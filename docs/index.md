@@ -13,6 +13,7 @@ geometry: [b5paper, tmargin=2.5cm, bmargin=2.5cm, lmargin=3.5cm, rmargin=2.5cm]
 site: bookdown::bookdown_site
 description: "R快速查询工具指南" 
 github-repo: nicheerfeng/git_book_ftidy
+favicon: "image/favicon.ico"
 ---
 
 
