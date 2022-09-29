@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 12 章 构筑R package | 基于 R 的数据处理流程指南</title>
+  <meta name="description" content="R快速查询工具指南" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 12 章 构筑R package | 基于 R 的数据处理流程指南" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="R快速查询工具指南" />
+  <meta name="github-repo" content="nicheerfeng/git_book_ftidy" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 12 章 构筑R package | 基于 R 的数据处理流程指南" />
+  
+  <meta name="twitter:description" content="R快速查询工具指南" />
+  
+
+<meta name="author" content="Teague Tian" />
+
+
+<meta name="date" content="2022-09-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Statistics-and-Research-Design.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Data Workflow</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#学业及工作经历"><i class="fa fa-check"></i>学业及工作经历：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#研究兴趣"><i class="fa fa-check"></i>研究兴趣：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#已完成和正在研究的项目"><i class="fa fa-check"></i>已完成和正在研究的项目</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#医学领域"><i class="fa fa-check"></i>医学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#生态学领域"><i class="fa fa-check"></i>生态学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#r工具开发"><i class="fa fa-check"></i>R工具开发：</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html"><i class="fa fa-check"></i><b>1</b> 确立分析目标</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#基本逻辑"><i class="fa fa-check"></i><b>1.1</b> 基本逻辑</a></li>
+<li class="chapter" data-level="1.2" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#数据分析的基本流程"><i class="fa fa-check"></i><b>1.2</b> 数据分析的基本流程</a></li>
+<li class="chapter" data-level="1.3" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#工作处理经验"><i class="fa fa-check"></i><b>1.3</b> 工作处理经验</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#ppt汇报经验"><i class="fa fa-check"></i><b>1.3.1</b> PPT汇报经验：</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>数据准备</b></span></li>
+<li class="chapter" data-level="2" data-path="Data-extraction.html"><a href="Data-extraction.html"><i class="fa fa-check"></i><b>2</b> 数据提取</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#数据提取的基本范式"><i class="fa fa-check"></i><b>2.1</b> 数据提取的基本范式</a></li>
+<li class="chapter" data-level="2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#数据导入与导出"><i class="fa fa-check"></i><b>2.2</b> 数据导入与导出</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#剪切板中处理数据"><i class="fa fa-check"></i><b>2.2.1</b> 剪切板中处理数据</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#读取excle文件"><i class="fa fa-check"></i><b>2.2.2</b> 读取excle文件</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Data-extraction.html"><a href="Data-extraction.html#加速读取及导出常用数据"><i class="fa fa-check"></i><b>2.2.3</b> 加速读取及导出常用数据</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Data-extraction.html"><a href="Data-extraction.html#office格式及图片导出"><i class="fa fa-check"></i><b>2.2.4</b> OFFICE格式及图片导出</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Data-extraction.html"><a href="Data-extraction.html#在r中使用sql"><i class="fa fa-check"></i><b>2.2.5</b> 在R中使用sql</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html"><i class="fa fa-check"></i><b>3</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据抽取"><i class="fa fa-check"></i><b>3.1</b> 数据抽取</a></li>
+<li class="chapter" data-level="3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据清洗"><i class="fa fa-check"></i><b>3.2</b> 数据清洗</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#选择数据子集"><i class="fa fa-check"></i><b>3.2.1</b> 选择数据子集</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据去重"><i class="fa fa-check"></i><b>3.2.2</b> 数据去重</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#缺失值处理"><i class="fa fa-check"></i><b>3.2.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#一致化处理-1"><i class="fa fa-check"></i><b>3.2.4</b> 一致化处理</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#异常值处理-1"><i class="fa fa-check"></i><b>3.2.5</b> 异常值处理</a></li>
+<li class="chapter" data-level="3.2.6" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#插值填补"><i class="fa fa-check"></i><b>3.2.6</b> 插值填补</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据重组与转换"><i class="fa fa-check"></i><b>3.3</b> 数据重组与转换</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据修改-数据增加与删除"><i class="fa fa-check"></i><b>3.3.1</b> 数据修改-数据增加与删除</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据值重编码非列名"><i class="fa fa-check"></i><b>3.3.2</b> 数据值重编码（非列名）</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据塑形"><i class="fa fa-check"></i><b>3.3.3</b> 数据塑形</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据提取"><i class="fa fa-check"></i><b>3.3.4</b> 数据提取</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>模型拟合</b></span></li>
+<li class="chapter" data-level="4" data-path="Model-building.html"><a href="Model-building.html"><i class="fa fa-check"></i><b>4</b> 构建模型</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-building.html"><a href="Model-building.html#描述统计模型"><i class="fa fa-check"></i><b>4.1</b> 描述统计模型</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="Model-building.html"><a href="Model-building.html#快速构建描述性统计"><i class="fa fa-check"></i><b>4.1.1</b> 快速构建描述性统计</a></li>
+<li class="chapter" data-level="4.1.2" data-path="Model-building.html"><a href="Model-building.html#高级分组统计"><i class="fa fa-check"></i><b>4.1.2</b> 高级分组统计</a></li>
+<li class="chapter" data-level="4.1.3" data-path="Model-building.html"><a href="Model-building.html#常用统计函数"><i class="fa fa-check"></i><b>4.1.3</b> 常用统计函数</a></li>
+<li class="chapter" data-level="4.1.4" data-path="Model-building.html"><a href="Model-building.html#批处理函数"><i class="fa fa-check"></i><b>4.1.4</b> 批处理函数</a></li>
+<li class="chapter" data-level="4.1.5" data-path="Model-building.html"><a href="Model-building.html#broom优雅输出"><i class="fa fa-check"></i><b>4.1.5</b> BROOM优雅输出</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="Model-building.html"><a href="Model-building.html#复杂统计模型"><i class="fa fa-check"></i><b>4.2</b> 复杂统计模型</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="Model-building.html"><a href="Model-building.html#变量筛选"><i class="fa fa-check"></i><b>4.2.1</b> 变量筛选</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Model-building.html"><a href="Model-building.html#线性统计回归"><i class="fa fa-check"></i><b>4.2.2</b> 线性统计回归</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Model-building.html"><a href="Model-building.html#方差检验"><i class="fa fa-check"></i><b>4.2.3</b> 方差检验</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Model-building.html"><a href="Model-building.html#相关统计r包资源"><i class="fa fa-check"></i><b>4.2.4</b> 相关统计R包资源：</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="Model-building.html"><a href="Model-building.html#临床统计模型"><i class="fa fa-check"></i><b>4.3</b> 临床统计模型</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-building.html"><a href="Model-building.html#平衡匹配"><i class="fa fa-check"></i><b>4.3.1</b> 平衡匹配</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-building.html"><a href="Model-building.html#生存分析"><i class="fa fa-check"></i><b>4.3.2</b> 生存分析</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-building.html"><a href="Model-building.html#补充r包"><i class="fa fa-check"></i><b>4.3.3</b> 补充R包</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-building.html"><a href="Model-building.html#构造模型的辅助函数或参数"><i class="fa fa-check"></i><b>4.4</b> 构造模型的辅助函数或参数</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="Model-building.html"><a href="Model-building.html#常用参数"><i class="fa fa-check"></i><b>4.4.1</b> 常用参数</a></li>
+<li class="chapter" data-level="4.4.2" data-path="Model-building.html"><a href="Model-building.html#查询线性模型结果"><i class="fa fa-check"></i><b>4.4.2</b> 查询线性模型结果</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Model-building.html"><a href="Model-building.html#r语言笔记.formula"><i class="fa fa-check"></i><b>4.4.3</b> R语言笔记.formula</a></li>
+<li class="chapter" data-level="4.4.4" data-path="Model-building.html"><a href="Model-building.html#特征工程"><i class="fa fa-check"></i><b>4.4.4</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Model-building.html"><a href="Model-building.html#深度学习"><i class="fa fa-check"></i><b>4.5</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="Model-building.html"><a href="Model-building.html#r-中执行keras"><i class="fa fa-check"></i><b>4.5.1</b> R 中执行keras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="Model-building.html"><a href="Model-building.html#机器学习"><i class="fa fa-check"></i><b>4.6</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="Model-building.html"><a href="Model-building.html#机器学习--mlr3包"><i class="fa fa-check"></i><b>4.6.1</b> 机器学习 -mlr3包</a></li>
+<li class="chapter" data-level="4.6.2" data-path="Model-building.html"><a href="Model-building.html#常规机器学习"><i class="fa fa-check"></i><b>4.6.2</b> 常规机器学习</a></li>
+<li class="chapter" data-level="4.6.3" data-path="Model-building.html"><a href="Model-building.html#朴素贝叶斯"><i class="fa fa-check"></i><b>4.6.3</b> 朴素贝叶斯</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Model-performance.html"><a href="Model-performance.html"><i class="fa fa-check"></i><b>5</b> 模型评估</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Model-performance.html"><a href="Model-performance.html#模型评估辅助"><i class="fa fa-check"></i><b>5.1</b> 模型评估辅助：</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="Model-performance.html"><a href="Model-performance.html#purrr包的pluck函数字符提取"><i class="fa fa-check"></i><b>5.1.1</b> purrr包的pluck()函数字符提取</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Model-performance.html"><a href="Model-performance.html#常用模型辅助评估r包"><i class="fa fa-check"></i><b>5.2</b> 常用模型辅助评估R包：</a></li>
+</ul></li>
+<li class="part"><span><b>模型展示</b></span></li>
+<li class="chapter" data-level="6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html"><i class="fa fa-check"></i><b>6</b> 模型发布与应用</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#flexboard"><i class="fa fa-check"></i><b>6.1</b> flexboard</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#安装工作环境"><i class="fa fa-check"></i><b>6.1.1</b> 安装工作环境</a></li>
+<li class="chapter" data-level="6.1.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#多级导航模块"><i class="fa fa-check"></i><b>6.1.2</b> 多级导航模块</a></li>
+<li class="chapter" data-level="6.1.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#超级链接表"><i class="fa fa-check"></i><b>6.1.3</b> 超级链接表</a></li>
+<li class="chapter" data-level="6.1.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加social-links"><i class="fa fa-check"></i><b>6.1.4</b> 给导航栏添加Social Links</a></li>
+<li class="chapter" data-level="6.1.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加source-code"><i class="fa fa-check"></i><b>6.1.5</b> 给导航栏添加Source Code</a></li>
+<li class="chapter" data-level="6.1.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加一个about"><i class="fa fa-check"></i><b>6.1.6</b> 给导航栏添加一个<code>about</code></a></li>
+<li class="chapter" data-level="6.1.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数"><i class="fa fa-check"></i><b>6.1.7</b> 布局参数</a></li>
+<li class="chapter" data-level="6.1.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#功能块参数"><i class="fa fa-check"></i><b>6.1.8</b> 功能块参数</a></li>
+<li class="chapter" data-level="6.1.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#故事版"><i class="fa fa-check"></i><b>6.1.9</b> 故事版</a></li>
+<li class="chapter" data-level="6.1.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助dashboard展示参数"><i class="fa fa-check"></i><b>6.1.10</b> 辅助dashboard展示参数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#shinydashboard"><i class="fa fa-check"></i><b>6.2</b> shinydashboard</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#基本框架和流程"><i class="fa fa-check"></i><b>6.2.1</b> 基本框架和流程</a></li>
+<li class="chapter" data-level="6.2.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#仪表板的结构"><i class="fa fa-check"></i><b>6.2.2</b> 仪表板的结构</a></li>
+<li class="chapter" data-level="6.2.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数-1"><i class="fa fa-check"></i><b>6.2.3</b> 布局参数</a></li>
+<li class="chapter" data-level="6.2.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#在dashboard中使用css技巧"><i class="fa fa-check"></i><b>6.2.4</b> 在dashboard中使用css技巧</a></li>
+<li class="chapter" data-level="6.2.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#适配于shiny的特殊函数"><i class="fa fa-check"></i><b>6.2.5</b> 适配于shiny的特殊函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#rmarkdown使用进阶"><i class="fa fa-check"></i><b>6.3</b> Rmarkdown使用进阶</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#参考书目"><i class="fa fa-check"></i><b>6.3.1</b> 参考书目</a></li>
+<li class="chapter" data-level="6.3.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#title和autherymal"><i class="fa fa-check"></i><b>6.3.2</b> title和auther/YMAL</a></li>
+<li class="chapter" data-level="6.3.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#字体与格式"><i class="fa fa-check"></i><b>6.3.3</b> 字体与格式</a></li>
+<li class="chapter" data-level="6.3.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助标记"><i class="fa fa-check"></i><b>6.3.4</b> 辅助标记</a></li>
+<li class="chapter" data-level="6.3.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#常用代码标签"><i class="fa fa-check"></i><b>6.3.5</b> 常用代码标签</a></li>
+<li class="chapter" data-level="6.3.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#非常用代码标签"><i class="fa fa-check"></i><b>6.3.6</b> 非常用代码标签</a></li>
+<li class="chapter" data-level="6.3.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#快捷键"><i class="fa fa-check"></i><b>6.3.7</b> 快捷键</a></li>
+<li class="chapter" data-level="6.3.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#标题修改"><i class="fa fa-check"></i><b>6.3.8</b> 标题修改</a></li>
+<li class="chapter" data-level="6.3.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#图片处理"><i class="fa fa-check"></i><b>6.3.9</b> 图片处理</a></li>
+<li class="chapter" data-level="6.3.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#表格输出"><i class="fa fa-check"></i><b>6.3.10</b> 表格输出</a></li>
+<li class="chapter" data-level="6.3.11" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#结果输出"><i class="fa fa-check"></i><b>6.3.11</b> 结果输出</a></li>
+<li class="chapter" data-level="6.3.12" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#补充知识点"><i class="fa fa-check"></i><b>6.3.12</b> 补充知识点</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html"><i class="fa fa-check"></i><b>7</b> 可视化（表与图）</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#表格可视化"><i class="fa fa-check"></i><b>7.1</b> 表格可视化</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#快速图表可视化"><i class="fa fa-check"></i><b>7.1.1</b> 快速图表可视化</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#编辑表"><i class="fa fa-check"></i><b>7.1.2</b> 编辑表</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#静态表格优化展示"><i class="fa fa-check"></i><b>7.1.3</b> 静态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#动态表格优化展示"><i class="fa fa-check"></i><b>7.1.4</b> 动态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#描述性统计表格分析"><i class="fa fa-check"></i><b>7.1.5</b> 描述性统计表格分析</a></li>
+<li class="chapter" data-level="7.1.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计结果表格可视化"><i class="fa fa-check"></i><b>7.1.6</b> 统计结果表格可视化</a></li>
+<li class="chapter" data-level="7.1.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充表格包"><i class="fa fa-check"></i><b>7.1.7</b> 补充表格包</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#图形可视化"><i class="fa fa-check"></i><b>7.2</b> 图形可视化</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#画图参考网站"><i class="fa fa-check"></i><b>7.2.1</b> 画图参考网站</a></li>
+<li class="chapter" data-level="7.2.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#免代码绘制"><i class="fa fa-check"></i><b>7.2.2</b> 免代码绘制</a></li>
+<li class="chapter" data-level="7.2.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计辅助绘图"><i class="fa fa-check"></i><b>7.2.3</b> 统计辅助绘图</a></li>
+<li class="chapter" data-level="7.2.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#base-plotggplot2"><i class="fa fa-check"></i><b>7.2.4</b> base-plot()/ggplot2()</a></li>
+<li class="chapter" data-level="7.2.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#绘图"><i class="fa fa-check"></i><b>7.2.5</b> 绘图</a></li>
+<li class="chapter" data-level="7.2.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计图形代码"><i class="fa fa-check"></i><b>7.2.6</b> 统计图形代码</a></li>
+<li class="chapter" data-level="7.2.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#医学分析图"><i class="fa fa-check"></i><b>7.2.7</b> 医学分析图</a></li>
+<li class="chapter" data-level="7.2.8" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充图形库"><i class="fa fa-check"></i><b>7.2.8</b> 补充图形库</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>工具箱</b></span></li>
+<li class="chapter" data-level="8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html"><i class="fa fa-check"></i><b>8</b> 常用统计R代码</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r-系统功能"><i class="fa fa-check"></i><b>8.1</b> R-系统功能</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用r系统代码"><i class="fa fa-check"></i><b>8.1.1</b> 常用R系统代码</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#辅助r包"><i class="fa fa-check"></i><b>8.1.2</b> 辅助R包：</a></li>
+<li class="chapter" data-level="8.1.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用系统脚本"><i class="fa fa-check"></i><b>8.1.3</b> 常用系统脚本</a></li>
+<li class="chapter" data-level="8.1.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#s3和s4事件"><i class="fa fa-check"></i><b>8.1.4</b> S3和S4事件</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r报错机制学习"><i class="fa fa-check"></i><b>8.2</b> R报错机制学习</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常见异常处理函数"><i class="fa fa-check"></i><b>8.2.1</b> 1 常见异常处理函数</a></li>
+<li class="chapter" data-level="8.2.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#stop"><i class="fa fa-check"></i><b>8.2.2</b> 2 STOP</a></li>
+<li class="chapter" data-level="8.2.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#warning"><i class="fa fa-check"></i><b>8.2.3</b> 3 WARNING</a></li>
+<li class="chapter" data-level="8.2.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕捉错误"><i class="fa fa-check"></i><b>8.2.4</b> 4 捕捉错误</a></li>
+<li class="chapter" data-level="8.2.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码错误调试"><i class="fa fa-check"></i><b>8.2.5</b> 5 代码错误调试</a></li>
+<li class="chapter" data-level="8.2.6" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码时间消耗跟踪"><i class="fa fa-check"></i><b>8.2.6</b> 6 代码时间消耗跟踪</a></li>
+<li class="chapter" data-level="8.2.7" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#补充案例"><i class="fa fa-check"></i><b>8.2.7</b> 7 补充案例</a></li>
+<li class="chapter" data-level="8.2.8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#相关资料"><i class="fa fa-check"></i><b>8.2.8</b> 8 相关资料</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用快捷命令"><i class="fa fa-check"></i><b>8.3</b> 常用快捷命令</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#高效管道符号"><i class="fa fa-check"></i><b>8.3.1</b> 高效管道符号</a></li>
+<li class="chapter" data-level="8.3.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用辅助函数"><i class="fa fa-check"></i><b>8.3.2</b> 常用辅助函数：</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#正则表达式"><i class="fa fa-check"></i><b>8.4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-1"><i class="fa fa-check"></i><b>8.4.1</b> 常用正则表达式命令-1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-2"><i class="fa fa-check"></i><b>8.4.2</b> 常用正则表达式命令-2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#量词"><i class="fa fa-check"></i><b>8.4.3</b> 量词</a></li>
+<li class="chapter" data-level="8.4.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕获分组"><i class="fa fa-check"></i><b>8.4.4</b> 捕获分组</a></li>
+<li class="chapter" data-level="8.4.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#python使用编译"><i class="fa fa-check"></i><b>8.4.5</b> python使用编译</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html"><i class="fa fa-check"></i><b>9</b> 临床医学统计流</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#common.r"><i class="fa fa-check"></i><b>9.1</b> COMMON.R</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载r包和配置全局环境"><i class="fa fa-check"></i><b>9.1.1</b> 加载R包和配置全局环境</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#使用officer来启动函数参数"><i class="fa fa-check"></i><b>9.1.2</b> 使用officer来启动函数参数：</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#table-of-content"><i class="fa fa-check"></i><b>9.1.3</b> Table of content</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#cover-template--封面"><i class="fa fa-check"></i><b>9.1.4</b> Cover template -封面</a></li>
+<li class="chapter" data-level="9.1.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷辅助函数"><i class="fa fa-check"></i><b>9.1.5</b> 快捷辅助函数：</a></li>
+<li class="chapter" data-level="9.1.6" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷统计函数"><i class="fa fa-check"></i><b>9.1.6</b> 快捷统计函数：</a></li>
+<li class="chapter" data-level="9.1.7" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#描述性分析统计函数"><i class="fa fa-check"></i><b>9.1.7</b> 描述性分析统计函数</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#rawdata-cleaning-pipeline"><i class="fa fa-check"></i><b>9.2</b> Rawdata cleaning pipeline</a></li>
+<li class="chapter" data-level="9.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#target_groups"><i class="fa fa-check"></i><b>9.3</b> target_groups</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载集成数据集"><i class="fa fa-check"></i><b>9.3.1</b> 加载集成数据集</a></li>
+<li class="chapter" data-level="9.3.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#保存数据集"><i class="fa fa-check"></i><b>9.3.2</b> 保存数据集</a></li>
+<li class="chapter" data-level="9.3.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#患者平衡匹配前后信息比较"><i class="fa fa-check"></i><b>9.3.3</b> 患者平衡匹配前后信息比较</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#dataset_for_analysis"><i class="fa fa-check"></i><b>9.4</b> dataset_for_analysis</a></li>
+<li class="chapter" data-level="9.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#final_analysis"><i class="fa fa-check"></i><b>9.5</b> final_analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Statistical-books.html"><a href="Statistical-books.html"><i class="fa fa-check"></i><b>10</b> 统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Statistical-books.html"><a href="Statistical-books.html#r-统计书籍"><i class="fa fa-check"></i><b>10.1</b> R-统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="Statistical-books.html"><a href="Statistical-books.html#tidyverse相关"><i class="fa fa-check"></i><b>10.1.1</b> tidyverse相关</a></li>
+<li class="chapter" data-level="10.1.2" data-path="Statistical-books.html"><a href="Statistical-books.html#ggplo2相关-网站"><i class="fa fa-check"></i><b>10.1.2</b> ggplo2相关-网站</a></li>
+<li class="chapter" data-level="10.1.3" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图指南"><i class="fa fa-check"></i><b>10.1.3</b> 绘图指南</a></li>
+<li class="chapter" data-level="10.1.4" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图相关的博客"><i class="fa fa-check"></i><b>10.1.4</b> 绘图相关的博客</a></li>
+<li class="chapter" data-level="10.1.5" data-path="Statistical-books.html"><a href="Statistical-books.html#医学指南相关"><i class="fa fa-check"></i><b>10.1.5</b> 医学指南相关</a></li>
+<li class="chapter" data-level="10.1.6" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计r包"><i class="fa fa-check"></i><b>10.1.6</b> 医学统计R包</a></li>
+<li class="chapter" data-level="10.1.7" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计相关博客"><i class="fa fa-check"></i><b>10.1.7</b> 医学统计相关博客</a></li>
+<li class="chapter" data-level="10.1.8" data-path="Statistical-books.html"><a href="Statistical-books.html#统计指南-r代码实现"><i class="fa fa-check"></i><b>10.1.8</b> 统计指南-R代码实现</a></li>
+<li class="chapter" data-level="10.1.9" data-path="Statistical-books.html"><a href="Statistical-books.html#数据建模相关"><i class="fa fa-check"></i><b>10.1.9</b> 数据建模相关</a></li>
+<li class="chapter" data-level="10.1.10" data-path="Statistical-books.html"><a href="Statistical-books.html#整合流程"><i class="fa fa-check"></i><b>10.1.10</b> 整合流程</a></li>
+<li class="chapter" data-level="10.1.11" data-path="Statistical-books.html"><a href="Statistical-books.html#博客社区"><i class="fa fa-check"></i><b>10.1.11</b> 博客社区</a></li>
+<li class="chapter" data-level="10.1.12" data-path="Statistical-books.html"><a href="Statistical-books.html#rmarkdown"><i class="fa fa-check"></i><b>10.1.12</b> Rmarkdown</a></li>
+<li class="chapter" data-level="10.1.13" data-path="Statistical-books.html"><a href="Statistical-books.html#r-rstudio"><i class="fa fa-check"></i><b>10.1.13</b> R-Rstudio</a></li>
+<li class="chapter" data-level="10.1.14" data-path="Statistical-books.html"><a href="Statistical-books.html#shiny"><i class="fa fa-check"></i><b>10.1.14</b> shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="Statistical-books.html"><a href="Statistical-books.html#使用gitbook写书"><i class="fa fa-check"></i><b>10.2</b> 使用gitbook写书</a></li>
+<li class="chapter" data-level="10.3" data-path="Statistical-books.html"><a href="Statistical-books.html#使用bookdwon写书"><i class="fa fa-check"></i><b>10.3</b> 使用bookdwon写书</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="Statistical-books.html"><a href="Statistical-books.html#常用功能标记"><i class="fa fa-check"></i><b>10.3.1</b> 常用功能标记</a></li>
+<li class="chapter" data-level="10.3.2" data-path="Statistical-books.html"><a href="Statistical-books.html#r代码的构建"><i class="fa fa-check"></i><b>10.3.2</b> R代码的构建</a></li>
+<li class="chapter" data-level="10.3.3" data-path="Statistical-books.html"><a href="Statistical-books.html#动态r代码"><i class="fa fa-check"></i><b>10.3.3</b> 动态r代码</a></li>
+<li class="chapter" data-level="10.3.4" data-path="Statistical-books.html"><a href="Statistical-books.html#引入shiny应用"><i class="fa fa-check"></i><b>10.3.4</b> 引入shiny应用</a></li>
+<li class="chapter" data-level="10.3.5" data-path="Statistical-books.html"><a href="Statistical-books.html#指定输出和解析的文件"><i class="fa fa-check"></i><b>10.3.5</b> 指定输出和解析的文件</a></li>
+<li class="chapter" data-level="10.3.6" data-path="Statistical-books.html"><a href="Statistical-books.html#文件最后修改时间"><i class="fa fa-check"></i><b>10.3.6</b> 文件最后修改时间</a></li>
+<li class="chapter" data-level="10.3.7" data-path="Statistical-books.html"><a href="Statistical-books.html#添加指定序号"><i class="fa fa-check"></i><b>10.3.7</b> 添加指定序号</a></li>
+<li class="chapter" data-level="10.3.8" data-path="Statistical-books.html"><a href="Statistical-books.html#辅助知识-"><i class="fa fa-check"></i><b>10.3.8</b> 辅助知识：—-</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html"><i class="fa fa-check"></i><b>11</b> 统计与研究设计</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用参数释义"><i class="fa fa-check"></i><b>11.1</b> 常用参数释义</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#因果回归参数"><i class="fa fa-check"></i><b>11.1.1</b> 因果回归参数</a></li>
+<li class="chapter" data-level="11.1.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#生存分析参数"><i class="fa fa-check"></i><b>11.1.2</b> 生存分析参数</a></li>
+<li class="chapter" data-level="11.1.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析参数解释"><i class="fa fa-check"></i><b>11.1.3</b> 方差分析参数解释</a></li>
+<li class="chapter" data-level="11.1.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归分析中常用参数释义"><i class="fa fa-check"></i><b>11.1.4</b> 回归分析中常用参数释义</a></li>
+<li class="chapter" data-level="11.1.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用分布描述"><i class="fa fa-check"></i><b>11.1.5</b> 常用分布描述</a></li>
+<li class="chapter" data-level="11.1.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#其他统计参数释义"><i class="fa fa-check"></i><b>11.1.6</b> 其他统计参数释义</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#临床研究中常用的统计方法和常见问题"><i class="fa fa-check"></i><b>11.2</b> 临床研究中常用的统计方法和常见问题</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计推断与区间估计"><i class="fa fa-check"></i><b>11.2.1</b> 统计推断与区间估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计方法选择"><i class="fa fa-check"></i><b>11.2.2</b> 统计方法选择：</a></li>
+<li class="chapter" data-level="11.2.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计分析中的常见问题"><i class="fa fa-check"></i><b>11.2.3</b> 统计分析中的常见问题</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#差异分析"><i class="fa fa-check"></i><b>11.3</b> 差异分析</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差检验与t检验的选择"><i class="fa fa-check"></i><b>11.3.1</b> 方差检验与T检验的选择</a></li>
+<li class="chapter" data-level="11.3.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#z-分布t检验f检验和卡方检验"><i class="fa fa-check"></i><b>11.3.2</b> Z 分布、T检验、F检验和卡方检验</a></li>
+<li class="chapter" data-level="11.3.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#t检验"><i class="fa fa-check"></i><b>11.3.3</b> T检验</a></li>
+<li class="chapter" data-level="11.3.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析"><i class="fa fa-check"></i><b>11.3.4</b> 方差分析</a></li>
+<li class="chapter" data-level="11.3.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#卡方检验"><i class="fa fa-check"></i><b>11.3.5</b> 卡方检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归"><i class="fa fa-check"></i><b>11.4</b> 多元线性回归</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的概念和基础公式"><i class="fa fa-check"></i><b>11.4.1</b> 多元线性回归的概念和基础公式</a></li>
+<li class="chapter" data-level="11.4.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的本质"><i class="fa fa-check"></i><b>11.4.2</b> 多元线性回归的本质</a></li>
+<li class="chapter" data-level="11.4.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的参数解释"><i class="fa fa-check"></i><b>11.4.3</b> 回归方程的参数解释：</a></li>
+<li class="chapter" data-level="11.4.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的评价指标"><i class="fa fa-check"></i><b>11.4.4</b> 回归方程的评价指标</a></li>
+<li class="chapter" data-level="11.4.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关参数"><i class="fa fa-check"></i><b>11.4.5</b> 回归解释相关参数：</a></li>
+<li class="chapter" data-level="11.4.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关补充"><i class="fa fa-check"></i><b>11.4.6</b> 回归解释相关补充：</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验"><i class="fa fa-check"></i><b>11.5</b> 相关检验</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验和系数"><i class="fa fa-check"></i><b>11.5.1</b> 相关检验和系数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#医疗相关检验"><i class="fa fa-check"></i><b>11.6</b> 医疗相关检验</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#log-rank检验"><i class="fa fa-check"></i><b>11.6.1</b> Log-rank检验</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html"><i class="fa fa-check"></i><b>12</b> 构筑R package</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构筑r-package相关参数配置"><i class="fa fa-check"></i><b>12.1</b> 构筑R package相关参数配置</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#创建本地环境并使用renv初始化本地安装环境"><i class="fa fa-check"></i><b>12.1.1</b> 创建本地环境并使用renv初始化本地安装环境</a></li>
+<li class="chapter" data-level="12.1.2" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#常用配置"><i class="fa fa-check"></i><b>12.1.2</b> 常用配置</a></li>
+<li class="chapter" data-level="12.1.3" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建函数"><i class="fa fa-check"></i><b>12.1.3</b> 构建函数</a></li>
+<li class="chapter" data-level="12.1.4" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#函数测试"><i class="fa fa-check"></i><b>12.1.4</b> 函数测试</a></li>
+<li class="chapter" data-level="12.1.5" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加项目内置数据集"><i class="fa fa-check"></i><b>12.1.5</b> 添加项目内置数据集</a></li>
+<li class="chapter" data-level="12.1.6" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加辅助描述文件"><i class="fa fa-check"></i><b>12.1.6</b> 添加辅助描述文件</a></li>
+<li class="chapter" data-level="12.1.7" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#r包整体测试"><i class="fa fa-check"></i><b>12.1.7</b> R包整体测试</a></li>
+<li class="chapter" data-level="12.1.8" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建及安装r包"><i class="fa fa-check"></i><b>12.1.8</b> 构建及安装R包</a></li>
+<li class="chapter" data-level="12.1.9" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建后上传到github多平台检查"><i class="fa fa-check"></i><b>12.1.9</b> 构建后上传到github多平台检查</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由bookdown驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于 R 的数据处理流程指南</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="id_-Build-R-package" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">第 12 章</span> 构筑R package<a href="id_-Build-R-package.html#id_-Build-R-package" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="构筑r-package相关参数配置" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> 构筑R package相关参数配置<a href="id_-Build-R-package.html#构筑r-package相关参数配置" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="创建本地环境并使用renv初始化本地安装环境" class="section level3 hasAnchor" number="12.1.1">
+<h3><span class="header-section-number">12.1.1</span> 创建本地环境并使用renv初始化本地安装环境<a href="id_-Build-R-package.html#创建本地环境并使用renv初始化本地安装环境" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## 1 创建本地环境并使用renv初始化本地安装环境：----
+library(devtools)
+library(usethis)
+library(roxygen2)
+library(tidyverse)
+library(lubridate)
+library(gtsummary)
+
+setwd(&quot;&quot;)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+# ## 在指定路径下创建R包：
+usethis::create_package(&quot;./&quot;)
+
+## 进行本地版本控制：
+# install.packages(&quot;renv&quot;)
+# 初始化环境
+renv::init()
+# 保存当前所用的包环境，当然我们才刚刚开始开发，别的包都没有引入
+renv::snapshot()
+</code></pre>
+</div>
+<div id="常用配置" class="section level3 hasAnchor" number="12.1.2">
+<h3><span class="header-section-number">12.1.2</span> 常用配置<a href="id_-Build-R-package.html#常用配置" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="描述文件description的常用配置" class="section level4 hasAnchor" number="12.1.2.1">
+<h4><span class="header-section-number">12.1.2.1</span> 描述文件（description）的常用配置<a href="id_-Build-R-package.html#描述文件description的常用配置" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 2.1 描述文件（description）的常用配置 ----
+## Description：
+# Description是对包的描述，每行不超过80个字符，行间使用4个空格分开
+
+## Version：
+# Version表示版本号，版本号最少要有2个整数中间用点号或者横线隔开
+# 推荐的格式：
+# releaesd版本由3个数字构成：&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;
+# In-development版本由4个数字构成，第四个是开发版本，从9000开始，所以包的第一个版本是0.0.0.9000
+
+## Auther@R：
+Authors@R:
+  person(given = &quot;First&quot;, ## given在前(名)，family在后(姓)
+         family = &quot;Last&quot;,
+         role = c(&quot;aut&quot;, &quot;cre&quot;),
+         # cre creator or maintainer 有问题时应该联系额人
+         # aut 对包贡献最大的人
+         # ctb 贡献者
+         # cph copyright holder nicheerfeng@gmail.com 如果版权是作者以外的人或机构，要注明
+         email = &quot;first.last@example.com&quot;,
+         comment = c(ORCID = &quot;YOUR-ORCID-ID&quot;))
+
+## 添加R包：在DESCRIPTION中添加说明文件；
+## 添加依赖的R包：
+# Imports
+# 描述的是包工作所必需的包，在我们的包被安装的时候，
+# 如果这些包之前没有被安装，这个时候会被安装
+# Suggests
+# 不是必需安装的，可能在示例数据，运行测试，
+
+# 从R包中指定函数输出；
+use_package(&quot;forcats&quot;)
+use_package(package, type = &quot;Imports&quot;, min_version = NULL)
+
+## 添加许可：
+# mit -- 任意使用；
+# gpl3 -- 任意使用，需公开源码；
+# ccby -- 不可用于商用；
+
+##  添加mit-license:
+# 这一步会在三个文件中添加参数：
+# 第一个是在LICENSE中添加字符描述；
+# 第二个是在LICENSE.md中添加详细描述；
+# 第三个是在Description中添加license的字段描述；
+## 这里还可以再引号内输入姓名，用于指明该文件的说明者；
+usethis::use_mit_license(&quot;MIT license&quot;)
+
+## 在description中添加指定描述：
+# URL: https://github.com/swsoyee/rPackageTutorial
+# BugReports: https://github.com/swsoyee/rPackageTutorial/issues</code></pre>
+</div>
+<div id="namespace的常用配置" class="section level4 hasAnchor" number="12.1.2.2">
+<h4><span class="header-section-number">12.1.2.2</span> namespace的常用配置<a href="id_-Build-R-package.html#namespace的常用配置" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## namespace的常用配置：----
+创建一个专门用于该R包进行环境开发的R文件，用于封装参数；
+注意：下面的null是必须的；
+此外， `%&gt;%`的使用需要使用usethis::pip()来生成描述文件，
+把描述文件的内容复制下来和这个一起即可。
+另外，这个函数文件中通常还会涉及到由非标准引用造成的check错误；
+需要使用utils::globalvirables()来添加对应的描述。
+#&#39; @import dplyr
+#&#39; @import tibble
+#&#39; @import lubridate
+#&#39; @import parallel
+#&#39; @import gtsummary
+#&#39; @import tidyselect
+#&#39; @import methods
+#&#39; @importFrom stringr str_replace str_c
+#&#39; @importFrom rlang enquo
+#&#39; @importFrom utils globalVariables
+#&#39; @importFrom utils data
+#&#39; @importFrom pacman p_load
+#&#39; @importFrom purrr map map_df
+#&#39; @importFrom magrittr %&gt;%
+#&#39; @importFrom tidyr spread separate_rows replace_na crossing separate gather
+#&#39; @importFrom stats sd
+NULL
+
+#&#39; Pipe operator
+#&#39;
+#&#39; See \code{magrittr::\link[magrittr:pipe]{\%&gt;\%}} for details.
+#&#39;
+#&#39; @name %&gt;%
+#&#39; @rdname pipe
+#&#39; @keywords internal
+#&#39; @export
+#&#39; @importFrom magrittr %&gt;%
+#&#39; @usage lhs \%&gt;\% rhs
+#&#39; @param lhs A value or the magrittr placeholder.
+#&#39; @param rhs A function call using the magrittr semantics.
+#&#39; @return The result of calling `rhs(lhs)`.
+NULL</code></pre>
+</div>
+</div>
+<div id="构建函数" class="section level3 hasAnchor" number="12.1.3">
+<h3><span class="header-section-number">12.1.3</span> 构建函数<a href="id_-Build-R-package.html#构建函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="构建函数文" class="section level4 hasAnchor" number="12.1.3.1">
+<h4><span class="header-section-number">12.1.3.1</span> 构建函数文<a href="id_-Build-R-package.html#构建函数文" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>use_r(&quot;test&quot;)</code></pre>
+</div>
+<div id="函数参数说明" class="section level4 hasAnchor" number="12.1.3.2">
+<h4><span class="header-section-number">12.1.3.2</span> 函数参数说明<a href="id_-Build-R-package.html#函数参数说明" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="常规顺序" class="section level5 hasAnchor" number="12.1.3.2.1">
+<h5><span class="header-section-number">12.1.3.2.1</span> 常规顺序<a href="id_-Build-R-package.html#常规顺序" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 3.2.1 常规顺序：----
+# 函数名、描述(Description)、函数体(Usage)、参数(Arguments)、
+# 详情补充(Details)、输出值(Value)、举例(Examples)、
+#
+# 其中：
+# 默认常规顺序是：
+# 1 函数名
+# 2 描述(Description)
+# 3 详情补充(Details)
+# 3.1 补充说明(see also) @seealso
+#
+# 次参数顺序：
+# 4 参数(Arguments) -- @param
+# 5 输出值(value) -- @return
+# 6 举例(Examples) -- @examples
+</code></pre>
+</div>
+<div id="补充参数" class="section level5 hasAnchor" number="12.1.3.2.2">
+<h5><span class="header-section-number">12.1.3.2.2</span> 补充参数<a href="id_-Build-R-package.html#补充参数" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 3.2.2 补充参数：-----
+
+## 继承参数：
+# @rdname 从主函数中引用，然后在同一描述文档中展示功能；
+#&#39; @rdname tr -- 其中tr为主函数；
+#&#39; @family dfa  -- 一般用于函数族的描述，类似于ggplot2中的函数控件；
+
+## 参考文献：
+#&#39; @references  -- \emph ：表示斜体；
+#&#39; Michael Friendly (2002).
+#&#39; \emph{Corrgrams: Exploratory displays for correlation matrices}.
+#&#39; The American Statistician, 56, 316--324.
+#&#39; D.J. Murdoch, E.D. Chow (1996).
+
+## 添加作者：
+#&#39; @author
+#&#39;
+
+## 添加声明文档：
+#&#39; @note
+#&#39; @seealso
+
+## 添加示例文档：
+## @example可以 vignettes/example-corrplot.R
+
+#&#39; @example
+
+</code></pre>
+</div>
+<div id="辅助描述" class="section level5 hasAnchor" number="12.1.3.2.3">
+<h5><span class="header-section-number">12.1.3.2.3</span> 辅助描述<a href="id_-Build-R-package.html#辅助描述" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 添加网页引用：
+# \url{https://en.wikipedia.org/wiki/Integer_overflow}
+
+## 添加本R包的函数引用：
+\link{function}
+## 引用其他R包的另外一种写法：
+\code{\link{print}}
+
+## 添加其他R包的函数引用：
+\link[base]{cut()}
+
+## 代码提示：
+`function` / [function()]
+
+</code></pre>
+</div>
+</div>
+<div id="函数构建的经验" class="section level4 hasAnchor" number="12.1.3.3">
+<h4><span class="header-section-number">12.1.3.3</span> 函数构建的经验<a href="id_-Build-R-package.html#函数构建的经验" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 使用invisible()来隐藏函数输出；
+funs = function(x,y){
+  z = x+y
+  invisible(z)
+}
+# 使用...来输入无限多的参数：
+funs = function(...){
+  args = list(...)
+  Reduce(`+`,args)
+}
+funs(1,2,3,4,5,6)
+
+# 函数中套用函数：
+funs = func(a,b){
+  b(a)
+}
+funs(c(1,2),mean)
+
+## 辅助函数构建的非标准引入：
+## 参数的非标准引用：必须发生在函数内部：
+terst = function(data,test){
+  var = enquo(test)
+  datatable2 %&gt;% select(!!var) %&gt;% dplyr::n_distinct(.)}
+terst(datatable2,patient)
+
+## 字符串的非标准引用：
+raw_patient_id = &quot;patient&quot;
+var &lt;- sym(raw_patient_id)
+datatable2 %&gt;% select(!!var) %&gt;% dplyr::n_distinct(.)
+</code></pre>
+</div>
+</div>
+<div id="函数测试" class="section level3 hasAnchor" number="12.1.4">
+<h3><span class="header-section-number">12.1.4</span> 函数测试<a href="id_-Build-R-package.html#函数测试" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="函数快速测试" class="section level4 hasAnchor" number="12.1.4.1">
+<h4><span class="header-section-number">12.1.4.1</span> 函数快速测试<a href="id_-Build-R-package.html#函数快速测试" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>devtools::load_all() # - 快捷键Ctrl + Shift + L ；
+</code></pre>
+</div>
+<div id="函数单元测试" class="section level4 hasAnchor" number="12.1.4.2">
+<h4><span class="header-section-number">12.1.4.2</span> 函数单元测试<a href="id_-Build-R-package.html#函数单元测试" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 使用testthat包：
+# context  写一个简短的介绍文件中的测试内容
+#
+# expect_equal()是基于all.equal()的 - 相对估计；
+# expect_identical()是基于identical - 相对精准；
+# expect_match 是基于grepl，识别字符使用；
+# expect_output()匹配输出类型；
+# expect_message()检查信息；
+# expect_warning()检查warning；
+# expect_error()检查错误
+# expect_is()检查某个对象是不是继承自一个特定的类：
+# expect_true() and expect_false() 当没有其他的expectation可用时使用
+
+## 测试案例：
+## expect_is() 检查某个对象是不是继承自一个特定的类：
+model &lt;- lm(mpg ~ wt, data = mtcars)
+class(model)
+#[1] &quot;lm&quot;
+expect_is(model, &quot;lm&quot;)
+
+## 匹配输出类型：
+a &lt;- list(1:10, letters)
+str(a)
+# List of 2
+# $ : int [1:10] 1 2 3 4 5 6 7 8 9 10
+# $ : chr [1:26] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; ...
+expect_output(str(a), &quot;List of 2&quot;)
+
+## 测试案例的基本完整写法：
+## 包含生成覆盖率检验---
+首先一个逻辑是这个测试是针对的函数本身，并不针对函数内部的细节参数；
+其次，他有一个相对固定的格式来判断的数据 的结果可行性；
+本质：他是example的一个结果验证：
+context(&quot;Just testing printer&quot;)
+test_that(
+  &quot;just test whether printer is ok&quot;.{
+    set.seed(1)
+    res = printer(x = rnorm(5),r -r(norm(5)))
+    expect_equal(nrow(res),5)})
+写完测试后的检查：
+devtools::test()
+检查完后输出：测试覆盖率；
+在addins中输入coverage，点击即可输出每个函数的测试覆盖率。
+然后输入：
+covr::package_coverage(type =&quot;all&quot;)
+输入该参数后：
+会在.trasvis.yml文件中生成：
+after_success:
+`Rescript e `covr::codecov(type =&quot;all&quot;)``</code></pre>
+</div>
+</div>
+<div id="添加项目内置数据集" class="section level3 hasAnchor" number="12.1.5">
+<h3><span class="header-section-number">12.1.5</span> 添加项目内置数据集<a href="id_-Build-R-package.html#添加项目内置数据集" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="仅供函数内部使用" class="section level4 hasAnchor" number="12.1.5.1">
+<h4><span class="header-section-number">12.1.5.1</span> 仅供函数内部使用<a href="id_-Build-R-package.html#仅供函数内部使用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 如果想要存储原始数据，可以放到inst/extdata里面
+usethis::use_data_raw()
+usethis::use_data(data_med,internal = TRUE,overwrite = TRUE)</code></pre>
+</div>
+<div id="使用inst-或者data" class="section level4 hasAnchor" number="12.1.5.2">
+<h4><span class="header-section-number">12.1.5.2</span> 使用inst 或者DATA<a href="id_-Build-R-package.html#使用inst-或者data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>usethis::use_data(data_med,internal = FALSE,overwrite = TRUE)
+# 内部使用形式的具体说明：
+# 下面的data不需要指明加载路径，只需要提供输入参数的名称即可；
+#&#39; @format  .....
+#&#39; \describe{
+#&#39; \item{price}{price,in Us dollars}
+#&#39; \item{carrt}{....}
+#&#39; ...
+#&#39; }
+#&#39; @source \url{http://www.doa.info/}
+&quot;data&quot;
+</code></pre>
+</div>
+</div>
+<div id="添加辅助描述文件" class="section level3 hasAnchor" number="12.1.6">
+<h3><span class="header-section-number">12.1.6</span> 添加辅助描述文件<a href="id_-Build-R-package.html#添加辅助描述文件" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="添置readmenewsbuideignore代码美化和代码规范" class="section level4 hasAnchor" number="12.1.6.1">
+<h4><span class="header-section-number">12.1.6.1</span> 添置readme/NEWS/buideignore代码美化和代码规范<a href="id_-Build-R-package.html#添置readmenewsbuideignore代码美化和代码规范" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## buideignore文件的写法：
+^data$
+^data\.md$
+
+
+## 添加说明文件：
+usethis::use_readme_md()
+# 创建可执行的read.me文件方便进行参数构建；
+use_readme_rmd()
+
+## 增加 NEWS 页面，用于记录每一次升级所做出的变更
+usethis::use_news_md()
+# 添加 Code of Conduct
+# 根据弹出的提示，把自动生成的内容添加到 README.Rmd 中并且重新生成 README.md 后提交本次变更
+usethis::use_code_of_conduct()
+
+## 使用styler进行代码美化：
+install.packages(&quot;styler&quot;)
+styler::style_pkg()
+
+## 代码规范：
+## install.packages(&quot;lintr&quot;)
+# 对整个包进行不符合规范的代码查询
+lintr::lint_package()</code></pre>
+</div>
+<div id="构建vignette" class="section level4 hasAnchor" number="12.1.6.2">
+<h4><span class="header-section-number">12.1.6.2</span> 构建vignette<a href="id_-Build-R-package.html#构建vignette" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>usethis::use_vignette(&quot;pmed_RWD&quot;)</code></pre>
+</div>
+<div id="添加包的说明在线网站" class="section level4 hasAnchor" number="12.1.6.3">
+<h4><span class="header-section-number">12.1.6.3</span> 添加包的说明在线网站<a href="id_-Build-R-package.html#添加包的说明在线网站" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="id_-Build-R-package.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 添加pkg：</span></span>
+<span id="cb500-2"><a href="id_-Build-R-package.html#cb500-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb500-3"><a href="id_-Build-R-package.html#cb500-3" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_pkgdown</span>()</span>
+<span id="cb500-4"><a href="id_-Build-R-package.html#cb500-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 安装远程厂库到本地：</span></span>
+<span id="cb500-5"><a href="id_-Build-R-package.html#cb500-5" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github_file</span>()</span>
+<span id="cb500-6"><a href="id_-Build-R-package.html#cb500-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 管理issuse:</span></span>
+<span id="cb500-7"><a href="id_-Build-R-package.html#cb500-7" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github_labels</span>()</span>
+<span id="cb500-8"><a href="id_-Build-R-package.html#cb500-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 还可以使用：直接在R本地执行远程推送；</span></span>
+<span id="cb500-9"><a href="id_-Build-R-package.html#cb500-9" aria-hidden="true" tabindex="-1"></a><span class="fu">use_github</span>(<span class="at">protocol =</span> <span class="st">&quot;https&quot;</span>)</span>
+<span id="cb500-10"><a href="id_-Build-R-package.html#cb500-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-11"><a href="id_-Build-R-package.html#cb500-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 添加origin</span></span>
+<span id="cb500-12"><a href="id_-Build-R-package.html#cb500-12" aria-hidden="true" tabindex="-1"></a><span class="co">#git remote add main https://github.com/nicheerfeng/pmed</span></span>
+<span id="cb500-13"><a href="id_-Build-R-package.html#cb500-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 添加token</span></span>
+<span id="cb500-14"><a href="id_-Build-R-package.html#cb500-14" aria-hidden="true" tabindex="-1"></a><span class="co"># git remote set-url origin https://oauth2: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@github.com/nicheerfeng/pmed.git</span></span>
+<span id="cb500-15"><a href="id_-Build-R-package.html#cb500-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 推送token：</span></span>
+<span id="cb500-16"><a href="id_-Build-R-package.html#cb500-16" aria-hidden="true" tabindex="-1"></a><span class="co"># git push -u origin main</span></span>
+<span id="cb500-17"><a href="id_-Build-R-package.html#cb500-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-18"><a href="id_-Build-R-package.html#cb500-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 补充：</span></span>
+<span id="cb500-19"><a href="id_-Build-R-package.html#cb500-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 以前的github里的master，就是现在的main。</span></span>
+<span id="cb500-20"><a href="id_-Build-R-package.html#cb500-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-21"><a href="id_-Build-R-package.html#cb500-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-22"><a href="id_-Build-R-package.html#cb500-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 实现将 pkgdown 站点自动发布到 GitHub 页面所需的 GitHub 设置：</span></span>
+<span id="cb500-23"><a href="id_-Build-R-package.html#cb500-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建新的分支，用于可视化展示站点信息；</span></span>
+<span id="cb500-24"><a href="id_-Build-R-package.html#cb500-24" aria-hidden="true" tabindex="-1"></a><span class="fu">use_pkgdown_github_pages</span>()</span>
+<span id="cb500-25"><a href="id_-Build-R-package.html#cb500-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-26"><a href="id_-Build-R-package.html#cb500-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建站点：</span></span>
+<span id="cb500-27"><a href="id_-Build-R-package.html#cb500-27" aria-hidden="true" tabindex="-1"></a>pkgdown<span class="sc">::</span><span class="fu">build_site</span>()</span>
+<span id="cb500-28"><a href="id_-Build-R-package.html#cb500-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb500-29"><a href="id_-Build-R-package.html#cb500-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 关于构建网站之后404原因的解释：</span></span>
+<span id="cb500-30"><a href="id_-Build-R-package.html#cb500-30" aria-hidden="true" tabindex="-1"></a><span class="co"># https://pkgdown.r-lib.org/reference/build_site.html?q=development#development-mode</span></span>
+<span id="cb500-31"><a href="id_-Build-R-package.html#cb500-31" aria-hidden="true" tabindex="-1"></a><span class="co"># _pkgdown.yml 需要设置：</span></span>
+<span id="cb500-32"><a href="id_-Build-R-package.html#cb500-32" aria-hidden="true" tabindex="-1"></a>development<span class="sc">:</span></span>
+<span id="cb500-33"><a href="id_-Build-R-package.html#cb500-33" aria-hidden="true" tabindex="-1"></a>  mode<span class="sc">:</span> release</span>
+<span id="cb500-34"><a href="id_-Build-R-package.html#cb500-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 因为原始的mode为auto，自动识别0.0.0类型为禁止发布类型；</span></span></code></pre></div>
+</div>
+</div>
+<div id="r包整体测试" class="section level3 hasAnchor" number="12.1.7">
+<h3><span class="header-section-number">12.1.7</span> R包整体测试<a href="id_-Build-R-package.html#r包整体测试" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="常规测试" class="section level4 hasAnchor" number="12.1.7.1">
+<h4><span class="header-section-number">12.1.7.1</span> 常规测试<a href="id_-Build-R-package.html#常规测试" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>devtools::check() # -Ctrl + Shift + E
+
+## 拼写检查：
+devtools::spell_check()
+
+## 多平台测试：
+devtools::check_win_devel() # win 平台
+usethis::use_github_action_check_standard() # git多平台；
+
+## 复杂检查：
+devtools::release()</code></pre>
+</div>
+<div id="测试报错结局方案" class="section level4 hasAnchor" number="12.1.7.2">
+<h4><span class="header-section-number">12.1.7.2</span> 测试报错结局方案<a href="id_-Build-R-package.html#测试报错结局方案" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## (1) 测试问题：--- no visible binding for global variable a -&gt;用了dplyr
+# 解决方案 1 (这里用到了utils包哦)
+utils::globalVariables(c(&quot;a&quot;))
+# 这种方法的具体实现思路：
+在R文件下新创建一个env的R文件，并在其中
+添加对应的，使用usethis::check()显示参数未发现的变量；
+将所有参数未发现的变量，打包成字符串集合的形式放置在globalVariables()内部；
+if(getRversion() &gt;= &quot;2.15.1&quot;) utils::globalVariables(c(&quot;!!&quot;,&quot;:=&quot;,&quot;.&quot;,&quot;*&quot;))
+
+# 解决方案二
+# 这种方案是在每个执行函数文件中将对应的未check到的变量赋值未null。不能使用字符串的形式，必须单个命名为null。
+a &lt;- NULL</code></pre>
+</div>
+</div>
+<div id="构建及安装r包" class="section level3 hasAnchor" number="12.1.8">
+<h3><span class="header-section-number">12.1.8</span> 构建及安装R包<a href="id_-Build-R-package.html#构建及安装r包" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>devtools::build()
+
+## 然后就可以通过install()函数来安装这个包：
+devtools::install()
+library(tdftest)
+a = c(&#39;a&#39;)
+b = c(&#39;b&#39;)
+fbind(a,b)
+
+## 另外一种本地安装的方法为：
+install.packages(&quot;~/test/test.tar.gz&quot;, repos = NULL, type = &quot;source&quot;)</code></pre>
+</div>
+<div id="构建后上传到github多平台检查" class="section level3 hasAnchor" number="12.1.9">
+<h3><span class="header-section-number">12.1.9</span> 构建后上传到github多平台检查<a href="id_-Build-R-package.html#构建后上传到github多平台检查" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>暂定；</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Statistics-and-Research-Design.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/12-Build-R-package.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 6 章 模型发布与应用 | 基于 R 的数据处理流程指南</title>
+  <meta name="description" content="R快速查询工具指南" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 6 章 模型发布与应用 | 基于 R 的数据处理流程指南" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="R快速查询工具指南" />
+  <meta name="github-repo" content="nicheerfeng/git_book_ftidy" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 6 章 模型发布与应用 | 基于 R 的数据处理流程指南" />
+  
+  <meta name="twitter:description" content="R快速查询工具指南" />
+  
+
+<meta name="author" content="Teague Tian" />
+
+
+<meta name="date" content="2022-09-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Model-performance.html"/>
+<link rel="next" href="Visualization-Tables-Figures.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Data Workflow</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#学业及工作经历"><i class="fa fa-check"></i>学业及工作经历：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#研究兴趣"><i class="fa fa-check"></i>研究兴趣：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#已完成和正在研究的项目"><i class="fa fa-check"></i>已完成和正在研究的项目</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#医学领域"><i class="fa fa-check"></i>医学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#生态学领域"><i class="fa fa-check"></i>生态学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#r工具开发"><i class="fa fa-check"></i>R工具开发：</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html"><i class="fa fa-check"></i><b>1</b> 确立分析目标</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#基本逻辑"><i class="fa fa-check"></i><b>1.1</b> 基本逻辑</a></li>
+<li class="chapter" data-level="1.2" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#数据分析的基本流程"><i class="fa fa-check"></i><b>1.2</b> 数据分析的基本流程</a></li>
+<li class="chapter" data-level="1.3" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#工作处理经验"><i class="fa fa-check"></i><b>1.3</b> 工作处理经验</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#ppt汇报经验"><i class="fa fa-check"></i><b>1.3.1</b> PPT汇报经验：</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>数据准备</b></span></li>
+<li class="chapter" data-level="2" data-path="Data-extraction.html"><a href="Data-extraction.html"><i class="fa fa-check"></i><b>2</b> 数据提取</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#数据提取的基本范式"><i class="fa fa-check"></i><b>2.1</b> 数据提取的基本范式</a></li>
+<li class="chapter" data-level="2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#数据导入与导出"><i class="fa fa-check"></i><b>2.2</b> 数据导入与导出</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#剪切板中处理数据"><i class="fa fa-check"></i><b>2.2.1</b> 剪切板中处理数据</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#读取excle文件"><i class="fa fa-check"></i><b>2.2.2</b> 读取excle文件</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Data-extraction.html"><a href="Data-extraction.html#加速读取及导出常用数据"><i class="fa fa-check"></i><b>2.2.3</b> 加速读取及导出常用数据</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Data-extraction.html"><a href="Data-extraction.html#office格式及图片导出"><i class="fa fa-check"></i><b>2.2.4</b> OFFICE格式及图片导出</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Data-extraction.html"><a href="Data-extraction.html#在r中使用sql"><i class="fa fa-check"></i><b>2.2.5</b> 在R中使用sql</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html"><i class="fa fa-check"></i><b>3</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据抽取"><i class="fa fa-check"></i><b>3.1</b> 数据抽取</a></li>
+<li class="chapter" data-level="3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据清洗"><i class="fa fa-check"></i><b>3.2</b> 数据清洗</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#选择数据子集"><i class="fa fa-check"></i><b>3.2.1</b> 选择数据子集</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据去重"><i class="fa fa-check"></i><b>3.2.2</b> 数据去重</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#缺失值处理"><i class="fa fa-check"></i><b>3.2.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#一致化处理-1"><i class="fa fa-check"></i><b>3.2.4</b> 一致化处理</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#异常值处理-1"><i class="fa fa-check"></i><b>3.2.5</b> 异常值处理</a></li>
+<li class="chapter" data-level="3.2.6" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#插值填补"><i class="fa fa-check"></i><b>3.2.6</b> 插值填补</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据重组与转换"><i class="fa fa-check"></i><b>3.3</b> 数据重组与转换</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据修改-数据增加与删除"><i class="fa fa-check"></i><b>3.3.1</b> 数据修改-数据增加与删除</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据值重编码非列名"><i class="fa fa-check"></i><b>3.3.2</b> 数据值重编码（非列名）</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据塑形"><i class="fa fa-check"></i><b>3.3.3</b> 数据塑形</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据提取"><i class="fa fa-check"></i><b>3.3.4</b> 数据提取</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>模型拟合</b></span></li>
+<li class="chapter" data-level="4" data-path="Model-building.html"><a href="Model-building.html"><i class="fa fa-check"></i><b>4</b> 构建模型</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-building.html"><a href="Model-building.html#描述统计模型"><i class="fa fa-check"></i><b>4.1</b> 描述统计模型</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="Model-building.html"><a href="Model-building.html#快速构建描述性统计"><i class="fa fa-check"></i><b>4.1.1</b> 快速构建描述性统计</a></li>
+<li class="chapter" data-level="4.1.2" data-path="Model-building.html"><a href="Model-building.html#高级分组统计"><i class="fa fa-check"></i><b>4.1.2</b> 高级分组统计</a></li>
+<li class="chapter" data-level="4.1.3" data-path="Model-building.html"><a href="Model-building.html#常用统计函数"><i class="fa fa-check"></i><b>4.1.3</b> 常用统计函数</a></li>
+<li class="chapter" data-level="4.1.4" data-path="Model-building.html"><a href="Model-building.html#批处理函数"><i class="fa fa-check"></i><b>4.1.4</b> 批处理函数</a></li>
+<li class="chapter" data-level="4.1.5" data-path="Model-building.html"><a href="Model-building.html#broom优雅输出"><i class="fa fa-check"></i><b>4.1.5</b> BROOM优雅输出</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="Model-building.html"><a href="Model-building.html#复杂统计模型"><i class="fa fa-check"></i><b>4.2</b> 复杂统计模型</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="Model-building.html"><a href="Model-building.html#变量筛选"><i class="fa fa-check"></i><b>4.2.1</b> 变量筛选</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Model-building.html"><a href="Model-building.html#线性统计回归"><i class="fa fa-check"></i><b>4.2.2</b> 线性统计回归</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Model-building.html"><a href="Model-building.html#方差检验"><i class="fa fa-check"></i><b>4.2.3</b> 方差检验</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Model-building.html"><a href="Model-building.html#相关统计r包资源"><i class="fa fa-check"></i><b>4.2.4</b> 相关统计R包资源：</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="Model-building.html"><a href="Model-building.html#临床统计模型"><i class="fa fa-check"></i><b>4.3</b> 临床统计模型</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-building.html"><a href="Model-building.html#平衡匹配"><i class="fa fa-check"></i><b>4.3.1</b> 平衡匹配</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-building.html"><a href="Model-building.html#生存分析"><i class="fa fa-check"></i><b>4.3.2</b> 生存分析</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-building.html"><a href="Model-building.html#补充r包"><i class="fa fa-check"></i><b>4.3.3</b> 补充R包</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-building.html"><a href="Model-building.html#构造模型的辅助函数或参数"><i class="fa fa-check"></i><b>4.4</b> 构造模型的辅助函数或参数</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="Model-building.html"><a href="Model-building.html#常用参数"><i class="fa fa-check"></i><b>4.4.1</b> 常用参数</a></li>
+<li class="chapter" data-level="4.4.2" data-path="Model-building.html"><a href="Model-building.html#查询线性模型结果"><i class="fa fa-check"></i><b>4.4.2</b> 查询线性模型结果</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Model-building.html"><a href="Model-building.html#r语言笔记.formula"><i class="fa fa-check"></i><b>4.4.3</b> R语言笔记.formula</a></li>
+<li class="chapter" data-level="4.4.4" data-path="Model-building.html"><a href="Model-building.html#特征工程"><i class="fa fa-check"></i><b>4.4.4</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Model-building.html"><a href="Model-building.html#深度学习"><i class="fa fa-check"></i><b>4.5</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="Model-building.html"><a href="Model-building.html#r-中执行keras"><i class="fa fa-check"></i><b>4.5.1</b> R 中执行keras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="Model-building.html"><a href="Model-building.html#机器学习"><i class="fa fa-check"></i><b>4.6</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="Model-building.html"><a href="Model-building.html#机器学习--mlr3包"><i class="fa fa-check"></i><b>4.6.1</b> 机器学习 -mlr3包</a></li>
+<li class="chapter" data-level="4.6.2" data-path="Model-building.html"><a href="Model-building.html#常规机器学习"><i class="fa fa-check"></i><b>4.6.2</b> 常规机器学习</a></li>
+<li class="chapter" data-level="4.6.3" data-path="Model-building.html"><a href="Model-building.html#朴素贝叶斯"><i class="fa fa-check"></i><b>4.6.3</b> 朴素贝叶斯</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Model-performance.html"><a href="Model-performance.html"><i class="fa fa-check"></i><b>5</b> 模型评估</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Model-performance.html"><a href="Model-performance.html#模型评估辅助"><i class="fa fa-check"></i><b>5.1</b> 模型评估辅助：</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="Model-performance.html"><a href="Model-performance.html#purrr包的pluck函数字符提取"><i class="fa fa-check"></i><b>5.1.1</b> purrr包的pluck()函数字符提取</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Model-performance.html"><a href="Model-performance.html#常用模型辅助评估r包"><i class="fa fa-check"></i><b>5.2</b> 常用模型辅助评估R包：</a></li>
+</ul></li>
+<li class="part"><span><b>模型展示</b></span></li>
+<li class="chapter" data-level="6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html"><i class="fa fa-check"></i><b>6</b> 模型发布与应用</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#flexboard"><i class="fa fa-check"></i><b>6.1</b> flexboard</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#安装工作环境"><i class="fa fa-check"></i><b>6.1.1</b> 安装工作环境</a></li>
+<li class="chapter" data-level="6.1.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#多级导航模块"><i class="fa fa-check"></i><b>6.1.2</b> 多级导航模块</a></li>
+<li class="chapter" data-level="6.1.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#超级链接表"><i class="fa fa-check"></i><b>6.1.3</b> 超级链接表</a></li>
+<li class="chapter" data-level="6.1.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加social-links"><i class="fa fa-check"></i><b>6.1.4</b> 给导航栏添加Social Links</a></li>
+<li class="chapter" data-level="6.1.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加source-code"><i class="fa fa-check"></i><b>6.1.5</b> 给导航栏添加Source Code</a></li>
+<li class="chapter" data-level="6.1.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加一个about"><i class="fa fa-check"></i><b>6.1.6</b> 给导航栏添加一个<code>about</code></a></li>
+<li class="chapter" data-level="6.1.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数"><i class="fa fa-check"></i><b>6.1.7</b> 布局参数</a></li>
+<li class="chapter" data-level="6.1.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#功能块参数"><i class="fa fa-check"></i><b>6.1.8</b> 功能块参数</a></li>
+<li class="chapter" data-level="6.1.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#故事版"><i class="fa fa-check"></i><b>6.1.9</b> 故事版</a></li>
+<li class="chapter" data-level="6.1.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助dashboard展示参数"><i class="fa fa-check"></i><b>6.1.10</b> 辅助dashboard展示参数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#shinydashboard"><i class="fa fa-check"></i><b>6.2</b> shinydashboard</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#基本框架和流程"><i class="fa fa-check"></i><b>6.2.1</b> 基本框架和流程</a></li>
+<li class="chapter" data-level="6.2.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#仪表板的结构"><i class="fa fa-check"></i><b>6.2.2</b> 仪表板的结构</a></li>
+<li class="chapter" data-level="6.2.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数-1"><i class="fa fa-check"></i><b>6.2.3</b> 布局参数</a></li>
+<li class="chapter" data-level="6.2.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#在dashboard中使用css技巧"><i class="fa fa-check"></i><b>6.2.4</b> 在dashboard中使用css技巧</a></li>
+<li class="chapter" data-level="6.2.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#适配于shiny的特殊函数"><i class="fa fa-check"></i><b>6.2.5</b> 适配于shiny的特殊函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#rmarkdown使用进阶"><i class="fa fa-check"></i><b>6.3</b> Rmarkdown使用进阶</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#参考书目"><i class="fa fa-check"></i><b>6.3.1</b> 参考书目</a></li>
+<li class="chapter" data-level="6.3.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#title和autherymal"><i class="fa fa-check"></i><b>6.3.2</b> title和auther/YMAL</a></li>
+<li class="chapter" data-level="6.3.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#字体与格式"><i class="fa fa-check"></i><b>6.3.3</b> 字体与格式</a></li>
+<li class="chapter" data-level="6.3.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助标记"><i class="fa fa-check"></i><b>6.3.4</b> 辅助标记</a></li>
+<li class="chapter" data-level="6.3.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#常用代码标签"><i class="fa fa-check"></i><b>6.3.5</b> 常用代码标签</a></li>
+<li class="chapter" data-level="6.3.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#非常用代码标签"><i class="fa fa-check"></i><b>6.3.6</b> 非常用代码标签</a></li>
+<li class="chapter" data-level="6.3.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#快捷键"><i class="fa fa-check"></i><b>6.3.7</b> 快捷键</a></li>
+<li class="chapter" data-level="6.3.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#标题修改"><i class="fa fa-check"></i><b>6.3.8</b> 标题修改</a></li>
+<li class="chapter" data-level="6.3.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#图片处理"><i class="fa fa-check"></i><b>6.3.9</b> 图片处理</a></li>
+<li class="chapter" data-level="6.3.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#表格输出"><i class="fa fa-check"></i><b>6.3.10</b> 表格输出</a></li>
+<li class="chapter" data-level="6.3.11" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#结果输出"><i class="fa fa-check"></i><b>6.3.11</b> 结果输出</a></li>
+<li class="chapter" data-level="6.3.12" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#补充知识点"><i class="fa fa-check"></i><b>6.3.12</b> 补充知识点</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html"><i class="fa fa-check"></i><b>7</b> 可视化（表与图）</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#表格可视化"><i class="fa fa-check"></i><b>7.1</b> 表格可视化</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#快速图表可视化"><i class="fa fa-check"></i><b>7.1.1</b> 快速图表可视化</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#编辑表"><i class="fa fa-check"></i><b>7.1.2</b> 编辑表</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#静态表格优化展示"><i class="fa fa-check"></i><b>7.1.3</b> 静态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#动态表格优化展示"><i class="fa fa-check"></i><b>7.1.4</b> 动态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#描述性统计表格分析"><i class="fa fa-check"></i><b>7.1.5</b> 描述性统计表格分析</a></li>
+<li class="chapter" data-level="7.1.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计结果表格可视化"><i class="fa fa-check"></i><b>7.1.6</b> 统计结果表格可视化</a></li>
+<li class="chapter" data-level="7.1.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充表格包"><i class="fa fa-check"></i><b>7.1.7</b> 补充表格包</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#图形可视化"><i class="fa fa-check"></i><b>7.2</b> 图形可视化</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#画图参考网站"><i class="fa fa-check"></i><b>7.2.1</b> 画图参考网站</a></li>
+<li class="chapter" data-level="7.2.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#免代码绘制"><i class="fa fa-check"></i><b>7.2.2</b> 免代码绘制</a></li>
+<li class="chapter" data-level="7.2.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计辅助绘图"><i class="fa fa-check"></i><b>7.2.3</b> 统计辅助绘图</a></li>
+<li class="chapter" data-level="7.2.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#base-plotggplot2"><i class="fa fa-check"></i><b>7.2.4</b> base-plot()/ggplot2()</a></li>
+<li class="chapter" data-level="7.2.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#绘图"><i class="fa fa-check"></i><b>7.2.5</b> 绘图</a></li>
+<li class="chapter" data-level="7.2.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计图形代码"><i class="fa fa-check"></i><b>7.2.6</b> 统计图形代码</a></li>
+<li class="chapter" data-level="7.2.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#医学分析图"><i class="fa fa-check"></i><b>7.2.7</b> 医学分析图</a></li>
+<li class="chapter" data-level="7.2.8" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充图形库"><i class="fa fa-check"></i><b>7.2.8</b> 补充图形库</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>工具箱</b></span></li>
+<li class="chapter" data-level="8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html"><i class="fa fa-check"></i><b>8</b> 常用统计R代码</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r-系统功能"><i class="fa fa-check"></i><b>8.1</b> R-系统功能</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用r系统代码"><i class="fa fa-check"></i><b>8.1.1</b> 常用R系统代码</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#辅助r包"><i class="fa fa-check"></i><b>8.1.2</b> 辅助R包：</a></li>
+<li class="chapter" data-level="8.1.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用系统脚本"><i class="fa fa-check"></i><b>8.1.3</b> 常用系统脚本</a></li>
+<li class="chapter" data-level="8.1.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#s3和s4事件"><i class="fa fa-check"></i><b>8.1.4</b> S3和S4事件</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r报错机制学习"><i class="fa fa-check"></i><b>8.2</b> R报错机制学习</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常见异常处理函数"><i class="fa fa-check"></i><b>8.2.1</b> 1 常见异常处理函数</a></li>
+<li class="chapter" data-level="8.2.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#stop"><i class="fa fa-check"></i><b>8.2.2</b> 2 STOP</a></li>
+<li class="chapter" data-level="8.2.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#warning"><i class="fa fa-check"></i><b>8.2.3</b> 3 WARNING</a></li>
+<li class="chapter" data-level="8.2.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕捉错误"><i class="fa fa-check"></i><b>8.2.4</b> 4 捕捉错误</a></li>
+<li class="chapter" data-level="8.2.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码错误调试"><i class="fa fa-check"></i><b>8.2.5</b> 5 代码错误调试</a></li>
+<li class="chapter" data-level="8.2.6" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码时间消耗跟踪"><i class="fa fa-check"></i><b>8.2.6</b> 6 代码时间消耗跟踪</a></li>
+<li class="chapter" data-level="8.2.7" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#补充案例"><i class="fa fa-check"></i><b>8.2.7</b> 7 补充案例</a></li>
+<li class="chapter" data-level="8.2.8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#相关资料"><i class="fa fa-check"></i><b>8.2.8</b> 8 相关资料</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用快捷命令"><i class="fa fa-check"></i><b>8.3</b> 常用快捷命令</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#高效管道符号"><i class="fa fa-check"></i><b>8.3.1</b> 高效管道符号</a></li>
+<li class="chapter" data-level="8.3.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用辅助函数"><i class="fa fa-check"></i><b>8.3.2</b> 常用辅助函数：</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#正则表达式"><i class="fa fa-check"></i><b>8.4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-1"><i class="fa fa-check"></i><b>8.4.1</b> 常用正则表达式命令-1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-2"><i class="fa fa-check"></i><b>8.4.2</b> 常用正则表达式命令-2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#量词"><i class="fa fa-check"></i><b>8.4.3</b> 量词</a></li>
+<li class="chapter" data-level="8.4.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕获分组"><i class="fa fa-check"></i><b>8.4.4</b> 捕获分组</a></li>
+<li class="chapter" data-level="8.4.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#python使用编译"><i class="fa fa-check"></i><b>8.4.5</b> python使用编译</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html"><i class="fa fa-check"></i><b>9</b> 临床医学统计流</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#common.r"><i class="fa fa-check"></i><b>9.1</b> COMMON.R</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载r包和配置全局环境"><i class="fa fa-check"></i><b>9.1.1</b> 加载R包和配置全局环境</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#使用officer来启动函数参数"><i class="fa fa-check"></i><b>9.1.2</b> 使用officer来启动函数参数：</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#table-of-content"><i class="fa fa-check"></i><b>9.1.3</b> Table of content</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#cover-template--封面"><i class="fa fa-check"></i><b>9.1.4</b> Cover template -封面</a></li>
+<li class="chapter" data-level="9.1.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷辅助函数"><i class="fa fa-check"></i><b>9.1.5</b> 快捷辅助函数：</a></li>
+<li class="chapter" data-level="9.1.6" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷统计函数"><i class="fa fa-check"></i><b>9.1.6</b> 快捷统计函数：</a></li>
+<li class="chapter" data-level="9.1.7" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#描述性分析统计函数"><i class="fa fa-check"></i><b>9.1.7</b> 描述性分析统计函数</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#rawdata-cleaning-pipeline"><i class="fa fa-check"></i><b>9.2</b> Rawdata cleaning pipeline</a></li>
+<li class="chapter" data-level="9.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#target_groups"><i class="fa fa-check"></i><b>9.3</b> target_groups</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载集成数据集"><i class="fa fa-check"></i><b>9.3.1</b> 加载集成数据集</a></li>
+<li class="chapter" data-level="9.3.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#保存数据集"><i class="fa fa-check"></i><b>9.3.2</b> 保存数据集</a></li>
+<li class="chapter" data-level="9.3.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#患者平衡匹配前后信息比较"><i class="fa fa-check"></i><b>9.3.3</b> 患者平衡匹配前后信息比较</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#dataset_for_analysis"><i class="fa fa-check"></i><b>9.4</b> dataset_for_analysis</a></li>
+<li class="chapter" data-level="9.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#final_analysis"><i class="fa fa-check"></i><b>9.5</b> final_analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Statistical-books.html"><a href="Statistical-books.html"><i class="fa fa-check"></i><b>10</b> 统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Statistical-books.html"><a href="Statistical-books.html#r-统计书籍"><i class="fa fa-check"></i><b>10.1</b> R-统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="Statistical-books.html"><a href="Statistical-books.html#tidyverse相关"><i class="fa fa-check"></i><b>10.1.1</b> tidyverse相关</a></li>
+<li class="chapter" data-level="10.1.2" data-path="Statistical-books.html"><a href="Statistical-books.html#ggplo2相关-网站"><i class="fa fa-check"></i><b>10.1.2</b> ggplo2相关-网站</a></li>
+<li class="chapter" data-level="10.1.3" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图指南"><i class="fa fa-check"></i><b>10.1.3</b> 绘图指南</a></li>
+<li class="chapter" data-level="10.1.4" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图相关的博客"><i class="fa fa-check"></i><b>10.1.4</b> 绘图相关的博客</a></li>
+<li class="chapter" data-level="10.1.5" data-path="Statistical-books.html"><a href="Statistical-books.html#医学指南相关"><i class="fa fa-check"></i><b>10.1.5</b> 医学指南相关</a></li>
+<li class="chapter" data-level="10.1.6" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计r包"><i class="fa fa-check"></i><b>10.1.6</b> 医学统计R包</a></li>
+<li class="chapter" data-level="10.1.7" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计相关博客"><i class="fa fa-check"></i><b>10.1.7</b> 医学统计相关博客</a></li>
+<li class="chapter" data-level="10.1.8" data-path="Statistical-books.html"><a href="Statistical-books.html#统计指南-r代码实现"><i class="fa fa-check"></i><b>10.1.8</b> 统计指南-R代码实现</a></li>
+<li class="chapter" data-level="10.1.9" data-path="Statistical-books.html"><a href="Statistical-books.html#数据建模相关"><i class="fa fa-check"></i><b>10.1.9</b> 数据建模相关</a></li>
+<li class="chapter" data-level="10.1.10" data-path="Statistical-books.html"><a href="Statistical-books.html#整合流程"><i class="fa fa-check"></i><b>10.1.10</b> 整合流程</a></li>
+<li class="chapter" data-level="10.1.11" data-path="Statistical-books.html"><a href="Statistical-books.html#博客社区"><i class="fa fa-check"></i><b>10.1.11</b> 博客社区</a></li>
+<li class="chapter" data-level="10.1.12" data-path="Statistical-books.html"><a href="Statistical-books.html#rmarkdown"><i class="fa fa-check"></i><b>10.1.12</b> Rmarkdown</a></li>
+<li class="chapter" data-level="10.1.13" data-path="Statistical-books.html"><a href="Statistical-books.html#r-rstudio"><i class="fa fa-check"></i><b>10.1.13</b> R-Rstudio</a></li>
+<li class="chapter" data-level="10.1.14" data-path="Statistical-books.html"><a href="Statistical-books.html#shiny"><i class="fa fa-check"></i><b>10.1.14</b> shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="Statistical-books.html"><a href="Statistical-books.html#使用gitbook写书"><i class="fa fa-check"></i><b>10.2</b> 使用gitbook写书</a></li>
+<li class="chapter" data-level="10.3" data-path="Statistical-books.html"><a href="Statistical-books.html#使用bookdwon写书"><i class="fa fa-check"></i><b>10.3</b> 使用bookdwon写书</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="Statistical-books.html"><a href="Statistical-books.html#常用功能标记"><i class="fa fa-check"></i><b>10.3.1</b> 常用功能标记</a></li>
+<li class="chapter" data-level="10.3.2" data-path="Statistical-books.html"><a href="Statistical-books.html#r代码的构建"><i class="fa fa-check"></i><b>10.3.2</b> R代码的构建</a></li>
+<li class="chapter" data-level="10.3.3" data-path="Statistical-books.html"><a href="Statistical-books.html#动态r代码"><i class="fa fa-check"></i><b>10.3.3</b> 动态r代码</a></li>
+<li class="chapter" data-level="10.3.4" data-path="Statistical-books.html"><a href="Statistical-books.html#引入shiny应用"><i class="fa fa-check"></i><b>10.3.4</b> 引入shiny应用</a></li>
+<li class="chapter" data-level="10.3.5" data-path="Statistical-books.html"><a href="Statistical-books.html#指定输出和解析的文件"><i class="fa fa-check"></i><b>10.3.5</b> 指定输出和解析的文件</a></li>
+<li class="chapter" data-level="10.3.6" data-path="Statistical-books.html"><a href="Statistical-books.html#文件最后修改时间"><i class="fa fa-check"></i><b>10.3.6</b> 文件最后修改时间</a></li>
+<li class="chapter" data-level="10.3.7" data-path="Statistical-books.html"><a href="Statistical-books.html#添加指定序号"><i class="fa fa-check"></i><b>10.3.7</b> 添加指定序号</a></li>
+<li class="chapter" data-level="10.3.8" data-path="Statistical-books.html"><a href="Statistical-books.html#辅助知识-"><i class="fa fa-check"></i><b>10.3.8</b> 辅助知识：—-</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html"><i class="fa fa-check"></i><b>11</b> 统计与研究设计</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用参数释义"><i class="fa fa-check"></i><b>11.1</b> 常用参数释义</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#因果回归参数"><i class="fa fa-check"></i><b>11.1.1</b> 因果回归参数</a></li>
+<li class="chapter" data-level="11.1.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#生存分析参数"><i class="fa fa-check"></i><b>11.1.2</b> 生存分析参数</a></li>
+<li class="chapter" data-level="11.1.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析参数解释"><i class="fa fa-check"></i><b>11.1.3</b> 方差分析参数解释</a></li>
+<li class="chapter" data-level="11.1.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归分析中常用参数释义"><i class="fa fa-check"></i><b>11.1.4</b> 回归分析中常用参数释义</a></li>
+<li class="chapter" data-level="11.1.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用分布描述"><i class="fa fa-check"></i><b>11.1.5</b> 常用分布描述</a></li>
+<li class="chapter" data-level="11.1.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#其他统计参数释义"><i class="fa fa-check"></i><b>11.1.6</b> 其他统计参数释义</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#临床研究中常用的统计方法和常见问题"><i class="fa fa-check"></i><b>11.2</b> 临床研究中常用的统计方法和常见问题</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计推断与区间估计"><i class="fa fa-check"></i><b>11.2.1</b> 统计推断与区间估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计方法选择"><i class="fa fa-check"></i><b>11.2.2</b> 统计方法选择：</a></li>
+<li class="chapter" data-level="11.2.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计分析中的常见问题"><i class="fa fa-check"></i><b>11.2.3</b> 统计分析中的常见问题</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#差异分析"><i class="fa fa-check"></i><b>11.3</b> 差异分析</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差检验与t检验的选择"><i class="fa fa-check"></i><b>11.3.1</b> 方差检验与T检验的选择</a></li>
+<li class="chapter" data-level="11.3.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#z-分布t检验f检验和卡方检验"><i class="fa fa-check"></i><b>11.3.2</b> Z 分布、T检验、F检验和卡方检验</a></li>
+<li class="chapter" data-level="11.3.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#t检验"><i class="fa fa-check"></i><b>11.3.3</b> T检验</a></li>
+<li class="chapter" data-level="11.3.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析"><i class="fa fa-check"></i><b>11.3.4</b> 方差分析</a></li>
+<li class="chapter" data-level="11.3.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#卡方检验"><i class="fa fa-check"></i><b>11.3.5</b> 卡方检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归"><i class="fa fa-check"></i><b>11.4</b> 多元线性回归</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的概念和基础公式"><i class="fa fa-check"></i><b>11.4.1</b> 多元线性回归的概念和基础公式</a></li>
+<li class="chapter" data-level="11.4.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的本质"><i class="fa fa-check"></i><b>11.4.2</b> 多元线性回归的本质</a></li>
+<li class="chapter" data-level="11.4.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的参数解释"><i class="fa fa-check"></i><b>11.4.3</b> 回归方程的参数解释：</a></li>
+<li class="chapter" data-level="11.4.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的评价指标"><i class="fa fa-check"></i><b>11.4.4</b> 回归方程的评价指标</a></li>
+<li class="chapter" data-level="11.4.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关参数"><i class="fa fa-check"></i><b>11.4.5</b> 回归解释相关参数：</a></li>
+<li class="chapter" data-level="11.4.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关补充"><i class="fa fa-check"></i><b>11.4.6</b> 回归解释相关补充：</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验"><i class="fa fa-check"></i><b>11.5</b> 相关检验</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验和系数"><i class="fa fa-check"></i><b>11.5.1</b> 相关检验和系数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#医疗相关检验"><i class="fa fa-check"></i><b>11.6</b> 医疗相关检验</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#log-rank检验"><i class="fa fa-check"></i><b>11.6.1</b> Log-rank检验</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html"><i class="fa fa-check"></i><b>12</b> 构筑R package</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构筑r-package相关参数配置"><i class="fa fa-check"></i><b>12.1</b> 构筑R package相关参数配置</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#创建本地环境并使用renv初始化本地安装环境"><i class="fa fa-check"></i><b>12.1.1</b> 创建本地环境并使用renv初始化本地安装环境</a></li>
+<li class="chapter" data-level="12.1.2" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#常用配置"><i class="fa fa-check"></i><b>12.1.2</b> 常用配置</a></li>
+<li class="chapter" data-level="12.1.3" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建函数"><i class="fa fa-check"></i><b>12.1.3</b> 构建函数</a></li>
+<li class="chapter" data-level="12.1.4" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#函数测试"><i class="fa fa-check"></i><b>12.1.4</b> 函数测试</a></li>
+<li class="chapter" data-level="12.1.5" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加项目内置数据集"><i class="fa fa-check"></i><b>12.1.5</b> 添加项目内置数据集</a></li>
+<li class="chapter" data-level="12.1.6" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加辅助描述文件"><i class="fa fa-check"></i><b>12.1.6</b> 添加辅助描述文件</a></li>
+<li class="chapter" data-level="12.1.7" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#r包整体测试"><i class="fa fa-check"></i><b>12.1.7</b> R包整体测试</a></li>
+<li class="chapter" data-level="12.1.8" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建及安装r包"><i class="fa fa-check"></i><b>12.1.8</b> 构建及安装R包</a></li>
+<li class="chapter" data-level="12.1.9" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建后上传到github多平台检查"><i class="fa fa-check"></i><b>12.1.9</b> 构建后上传到github多平台检查</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由bookdown驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于 R 的数据处理流程指南</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="id_06-Model-release-and-application" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">第 6 章</span> 模型发布与应用<a href="id_06-Model-release-and-application.html#id_06-Model-release-and-application" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="flexboard" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> flexboard<a href="id_06-Model-release-and-application.html#flexboard" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="安装工作环境" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> 安装工作环境<a href="id_06-Model-release-and-application.html#安装工作环境" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>install.packages(&quot;flexdashboard&quot;)
+library(flexdashboard)</code></pre>
+</div>
+<div id="多级导航模块" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> 多级导航模块<a href="id_06-Model-release-and-application.html#多级导航模块" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="构建一级导航" class="section level4 hasAnchor" number="6.1.2.1">
+<h4><span class="header-section-number">6.1.2.1</span> 构建一级导航<a href="id_06-Model-release-and-application.html#构建一级导航" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>---
+title: &quot;Multiple Pages&quot;
+output: flexdashboard::flex_dashboard
+---
+# Page 1  ## 使用等号来赋值新的导航页。默认为纵向；
+# `===================================== `
+### Chart 1  
+  
+# 修改默认页为纵向
+# Page 2 {data-orientation=rows}
+# `===================================== ` </code></pre>
+</div>
+<div id="构建二级下拉菜单" class="section level4 hasAnchor" number="6.1.2.2">
+<h4><span class="header-section-number">6.1.2.2</span> 构建二级下拉菜单<a href="id_06-Model-release-and-application.html#构建二级下拉菜单" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># ---
+#   title: &quot;Page Navigation Menus&quot;
+# output: flexdashboard::flex_dashboard
+# ---
+#   
+#   Page 1 {data-navmenu=&quot;Menu A&quot;}
+# `=====================================`
+#   Page 2 {data-navmenu=&quot;Menu A&quot;}
+# `=====================================`  
+#   Page 3 {data-navmenu=&quot;Menu B&quot;}
+# `=====================================`
+#   Page 4 {data-navmenu=&quot;Menu B&quot;}
+# `=====================================`  </code></pre>
+</div>
+</div>
+<div id="超级链接表" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> 超级链接表<a href="id_06-Model-release-and-application.html#超级链接表" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="提供显著引用" class="section level4 hasAnchor" number="6.1.3.1">
+<h4><span class="header-section-number">6.1.3.1</span> 提供显著引用<a href="id_06-Model-release-and-application.html#提供显著引用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># Page 1
+# `===================================== `
+# You can link to a dashboard page with either of the following syntaxes:
+# # 方法1  
+# [Page 2]
+# # 方法2可以修改指引的名称；
+# [Page Two](#page-2)</code></pre>
+</div>
+<div id="使用图标提供显著引用" class="section level4 hasAnchor" number="6.1.3.2">
+<h4><span class="header-section-number">6.1.3.2</span> 使用图标提供显著引用<a href="id_06-Model-release-and-application.html#使用图标提供显著引用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># Page 1 {data-icon=&quot;fa-list&quot;}
+# `=====================================`</code></pre>
+</div>
+<div id="隐藏最后一级的引用" class="section level4 hasAnchor" number="6.1.3.3">
+<h4><span class="header-section-number">6.1.3.3</span> 隐藏最后一级的引用<a href="id_06-Model-release-and-application.html#隐藏最后一级的引用" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 暂时没想到这个怎么用；
+# Page 3 {.hidden} -- 就不能直接引用这个；</code></pre>
+</div>
+</div>
+<div id="给导航栏添加social-links" class="section level3 hasAnchor" number="6.1.4">
+<h3><span class="header-section-number">6.1.4</span> 给导航栏添加Social Links<a href="id_06-Model-release-and-application.html#给导航栏添加social-links" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>---
+  title: &quot;Social Links&quot;
+output: 
+  flexdashboard::flex_dashboard:
+  social: [ &quot;twitter&quot;, &quot;facebook&quot;, &quot;menu&quot; ]
+---</code></pre>
+</div>
+<div id="给导航栏添加source-code" class="section level3 hasAnchor" number="6.1.5">
+<h3><span class="header-section-number">6.1.5</span> 给导航栏添加Source Code<a href="id_06-Model-release-and-application.html#给导航栏添加source-code" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>---
+  title: &quot;Source Code&quot;
+output: 
+  flexdashboard::flex_dashboard:
+  ## 源代码嵌入
+  source_code: embed
+  ## GITHUB:url嵌入；
+  source_code: &quot;http:/&quot;
+---</code></pre>
+</div>
+<div id="给导航栏添加一个about" class="section level3 hasAnchor" number="6.1.6">
+<h3><span class="header-section-number">6.1.6</span> 给导航栏添加一个<code>about</code><a href="id_06-Model-release-and-application.html#给导航栏添加一个about" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>  ---
+    title: &quot;Navigation Bar&quot;
+  output: 
+    flexdashboard::flex_dashboard:
+    navbar:
+    - { title: &quot;About&quot;, href: &quot;https://example.com/about&quot;, align: left }
+  ---</code></pre>
+</div>
+<div id="布局参数" class="section level3 hasAnchor" number="6.1.7">
+<h3><span class="header-section-number">6.1.7</span> 布局参数<a href="id_06-Model-release-and-application.html#布局参数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="行列布局参数配置" class="section level4 hasAnchor" number="6.1.7.1">
+<h4><span class="header-section-number">6.1.7.1</span> 行列布局参数配置<a href="id_06-Model-release-and-application.html#行列布局参数配置" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 默认为行构建；
+## 按列指定构建；
+Column -- 单列
+-
+### Chart 1
+
+Column -- 多列
+-
+### Chart 2
+### Chart 3
+
+Column {.tabset} - 形成合并框构建；
+Column{.tabset .tabset-fade} - 渐隐合并框；
+-    
+### Chart 2
+### Chart 3  
+
+## 直接指定数据展示的高度，有时候比定义图片高度更好用；    
+Row {data-height=600}
+-  </code></pre>
+</div>
+<div id="图形参数配置" class="section level4 hasAnchor" number="6.1.7.2">
+<h4><span class="header-section-number">6.1.7.2</span> 图形参数配置<a href="id_06-Model-release-and-application.html#图形参数配置" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 常用通常修改图形方式；
+    {r, fig.width=5, fig.height=5}
+# 默认情况下，flexdashboard 在图表边缘放置 8 个像素的填充。
+# 添加.no-padding属性以指定完全没有填充，也可以添加属性data-padding以指定特定数量的像素。  
+### Chart 1 {.no-padding}
+  
+### Chart 2 {data-padding=10}
+  </code></pre>
+</div>
+<div id="表格参数配置" class="section level4 hasAnchor" number="6.1.7.3">
+<h4><span class="header-section-number">6.1.7.3</span> 表格参数配置<a href="id_06-Model-release-and-application.html#表格参数配置" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 默认静态配置
+knitr::kable(mtcars)
+DT::datatable(mtcars, options = list(
+  bPaginate = FALSE
+))
+## 动态参数配置--更新；
+renderTable({
+  head(mtcars, n = input$rows)
+})
+DT::renderDataTable({
+  data &lt;- head(mtcars, n = input$maxrows)
+  DT::datatable(data, options = list(
+    bPaginate = FALSE
+  ))
+})</code></pre>
+</div>
+<div id="文字描述" class="section level4 hasAnchor" number="6.1.7.4">
+<h4><span class="header-section-number">6.1.7.4</span> 文字描述<a href="id_06-Model-release-and-application.html#文字描述" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>正常可以在一页的任意位置写入即可，表示单独的块；可以给他用<code>###</code>起名；
+也可以在新的一页中定义；</p>
+</div>
+<div id="排除标题" class="section level4 hasAnchor" number="6.1.7.5">
+<h4><span class="header-section-number">6.1.7.5</span> 排除标题<a href="id_06-Model-release-and-application.html#排除标题" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>All Lung Deaths {.no-title} —不展示标题；</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="id_06-Model-release-and-application.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dygraph</span>(ldeaths)</span></code></pre></div>
+</div>
+</div>
+<div id="功能块参数" class="section level3 hasAnchor" number="6.1.8">
+<h3><span class="header-section-number">6.1.8</span> 功能块参数<a href="id_06-Model-release-and-application.html#功能块参数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="图标网站来源" class="section level4 hasAnchor" number="6.1.8.1">
+<h4><span class="header-section-number">6.1.8.1</span> 图标网站来源<a href="id_06-Model-release-and-application.html#图标网站来源" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><a href="https://fontawesome.com/icons/twitter?s=solid&amp;f=brands" class="uri">https://fontawesome.com/icons/twitter?s=solid&amp;f=brands</a>
+引用方式”fa-comments”
+#### 计数box</p>
+<pre><code>### Comments per Day --内置到box中的数字标签；
+comments &lt;- computeComments() # --输出数字；
+valueBox(comments, icon = &quot;fa-comments&quot;)
+## shiny样式；--即时输入；
+renderValueBox({
+  articles &lt;- computeArticles(input$types)
+  valueBox(articles, 
+           icon = &quot;fa-pencil&quot;,
+           color = ifelse(articles &gt; 100, &quot;success&quot;, &quot;info&quot;))
+})
+</code></pre>
+</div>
+<div id="仪表盘比例动态" class="section level4 hasAnchor" number="6.1.8.2">
+<h4><span class="header-section-number">6.1.8.2</span> 仪表盘（比例动态）<a href="id_06-Model-release-and-application.html#仪表盘比例动态" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="id_06-Model-release-and-application.html#cb180-1" aria-hidden="true" tabindex="-1"></a>rate <span class="ot">&lt;-</span> <span class="fu">computeContactRate</span>()</span>
+<span id="cb180-2"><a href="id_06-Model-release-and-application.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gauge</span>(rate, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">100</span>, <span class="at">symbol =</span> <span class="st">&#39;%&#39;</span>, <span class="fu">gaugeSectors</span>(</span>
+<span id="cb180-3"><a href="id_06-Model-release-and-application.html#cb180-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">success =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">100</span>), <span class="at">warning =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">79</span>), <span class="at">danger =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">39</span>)</span>
+<span id="cb180-4"><a href="id_06-Model-release-and-application.html#cb180-4" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="id_06-Model-release-and-application.html#cb181-1" aria-hidden="true" tabindex="-1"></a><span class="fu">renderGauge</span>({</span>
+<span id="cb181-2"><a href="id_06-Model-release-and-application.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  rate <span class="ot">&lt;-</span> <span class="fu">computeContactRate</span>(input<span class="sc">$</span>region)</span>
+<span id="cb181-3"><a href="id_06-Model-release-and-application.html#cb181-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gauge</span>(rate, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">100</span>, <span class="at">symbol =</span> <span class="st">&#39;%&#39;</span>, <span class="fu">gaugeSectors</span>(</span>
+<span id="cb181-4"><a href="id_06-Model-release-and-application.html#cb181-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">success =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">100</span>), <span class="at">warning =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">79</span>), <span class="at">danger =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">39</span>)</span>
+<span id="cb181-5"><a href="id_06-Model-release-and-application.html#cb181-5" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb181-6"><a href="id_06-Model-release-and-application.html#cb181-6" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+</div>
+</div>
+<div id="故事版" class="section level3 hasAnchor" number="6.1.9">
+<h3><span class="header-section-number">6.1.9</span> 故事版<a href="id_06-Model-release-and-application.html#故事版" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="主题故事版构建" class="section level4 hasAnchor" number="6.1.9.1">
+<h4><span class="header-section-number">6.1.9.1</span> 主题故事版构建<a href="id_06-Model-release-and-application.html#主题故事版构建" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 在titile中提供storyboard: true；
+## 其他部分正常些即可；
+---
+  title: &quot;Storyboard&quot;
+output: 
+  flexdashboard::flex_dashboard:
+  storyboard: true
+---</code></pre>
+<p>此时<code>page1</code>将被当做导航标题：
+<code>##</code> page1 `</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="id_06-Model-release-and-application.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 讲述一个故事</span></span></code></pre></div>
+</div>
+<div id="插入某一页面为故事版" class="section level4 hasAnchor" number="6.1.9.2">
+<h4><span class="header-section-number">6.1.9.2</span> 插入某一页面为故事版<a href="id_06-Model-release-and-application.html#插入某一页面为故事版" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>---
+  title: &quot;Storyboard Page&quot;
+  output: flexdashboard::flex_dashboard
+---
+    
+Analysis {.storyboard}
+=========================================</code></pre>
+</div>
+</div>
+<div id="辅助dashboard展示参数" class="section level3 hasAnchor" number="6.1.10">
+<h3><span class="header-section-number">6.1.10</span> 辅助dashboard展示参数<a href="id_06-Model-release-and-application.html#辅助dashboard展示参数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="去除手机显示中的参数展示" class="section level4 hasAnchor" number="6.1.10.1">
+<h4><span class="header-section-number">6.1.10.1</span> 去除手机显示中的参数展示<a href="id_06-Model-release-and-application.html#去除手机显示中的参数展示" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>---
+  title: &quot;Storyboard Commentary&quot;
+  output: 
+    flexdashboard::flex_dashboard:
+    storyboard: true
+---</code></pre>
+</div>
+<div id="指定展示的主题" class="section level4 hasAnchor" number="6.1.10.2">
+<h4><span class="header-section-number">6.1.10.2</span> 指定展示的主题<a href="id_06-Model-release-and-application.html#指定展示的主题" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>---
+  title: &quot;Themes&quot;
+output: 
+  flexdashboard::flex_dashboard:
+  theme: bootstrap
+---
+
+## 可以使用的主题列表
+default
+cosmo
+bootstrap
+cerulean
+journal
+flatly
+readable
+spacelab
+united
+lumen
+paper
+sandstone
+simplex
+yeti </code></pre>
+</div>
+<div id="给展示网站提供logo" class="section level4 hasAnchor" number="6.1.10.3">
+<h4><span class="header-section-number">6.1.10.3</span> 给展示网站提供logo<a href="id_06-Model-release-and-application.html#给展示网站提供logo" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 图片控制在(48 pixels high for the default “cosmo
+---
+  title: &quot;Logo and Favicon&quot;
+output: 
+  flexdashboard::flex_dashboard:
+  logo: logo.png
+favicon: favicon.png
+---</code></pre>
+</div>
+</div>
+</div>
+<div id="shinydashboard" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> shinydashboard<a href="id_06-Model-release-and-application.html#shinydashboard" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="基本框架和流程" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> 基本框架和流程<a href="id_06-Model-release-and-application.html#基本框架和流程" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="基本组成框架" class="section level4 hasAnchor" number="6.2.1.1">
+<h4><span class="header-section-number">6.2.1.1</span> 基本组成框架<a href="id_06-Model-release-and-application.html#基本组成框架" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## ui.R 
+library(shinydashboard)
+
+dashboardPage(
+  dashboardHeader(),
+  dashboardSidebar(), ## 侧边栏
+  dashboardBody() ## 主体；
+)
+## app.R ##
+library(shiny)
+library(shinydashboard)
+## 其中skin可用的颜色为The default is blue, also black, purple, green, red, and yellow； 
+ui &lt;- dashboardPage(header, sidebar, body, skin = skin)
+
+server &lt;- function(input, output) { }
+
+shinyApp(ui, server)</code></pre>
+</div>
+<div id="基于ui和server来开发shiny的流程范式" class="section level4 hasAnchor" number="6.2.1.2">
+<h4><span class="header-section-number">6.2.1.2</span> 基于ui和server来开发shiny的流程范式<a href="id_06-Model-release-and-application.html#基于ui和server来开发shiny的流程范式" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>1、侧边栏内部可以写`sliderInput`，body内部也可以写；
+2、每个ui中的输入都需要指定输出的`name`,然后在
+`output$name`接受ui的参数，然后再进行运算。
+3、ui和server都会存在显示效果；</code></pre>
+</div>
+</div>
+<div id="仪表板的结构" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> 仪表板的结构<a href="id_06-Model-release-and-application.html#仪表板的结构" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="dashboardheader标题栏" class="section level4 hasAnchor" number="6.2.2.1">
+<h4><span class="header-section-number">6.2.2.1</span> dashboardHeader()标题栏<a href="id_06-Model-release-and-application.html#dashboardheader标题栏" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code># 默认形式
+# 其中titleWidth = 450可以修改默认的标题长度，适用于特别长的标题选择；
+dashboardHeader(title = &quot;My Dashboard&quot;,titleWidth = 450)</code></pre>
+<div id="消息菜单" class="section level5 hasAnchor" number="6.2.2.1.1">
+<h5><span class="header-section-number">6.2.2.1.1</span> 消息菜单<a href="id_06-Model-release-and-application.html#消息菜单" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="静态消息" class="section level5 hasAnchor" number="6.2.2.1.2">
+<h5><span class="header-section-number">6.2.2.1.2</span> 静态消息<a href="id_06-Model-release-and-application.html#静态消息" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># 直接放置在dashboardHeader()内部即可；
+dropdownMenu(type = &quot;messages&quot;,
+             messageItem(
+               from = &quot;Sales Dept&quot;,
+               message = &quot;Sales are steady this month.&quot;
+             ),
+             messageItem(
+               from = &quot;New User&quot;,
+               message = &quot;How do I register?&quot;,
+               icon = icon(&quot;question&quot;),
+               time = &quot;13:45&quot;
+             ))</code></pre>
+</div>
+<div id="动态消息" class="section level5 hasAnchor" number="6.2.2.1.3">
+<h5><span class="header-section-number">6.2.2.1.3</span> 动态消息<a href="id_06-Model-release-and-application.html#动态消息" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 感觉可以用于统计访问患者数等；
+## ui:
+dashboardHeader(dropdownMenuOutput(&quot;messageMenu&quot;))
+## server:
+output$messageMenu &lt;- renderMenu({
+  # Code to generate each of the messageItems here, in a list. This assumes
+  # that messageData is a data frame with two columns, &#39;from&#39; and &#39;message&#39;.
+  msgs &lt;- apply(messageData, 1, function(row) {
+    messageItem(from = row[[&quot;from&quot;]], message = row[[&quot;message&quot;]])
+  })
+  
+  # This is equivalent to calling:
+  #   dropdownMenu(type=&quot;messages&quot;, msgs[[1]], msgs[[2]], ...)
+  dropdownMenu(type = &quot;messages&quot;, .list = msgs)
+})</code></pre>
+</div>
+<div id="通知菜单" class="section level5 hasAnchor" number="6.2.2.1.4">
+<h5><span class="header-section-number">6.2.2.1.4</span> 通知菜单<a href="id_06-Model-release-and-application.html#通知菜单" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>dropdownMenu(type = &quot;notifications&quot;,
+             notificationItem(
+               text = &quot;5 new users today&quot;,
+               icon(&quot;users&quot;)
+             ),
+             notificationItem(
+               text = &quot;12 items delivered&quot;,
+               icon(&quot;truck&quot;),
+               status = &quot;success&quot;
+             ))</code></pre>
+</div>
+<div id="任务菜单" class="section level5 hasAnchor" number="6.2.2.1.5">
+<h5><span class="header-section-number">6.2.2.1.5</span> 任务菜单<a href="id_06-Model-release-and-application.html#任务菜单" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 用于显示项目进度； ---这个如果能做成动态的效果会很好；
+dropdownMenu(type = &quot;tasks&quot;, badgeStatus = &quot;success&quot;,
+             taskItem(value = 90, color = &quot;green&quot;,
+                      &quot;Documentation&quot;
+             ),
+             taskItem(value = 17, color = &quot;aqua&quot;,
+                      &quot;Project X&quot;
+             ),
+             taskItem(value = 75, color = &quot;yellow&quot;,
+                      &quot;Server deployment&quot;
+             ),
+             taskItem(value = 80, color = &quot;red&quot;,
+                      &quot;Overall project&quot;
+             ))</code></pre>
+</div>
+<div id="禁用标题" class="section level5 hasAnchor" number="6.2.2.1.6">
+<h5><span class="header-section-number">6.2.2.1.6</span> 禁用标题<a href="id_06-Model-release-and-application.html#禁用标题" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>dashboardHeader(disable = TRUE)</code></pre>
+</div>
+</div>
+<div id="dashboardsidebar侧边栏" class="section level4 hasAnchor" number="6.2.2.2">
+<h4><span class="header-section-number">6.2.2.2</span> dashboardSidebar()侧边栏<a href="id_06-Model-release-and-application.html#dashboardsidebar侧边栏" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="构建侧边栏" class="section level5 hasAnchor" number="6.2.2.2.1">
+<h5><span class="header-section-number">6.2.2.2.1</span> 构建侧边栏<a href="id_06-Model-release-and-application.html#构建侧边栏" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># 其中&quot;Dashboard&quot;为侧边栏的实际显示名，`tabName`为引用名；
+dashboardSidebar(
+  ## 调整侧边栏的宽度；
+  width = 350,
+  sidebarMenu(
+    menuItem(&quot;Dashboard&quot;, tabName = &quot;dashboard&quot;, icon = icon(&quot;dashboard&quot;)),
+    menuItem(&quot;Widgets&quot;, tabName = &quot;widgets&quot;, icon = icon(&quot;th&quot;))
+  )
+)</code></pre>
+</div>
+<div id="menuitem-参数补充" class="section level5 hasAnchor" number="6.2.2.2.2">
+<h5><span class="header-section-number">6.2.2.2.2</span> menuItem() 参数补充<a href="id_06-Model-release-and-application.html#menuitem-参数补充" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># badgeLabel 在侧边栏中提供提示，用于说明功能性；
+menuItem(&quot;Widgets&quot;, icon = icon(&quot;th&quot;), tabName = &quot;widgets&quot;,
+         badgeLabel = &quot;new&quot;, badgeColor = &quot;green&quot;)</code></pre>
+</div>
+<div id="提供不同网站间的相互引用" class="section level5 hasAnchor" number="6.2.2.2.3">
+<h5><span class="header-section-number">6.2.2.2.3</span> 提供不同网站间的相互引用<a href="id_06-Model-release-and-application.html#提供不同网站间的相互引用" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>menuItem(&quot;Source code&quot;, icon = icon(&quot;file-code-o&quot;), 
+         href = &quot;https://github.com/rstudio/shinydashboard/&quot;)</code></pre>
+</div>
+<div id="menusubitem-次级标签引入-" class="section level5 hasAnchor" number="6.2.2.2.4">
+<h5><span class="header-section-number">6.2.2.2.4</span> menuSubItem() 次级标签引入；-<a href="id_06-Model-release-and-application.html#menusubitem-次级标签引入-" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># 需要包裹在menuItem内部，也即
+menuItem(&quot;Charts&quot;, icon = icon(&quot;bar-chart-o&quot;),
+         menuSubItem(&quot;Sub-item 1&quot;, tabName = &quot;subitem1&quot;),
+         menuSubItem(&quot;Sub-item 2&quot;, tabName = &quot;subitem2&quot;))</code></pre>
+</div>
+<div id="sidebaruserpanel-展示用户信息-" class="section level5 hasAnchor" number="6.2.2.2.5">
+<h5><span class="header-section-number">6.2.2.2.5</span> sidebarUserPanel() 展示用户信息-<a href="id_06-Model-release-and-application.html#sidebaruserpanel-展示用户信息-" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># A panel displaying user information in a sidebar
+sidebarUserPanel(&quot;User Name&quot;,
+                 subtitle = a(href = &quot;#&quot;, icon(&quot;circle&quot;, class = &quot;text-success&quot;), &quot;Online&quot;)
+                 # Image file should be in www/ subdir
+                 # image = &quot;./code_review.Ruserimage.png&quot;)</code></pre>
+</div>
+<div id="提供多功能组件间的检索功能" class="section level5 hasAnchor" number="6.2.2.2.6">
+<h5><span class="header-section-number">6.2.2.2.6</span> 提供多功能组件间的检索功能<a href="id_06-Model-release-and-application.html#提供多功能组件间的检索功能" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 这个功能可以检索多个tib，需要参考
+?dashboardSidebar()
+sidebarSearchForm(label = &quot;Enter a number&quot;, &quot;searchText&quot;, &quot;searchButton&quot;), 
+
+## 用法实现还是用处不大；
+sidebarSearchForm(textId = &quot;searchText&quot;, buttonId = &quot;searchButton&quot;, 
+                  label = &quot;Search dataset&quot;, icon = shiny::icon(&quot;search&quot;))
+example_data &lt;- data.frame(ID = 1:7, word = c(&quot;random&quot;, &quot;words&quot;, &quot;to&quot;, 
+                                              &quot;test&quot;, &quot;the&quot;, &quot;search&quot;, &quot;function&quot;)) 
+
+output$filtered_table &lt;- renderTable({
+  req(input$searchButton == TRUE)
+  example_data[input$searchText,]</code></pre>
+</div>
+<div id="添加文字和换行" class="section level5 hasAnchor" number="6.2.2.2.7">
+<h5><span class="header-section-number">6.2.2.2.7</span> 添加文字和换行<a href="id_06-Model-release-and-application.html#添加文字和换行" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># 换行
+br(),br(),br(),br(),
+# 添加文字方式1:
+# p(HTML(&quot;&lt;b&gt;                           Teague Tian&lt;/b&gt;&quot;),style=&quot;white-space: pre-wrap&quot;),
+# p(HTML(&quot;&lt;b&gt;                           医学统计师&lt;/b&gt;&quot;),style=&quot;white-space: pre-wrap&quot;)
+# 添加文字方式2
+# p(HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),
+#   HTML(&#39;&amp;nbsp;&#39;),strong(&quot;Teague Tian&quot;)),
+# p(HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),HTML(&#39;&amp;nbsp;&#39;),
+#   HTML(&#39;&amp;nbsp;&#39;),strong(&quot;医学统计师&quot;))</code></pre>
+</div>
+<div id="给sider内部提供id用于动态监测多级程序运行--" class="section level5 hasAnchor" number="6.2.2.2.8">
+<h5><span class="header-section-number">6.2.2.2.8</span> 给sider()内部提供ID,用于动态监测多级程序运行 -<a href="id_06-Model-release-and-application.html#给sider内部提供id用于动态监测多级程序运行--" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 如果不提供ID，由于无法知道程序运行的检测，可能导致部分分项无法打开运行；  
+  dashboardSidebar(
+    sidebarMenu(
+      # Setting id makes input$tabs give the tabName of currently-selected tab
+      id = &quot;tabs&quot;,
+      
+      menuItem(&quot;Dashboard&quot;, tabName = &quot;dashboard&quot;, icon = icon(&quot;dashboard&quot;)),
+      textOutput(&quot;res&quot;)))
+  
+  server &lt;- function(input, output, session) {
+    output$res &lt;- renderText({
+      paste(&quot;You&#39;ve selected:&quot;, input$tabs)
+    })
+  }</code></pre>
+<pre><code>## 此外，在之前的版本中如果使用子项快速检索提取的位置，但不会返回来自哪一项；
+# 目前的版本中可以使用input$sidebarItemExpanded来返回总级别
+server{
+req(input$sidebarItemExpanded)
+paste(&quot;Expanded menuItem:&quot;, input$sidebarItemExpanded)}</code></pre>
+</div>
+<div id="在server内用rendermenu构建多级标签" class="section level5 hasAnchor" number="6.2.2.2.9">
+<h5><span class="header-section-number">6.2.2.2.9</span> 在server内用renderMenu{}构建多级标签<a href="id_06-Model-release-and-application.html#在server内用rendermenu构建多级标签" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>dashboardSidebar(
+    sidebarMenu(
+      # Setting id makes input$tabs give the tabName of currently-selected tab
+      id = &quot;tabs&quot;,
+      
+      menuItem(&quot;Dashboard&quot;, tabName = &quot;dashboard&quot;, icon = icon(&quot;dashboard&quot;)),
+      menuItem(&quot;Widgets&quot;, icon = icon(&quot;th&quot;), tabName = &quot;widgets&quot;),
+      menuItem(&quot;Charts&quot;, icon = icon(&quot;bar-chart-o&quot;),
+               menuSubItem(&quot;Sub-item 1&quot;, tabName = &quot;subitem1&quot;),
+               menuSubItem(&quot;Sub-item 2&quot;, tabName = &quot;subitem2&quot;))))
+## 等价于
+ui &lt;- dashboardPage(
+    dashboardHeader(), 
+    dashboardSidebar(
+      sidebarMenuOutput(&quot;menu&quot;),
+      textOutput(&quot;res&quot;)),
+    dashboardBody(
+      tabItems(
+        tabItem(&quot;dashboard&quot;, &quot;Dashboard tab content&quot;),
+        tabItem(&quot;widgets&quot;, &quot;Widgets tab content&quot;),
+        tabItem(&quot;subitem1&quot;, &quot;Sub-item 1 tab content&quot;),
+        tabItem(&quot;subitem2&quot;, &quot;Sub-item 2 tab content&quot;) )))
+  
+server &lt;- function(input, output, session) {
+    output$res &lt;- renderText({
+      paste(&quot;You&#39;ve selected:&quot;, input$tabs)})
+    output$menu &lt;- renderMenu({
+      sidebarMenu(
+        # Setting id makes input$tabs give the tabName of currently-selected tab
+        id = &quot;tabs&quot;,
+        menuItem(&quot;Dashboard&quot;, tabName = &quot;dashboard&quot;, icon = icon(&quot;dashboard&quot;)),
+        menuItem(&quot;Widgets&quot;, icon = icon(&quot;th&quot;), tabName = &quot;widgets&quot;),
+        menuItem(&quot;Charts&quot;, icon = icon(&quot;bar-chart-o&quot;),
+                 menuSubItem(&quot;Sub-item 1&quot;, tabName = &quot;subitem1&quot;),
+                 menuSubItem(&quot;Sub-item 2&quot;, tabName = &quot;subitem2&quot;)))})}  
+  </code></pre>
+</div>
+</div>
+<div id="dashboardbody内部主体构建" class="section level4 hasAnchor" number="6.2.2.3">
+<h4><span class="header-section-number">6.2.2.3</span> dashboardBody()内部主体构建<a href="id_06-Model-release-and-application.html#dashboardbody内部主体构建" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>大多数仪表板的基本构建块是box. 盒子又可以包含任何内容。
+  box(title = &quot;Box title&quot;, height = 300, &quot;Box content&quot;)</code></pre>
+<div id="在body内部引用多级侧边栏的方法" class="section level5 hasAnchor" number="6.2.2.3.1">
+<h5><span class="header-section-number">6.2.2.3.1</span> 在body内部<code>引用</code>多级侧边栏的方法<a href="id_06-Model-release-and-application.html#在body内部引用多级侧边栏的方法" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 使用tabItems()来获取侧边栏，然后利用tabItem()来捕获每个侧边栏的内容；
+dashboardBody(
+  tabItems(
+    # First tab content
+    tabItem(tabName = &quot;dashboard&quot;,
+            fluidRow(
+              box(plotOutput(&quot;plot1&quot;, height = 250)),
+              
+              box(
+                title = &quot;Controls&quot;,
+                sliderInput(&quot;slider&quot;, &quot;Number of observations:&quot;, 1, 100, 50)
+              ))),
+    # Second tab content
+    tabItem(tabName = &quot;widgets&quot;,
+            h2(&quot;Widgets tab content&quot;)
+    )))</code></pre>
+</div>
+<div id="在body内部创建多个多级标签页" class="section level5 hasAnchor" number="6.2.2.3.2">
+<h5><span class="header-section-number">6.2.2.3.2</span> 在body内部创建多个多级标签页<a href="id_06-Model-release-and-application.html#在body内部创建多个多级标签页" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## 使用 tabBox 来创建多级标签页
+##   
+body &lt;- dashboardBody(
+  fluidRow(
+    tabBox(
+      title = &quot;First tabBox&quot;,
+      # The id lets us use input$tabset1 on the server to find the current tab
+      id = &quot;tabset1&quot;, height = &quot;250px&quot;,
+      tabPanel(&quot;Tab1&quot;, &quot;First tab content&quot;),
+      tabPanel(&quot;Tab2&quot;, &quot;Tab content 2&quot;)
+    ),
+    tabBox(
+      side = &quot;right&quot;, height = &quot;250px&quot;,
+      selected = &quot;Tab3&quot;,
+      tabPanel(&quot;Tab1&quot;, &quot;Tab content 1&quot;),
+      tabPanel(&quot;Tab2&quot;, &quot;Tab content 2&quot;),
+      tabPanel(&quot;Tab3&quot;, &quot;Note that when side=right, the tab order is reversed.&quot;)
+    )),
+  fluidRow(
+    tabBox(
+      # Title can include an icon
+      title = tagList(shiny::icon(&quot;gear&quot;), &quot;tabBox status&quot;),
+      tabPanel(&quot;Tab1&quot;,
+               &quot;Currently selected tab from first box:&quot;,
+               verbatimTextOutput(&quot;tabset1Selected&quot;)
+      ),
+      tabPanel(&quot;Tab2&quot;, &quot;Tab content 2&quot;))))
+
+shinyApp(
+  ui = dashboardPage(
+    dashboardHeader(title = &quot;tabBoxes&quot;),
+    dashboardSidebar(),
+    body),
+  server = function(input, output) {
+    # The currently selected tab from the first box
+    output$tabset1Selected &lt;- renderText({
+      input$tabset1})})
+</code></pre>
+</div>
+</div>
+</div>
+<div id="布局参数-1" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> 布局参数<a href="id_06-Model-release-and-application.html#布局参数-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="行列布局" class="section level4 hasAnchor" number="6.2.3.1">
+<h4><span class="header-section-number">6.2.3.1</span> 行列布局<a href="id_06-Model-release-and-application.html#行列布局" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="fluidrow" class="section level5 hasAnchor" number="6.2.3.1.1">
+<h5><span class="header-section-number">6.2.3.1.1</span> fluidRow()<a href="id_06-Model-release-and-application.html#fluidrow" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>创造自适应的布局页面应用在body内部；
+# Create a page with fluid layout
+fluidRow(
+  box(plotOutput(&quot;plot1&quot;, height = 250)),
+  
+  box(
+    title = &quot;Controls&quot;,
+    sliderInput(&quot;slider&quot;, &quot;Number of observations:&quot;, 1, 100, 50)
+  ))
+
+# 此外，还有fluidPage,与此fluidRow类似，但fluidRow更适合管理多级页面；</code></pre>
+</div>
+<div id="columnwidth-4box纵向展示" class="section level5 hasAnchor" number="6.2.3.1.2">
+<h5><span class="header-section-number">6.2.3.1.2</span> column(width = 4,…box())纵向展示<a href="id_06-Model-release-and-application.html#columnwidth-4box纵向展示" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>body &lt;- dashboardBody(
+  fluidRow(
+    column(width = 4,
+           box(
+             title = &quot;Box title&quot;, width = NULL, status = &quot;primary&quot;,
+             &quot;Box content&quot;
+           ),
+           box(
+             title = &quot;Title 1&quot;, width = NULL, solidHeader = TRUE, status = &quot;primary&quot;,
+             &quot;Box content&quot;
+           ),
+           box(
+             width = NULL, background = &quot;black&quot;,
+             &quot;A box with a solid black background&quot;
+           ))))</code></pre>
+</div>
+<div id="混合模式布局" class="section level5 hasAnchor" number="6.2.3.1.3">
+<h5><span class="header-section-number">6.2.3.1.3</span> 混合模式布局<a href="id_06-Model-release-and-application.html#混合模式布局" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code># 交叉使用fluidRow()和column()来构建参数分布图
+body &lt;- dashboardBody(
+  fluidRow(
+    box(
+      title = &quot;Box title&quot;, width = 6, status = &quot;primary&quot;,
+      &quot;Box content&quot;
+    ),
+    box(
+      status = &quot;warning&quot;, width = 6,
+      &quot;Box content&quot;
+    )
+  ),
+  
+  fluidRow(
+    column(width = 4,
+           box(
+             title = &quot;Title 1&quot;, width = NULL, solidHeader = TRUE, status = &quot;primary&quot;,
+             &quot;Box content&quot;
+           ),
+           box(
+             width = NULL, background = &quot;black&quot;,
+             &quot;A box with a solid black background&quot;  ))))</code></pre>
+</div>
+</div>
+</div>
+<div id="在dashboard中使用css技巧" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> 在dashboard中使用css技巧<a href="id_06-Model-release-and-application.html#在dashboard中使用css技巧" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>暂定，还没找到合适的资源学习；
+### 功能块参数
+#### infoBox和valueBox</p>
+<pre><code>library(shinydashboard)
+ui &lt;- dashboardPage(
+  dashboardHeader(title = &quot;Value boxes&quot;),
+  dashboardSidebar(),
+  dashboardBody(
+    fluidRow(
+      # A static valueBox
+      valueBox(10 * 2, &quot;New Orders&quot;, icon = icon(&quot;credit-card&quot;)),
+      # Dynamic valueBoxes
+      ## 基本逻辑是输入任意一种命名的box；
+      ## 然后在下面使用input函数来承接；
+      valueBoxOutput(&quot;progressBox&quot;),
+      valueBoxOutput(&quot;approvalBox&quot;)),
+    fluidRow(
+      # Clicking this will increment the progress amount
+      ## 这里的actionButton就是承接用户输入，并反馈输出；
+      box(width = 4, actionButton(&quot;count&quot;, &quot;Increment progress&quot;)))))
+
+server &lt;- function(input, output) {
+  output$progressBox &lt;- renderValueBox({
+    valueBox(
+      paste0(25 + input$count, &quot;%&quot;), &quot;Progress&quot;, icon = icon(&quot;list&quot;),
+      color = &quot;purple&quot;)})
+  
+output$approvalBox &lt;- renderValueBox({
+    valueBox( &quot;80%&quot;, &quot;Approval&quot;, icon = icon(&quot;thumbs-up&quot;, lib = &quot;glyphicon&quot;),
+      color = &quot;yellow&quot;)})}
+
+shinyApp(ui, server)</code></pre>
+</div>
+<div id="适配于shiny的特殊函数" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> 适配于shiny的特殊函数<a href="id_06-Model-release-and-application.html#适配于shiny的特殊函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>req()</strong></p>
+<pre><code>--判断数据返回的真假；
+  如果数据返回不符合条件限制，则该运算停止；
+output$filtered_table &lt;- renderTable({
+    +     req(input$searchButton == TRUE) 
+  ......}</code></pre>
+</div>
+</div>
+<div id="rmarkdown使用进阶" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Rmarkdown使用进阶<a href="id_06-Model-release-and-application.html#rmarkdown使用进阶" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="参考书目" class="section level3 hasAnchor" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> 参考书目<a href="id_06-Model-release-and-application.html#参考书目" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>### 权威指南：
+https://bookdown.org/yihui/rmarkdown/
+# 下面这本书非常有用；！！！
+https://bookdown.org/yihui/rmarkdown-cookbook/multi-column.html
+## 其他参考博客：
+
+速查表：https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf?_ga=2.258283010.941366294.1644810156-143414957.1644300675
+全局代码设置；
+（https://yihui.org/knitr/options/）
+</code></pre>
+</div>
+<div id="title和autherymal" class="section level3 hasAnchor" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> title和auther/YMAL<a href="id_06-Model-release-and-application.html#title和autherymal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>---
+title: &quot;ters&quot;
+author: &quot;nicheerfeng&quot;
+date: &quot;2022/2/14&quot;
+output: html_document  ## 另外还有pdf_document // word_document
+---</code></pre>
+<p>复杂常用参数；</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output: 
+  html_document:
+    toc: ture                  #是否展示目录
+    toc_float: true             #目录的形式，是否浮动
+    number_sections: true       #各个标题的数字标记是否展示
+    df_print: paged           #表格的形式，paged创建可分页的表
+    theme: cerulean              #文档主题，来源于Bootswatch(https://bootswatch.com/)
+    highlight: tango               #指定语法高亮样式
+    #css: css/styles.css       #加入额外的CSS，如果想从自己的css为文档提供所有样式，theme和highlight可设置为null
+    #fig_width: 7                  #图片宽度
+    #fig_height: 6                 #图片高度
+    #fig_caption: TRUE       #图片设置，控制图形是否带有标题
+    #code_folding: hide        #是否隐藏代码块
+    #self_contained: false    #在外部文件中保留依赖关系
+    #keep_md: true              #是否在knitr处理，pandoc渲染之后保存一份markdown文件的副本
+    #template: quarterly_report.html   #可以使用模板选项替换基础pandoc模板
+---</code></pre>
+<p>include参数：
+主要用于在输出文档中添加额外的内容（在文档标题中或文档正文之前/之后包含内容）</p>
+<pre><code>---
+title: &quot;Habits&quot;
+output:
+  html_document:
+    includes:
+      in_header: header.html
+      before_body: doc_prefix.html
+      after_body: doc_suffix.html
+---</code></pre>
+<p>author选项的补充：</p>
+<pre><code>---
+title:  &#39;This is the title: it contains a colon&#39;
+author:
+  - name: Author One
+    affiliation: University of Somewhere
+  - name: Author Two
+    affiliation: University of Nowhere
+tags: [nothing, nothingness] # 添加tag选项；
+abstract: | ## 添加abstract
+  This is the abstract.
+
+  It consists of two paragraphs.
+---</code></pre>
+<p>输出结果的补充：</p>
+<pre><code>---
+title = data_view ##注意这里的``的作用是外循环中执行；
+author: &quot;Rsh&quot;
+date: &#39;2020/09/1&#39;
+params:
+    name: = &#39;input you data name&#39;
+output:
+    html_document:  ## 输出html格式的 文件；
+        theme:cerulean
+        highlight:tango
+---</code></pre>
+</div>
+<div id="字体与格式" class="section level3 hasAnchor" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> 字体与格式<a href="id_06-Model-release-and-application.html#字体与格式" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>###  字体：
+**这是加粗的文字**
+*这是倾斜的文字*`
+***这是斜体加粗的文字***
+~~这是加删除线的文字~~
+
+### 使用内嵌的html来编辑rmarkdown中字号和颜色；
+&lt;font face=&quot;宋体&quot;&gt;宋体&lt;/font&gt;
+&lt;font face=&quot;宋体&quot; color=red&gt;红色宋体&lt;/font&gt;
+&lt;font face=&quot;宋体&quot; color=red size=5&gt;5号红色宋体&lt;/font&gt;
+
+## 修改字体颜色：使用html作为元素插入到代码块中；
+我是\textcolor{blue}{庄闪闪}呀！欢迎关注我的\textcolor{red}{公众号}：\textcolor{blue}{庄闪闪的R语言手册}。
+
+## 另外一种打印红色字体的方法;
+&lt;span style=&quot;color: red;&quot;&gt;**_DANGER:_** This is a warning.&lt;/span&gt;  </code></pre>
+</div>
+<div id="辅助标记" class="section level3 hasAnchor" number="6.3.4">
+<h3><span class="header-section-number">6.3.4</span> 辅助标记<a href="id_06-Model-release-and-application.html#辅助标记" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## 分割线：
+---这是分割线
+***这也是分割线
+
+### 代码注释不被编号，仅适用于rmarkdwon，而不适用于markdown中：
+# Preface {-}
+
+## 注释掉文本：
+ctrl+shift+c:富文本注释方法，可以将标记的markdown文本注释掉；</code></pre>
+<p>时间设置：</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="id_06-Model-release-and-application.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="co"># date: &quot;`r Sys.Date`&quot; # 就可以输出当前的时间了；</span></span></code></pre></div>
+<p>内联代码：
+在Rmarkdown语法中使用内联代码 <code>r函数+外部参数</code> 的方法来运行；
+主要用于脚本的 title修改等方面使用；
+比如说：[date:“2022-09-29”]</p>
+<p>添加浮动导航栏：</p>
+<pre><code>---
+title: &quot;FAF&quot;
+author: &quot;nicheerfeng&quot;
+date: &quot;2022-09-27&quot;
+output: 
+  html_document: ## 注意缩进很重要！
+    toc: true
+    toc_float: true
+# toc_collapsed: true
+# toc_depth: 3
+# number_sections: true
+# theme: lumen
+---</code></pre>
+</div>
+<div id="常用代码标签" class="section level3 hasAnchor" number="6.3.5">
+<h3><span class="header-section-number">6.3.5</span> 常用代码标签<a href="id_06-Model-release-and-application.html#常用代码标签" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>### 关闭打印：
+(```){r example label, echo = FALSE, warning = FALSE}
+  coding
+(```)
+# 解释：
+注意：这里的代码即为使用R语言的代码，设置了代码块的名称为 example label，使代码块不包括在文档中，同时不输出警告信息。为了防止转译添加的小括号，正式代码中没有。注意代码行注释的意义在于格底部包含的代码块导航器中方便于查询；
+
+### 主要常用代码标签: 注意这些标签仅在生成对应html文件时才有用；
+
+1)echo = FALSE：隐藏代码，但运行代码并产生所有输出，曲线图，警告和消息。
+2)eval = FALSE：显示代码，但不实际运行。这样的代码段如果有标签， 可以在后续代码段中被引用。
+3)fig.show = &quot;hide&quot;：隐藏图。
+4)eval=FALSE：运行代码，但不显示输出。这对于设置代码和注释条件很有用很有帮助。打开新的R Markdown文档时，您可以在第一个代码块中看到一个示例
+5)message = FALSE：防止软件包在加载时打印消息。这也抑制了函数生成的消息。
+6)results = &quot;hide&quot;：隐藏打印输出。
+7)warning = FALSE：防止软件包和功能显示警告。
+
+
+### 非常用代码块：
+1) collapse选项：
+一个代码块的代码、输出通常被分解为多个原样文本块中， 如果一个代码块希望所有的代码、输出都写到同一个原样文本块中， 加选项collapse=TRUE。 
+2) results = 结果补充；
+hide, 运行了代码后不显示运行结果。
+hold, 一个代码块所有的代码都显示完， 才显示所有的结果。
+3) 
+
+
+
+### 全局代码设置：##### 
+（https://yihui.org/knitr/options/）
+（注意其他所有参数都可以通过knitr::opts_knit$set()来设计；）
+### 修改工作目录：
+knitr::opts_knit$set(root.dir = &#39;desired/directorypath&#39;)
+</code></pre>
+</div>
+<div id="非常用代码标签" class="section level3 hasAnchor" number="6.3.6">
+<h3><span class="header-section-number">6.3.6</span> 非常用代码标签<a href="id_06-Model-release-and-application.html#非常用代码标签" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="解决重复标签序列的问题" class="section level4 hasAnchor" number="6.3.6.1">
+<h4><span class="header-section-number">6.3.6.1</span> 解决重复标签序列的问题<a href="id_06-Model-release-and-application.html#解决重复标签序列的问题" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>options(knitr.duplicate.label = ‘allow’)</p>
+</div>
+<div id="将r代码转为rmarkdown形式" class="section level4 hasAnchor" number="6.3.6.2">
+<h4><span class="header-section-number">6.3.6.2</span> 将R代码转为rmarkdown形式<a href="id_06-Model-release-and-application.html#将r代码转为rmarkdown形式" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>在R脚本中使用注释时，使用 `#+` 的形式，而不是`#` ,然后就可以得到R脚本；
+
+然后脚本在R中另外新建，进行命名运算，就可以得到一个新的Rmarkdown；
+knitr::spin(&quot;r_script.R&quot;, knit = FALSE, format = &quot;Rmd&quot;)
+# 例如：
+#&#39; noew1     ## 注意#&#39; 将代码块分行；
+#+ hh        ## 构建新的代码块；
+print(&quot;he&quot;)
+
+#&#39; noew21
+#+ fhaufh
+print(&quot;jj&quot;)</code></pre>
+</div>
+<div id="将rmarkdown转为r脚本的形式" class="section level4 hasAnchor" number="6.3.6.3">
+<h4><span class="header-section-number">6.3.6.3</span> 将rmarkdown转为R脚本的形式<a href="id_06-Model-release-and-application.html#将rmarkdown转为r脚本的形式" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 您必须指定documentation = 2返回#&#39;注释中的完整文档。如果您的文档是纯代码，请指定documentation = 0。
+knitr::purl(&quot;r_script.Rmd&quot;, documentation = 2)</code></pre>
+</div>
+<div id="rmarkdown中执行换行" class="section level4 hasAnchor" number="6.3.6.4">
+<h4><span class="header-section-number">6.3.6.4</span> Rmarkdown中执行换行：<a href="id_06-Model-release-and-application.html#rmarkdown中执行换行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>使用对应的脚本注释后，添加两个空格，在再下一行添加信息的注释信息就可以得到对应的显示输出；</p>
+</div>
+<div id="rmarkdown中添加空白行" class="section level4 hasAnchor" number="6.3.6.5">
+<h4><span class="header-section-number">6.3.6.5</span> Rmarkdown中添加空白行：<a href="id_06-Model-release-and-application.html#rmarkdown中添加空白行" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>在对应的注释行中添加： <br></p>
+</div>
+<div id="rmarkdown中添加分页" class="section level4 hasAnchor" number="6.3.6.6">
+<h4><span class="header-section-number">6.3.6.6</span> rmarkdown中添加分页：<a href="id_06-Model-release-and-application.html#rmarkdown中添加分页" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>插入：
+</p>
+</div>
+<div id="中文正常显示" class="section level4 hasAnchor" number="6.3.6.7">
+<h4><span class="header-section-number">6.3.6.7</span> 中文正常显示：<a href="id_06-Model-release-and-application.html#中文正常显示" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="id_06-Model-release-and-application.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf.options</span>(<span class="at">family=</span><span class="st">&quot;GB1&quot;</span>)</span></code></pre></div>
+<p>或者
+pdf.options(height=10/2.54, width=10/2.54, family=“GB1”)</p>
+</div>
+<div id="代码整洁" class="section level4 hasAnchor" number="6.3.6.8">
+<h4><span class="header-section-number">6.3.6.8</span> 代码整洁;<a href="id_06-Model-release-and-application.html#代码整洁" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>加选项tidy=TRUE可以自动重新排列代码段， 使得代码段格式更符合规范</p>
+</div>
+<div id="缓存代码结果减少反复运行代码的风险" class="section level4 hasAnchor" number="6.3.6.9">
+<h4><span class="header-section-number">6.3.6.9</span> 缓存代码结果，减少反复运行代码的风险：<a href="id_06-Model-release-and-application.html#缓存代码结果减少反复运行代码的风险" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>cache=TRUE，
+<code>{r  cache=TRUE}</code></p>
+</div>
+<div id="修改页边距" class="section level4 hasAnchor" number="6.3.6.10">
+<h4><span class="header-section-number">6.3.6.10</span> 修改页边距：<a href="id_06-Model-release-and-application.html#修改页边距" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="在ymal中修改页边距添加下面代码即可" class="section level4 hasAnchor" number="6.3.6.11">
+<h4><span class="header-section-number">6.3.6.11</span> 在ymal中修改页边距：添加下面代码即可；<a href="id_06-Model-release-and-application.html#在ymal中修改页边距添加下面代码即可" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>geometry: “left=2cm,right=2cm,top=2cm,bottom=2cm”</p>
+</div>
+<div id="文字缩进" class="section level4 hasAnchor" number="6.3.6.12">
+<h4><span class="header-section-number">6.3.6.12</span> 文字缩进：<a href="id_06-Model-release-and-application.html#文字缩进" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><code>| When dollars appear its a sign |   that your code does not quite align   ## 这行会自动缩进； | Ensure that your math   |   in xaringan hath   |   been placed on a single long line</code></p>
+</div>
+<div id="控制文本输出的宽度" class="section level4 hasAnchor" number="6.3.6.13">
+<h4><span class="header-section-number">6.3.6.13</span> 控制文本输出的宽度：<a href="id_06-Model-release-and-application.html#控制文本输出的宽度" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="id_06-Model-release-and-application.html#cb228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">width =</span> <span class="dv">300</span>) <span class="do">##这个越小，实际显示宽度越宽；</span></span>
+<span id="cb228-2"><a href="id_06-Model-release-and-application.html#cb228-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##           [,1]       [,2]      [,3]      [,4]       [,5]       [,6]      [,7]       [,8]       [,9]     [,10]      [,11]     [,12]     [,13]     [,14]      [,15]      [,16]     [,17]     [,18]      [,19]     [,20]
+## [1,] 0.5008876 0.42856665 0.2141572 0.6258645 0.49428144 0.87377136 0.6311367 0.06880399 0.44697840 0.7055169 0.10708927 0.5229960 0.6521262 0.9938087 0.19096605 0.73450952 0.8350051 0.0364972 0.56317322 0.1701522
+## [2,] 0.5189023 0.69897245 0.7492733 0.4627841 0.20324083 0.76156546 0.1050154 0.20213686 0.73630328 0.3280898 0.44436364 0.8704995 0.8920534 0.4507884 0.82562769 0.08559125 0.1640545 0.8429831 0.05463917 0.5264489
+## [3,] 0.7998076 0.64886680 0.4616696 0.8819167 0.07451446 0.14601917 0.8876246 0.87008916 0.33810591 0.8511071 0.08865857 0.8354680 0.8944711 0.8644346 0.20740996 0.45770038 0.2786069 0.2689672 0.14449143 0.3395963
+## [4,] 0.1345694 0.01471652 0.6688912 0.1400785 0.74831720 0.43956820 0.1145963 0.53626352 0.04076512 0.8502366 0.20972908 0.7968310 0.1904733 0.9787795 0.08111327 0.81968492 0.6048755 0.1297345 0.14986996 0.2843976
+## [5,] 0.5611794 0.95766686 0.6595036 0.5486469 0.14879251 0.06589654 0.8861484 0.04589817 0.45092497 0.8728023 0.59455073 0.3299404 0.2211582 0.1440823 0.25419770 0.17915701 0.8107382 0.7800852 0.53230672 0.1225926</code></pre>
+</div>
+<div id="文档内的引用这里就是根据代码块中的命名进行引用方法了" class="section level4 hasAnchor" number="6.3.6.14">
+<h4><span class="header-section-number">6.3.6.14</span> 文档内的引用：这里就是根据代码块中的命名进行引用方法了；<a href="id_06-Model-release-and-application.html#文档内的引用这里就是根据代码块中的命名进行引用方法了" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>See Figure <a href="#fig:cars-plot"><strong>??</strong></a></p>
+</div>
+<div id="全局设置的一些案例" class="section level4 hasAnchor" number="6.3.6.15">
+<h4><span class="header-section-number">6.3.6.15</span> 全局设置的一些案例：<a href="id_06-Model-release-and-application.html#全局设置的一些案例" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>案例1：</strong>
+结尾的斜线Figs/很重要。如果您使用 fig.path=‘Figs’，那么这些数字将进入主目录，但Figs作为其名称的初始部分。可以指定图的输出位置；</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="id_06-Model-release-and-application.html#cb230-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.width=</span><span class="dv">12</span>, <span class="at">fig.height=</span><span class="dv">8</span>, <span class="at">fig.path=</span><span class="st">&#39;Figs/&#39;</span>,</span>
+<span id="cb230-2"><a href="id_06-Model-release-and-application.html#cb230-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">echo=</span><span class="cn">FALSE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><strong>案例2：</strong>
+全局打印,是否打印对应的代码；选择FALSE则不打印代码，只输出结果；</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="id_06-Model-release-and-application.html#cb231-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">:</span> opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="快捷键" class="section level3 hasAnchor" number="6.3.7">
+<h3><span class="header-section-number">6.3.7</span> 快捷键<a href="id_06-Model-release-and-application.html#快捷键" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## 添加新的代码块：
+ctrl+alt + i 
+
+## 运行当前块上方的所有块
+Ctrl + Alt + P
+
+## 运行当前的代码块：
+Ctrl + Shift + Enter
+
+## 运行所有块：
+Ctrl + A + Enter</code></pre>
+</div>
+<div id="标题修改" class="section level3 hasAnchor" number="6.3.8">
+<h3><span class="header-section-number">6.3.8</span> 标题修改<a href="id_06-Model-release-and-application.html#标题修改" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## 参见https://zhuanlan.zhihu.com/p/435553617
+
+## 自动左对齐；添加多行标题；（适用导出文件类型：html、pdf (不适用word））
+---
+title: |
+  | Veryyyyyyy  
+
+## 自动居中对齐（适用导出文件类型：html、pdf (不适用word））
+---
+title: |
+  &lt;center&gt; Veryyyyyyy &lt;/center&gt;
+  &lt;center&gt; yyyyyyyyyyyyyy Looooo &lt;/center&gt;
+
+## 自动换行对齐: 换行符法（适用文件类型： word 、html）
+---
+title: &quot;YYYY  \n  mdmdmdmd&quot;
+</code></pre>
+</div>
+<div id="图片处理" class="section level3 hasAnchor" number="6.3.9">
+<h3><span class="header-section-number">6.3.9</span> 图片处理<a href="id_06-Model-release-and-application.html#图片处理" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="修改默认形式" class="section level4 hasAnchor" number="6.3.9.1">
+<h4><span class="header-section-number">6.3.9.1</span> 修改默认形式<a href="id_06-Model-release-and-application.html#修改默认形式" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>默认形式为html格式的svg；</p>
+<p>需要将其修改为pdf格式或者png格式：
+knitr::opts_chunk$ set ( dev = “cairo_pdf” )
+knitr::opts_chunk$ set ( dev = “png” , dev.args = list ( type = “cairo-png” ))</p>
+</div>
+<div id="fig.show-设置图片合适" class="section level4 hasAnchor" number="6.3.9.2">
+<h4><span class="header-section-number">6.3.9.2</span> fig.show() 设置图片合适：<a href="id_06-Model-release-and-application.html#fig.show-设置图片合适" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>fig.show=‘asis’：表示plot在产生他们的代码后面 fig.show=‘hold’：所有代码产生的图片都放在一个完整的代码块之后 fig.show=‘animate’：表示将所有生成的图片合成一个动画图片 可以参考：<a href="https://bookdown.org/yihui/rmarkdown-cookbook/animation.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/animation.html</a> fig.show=‘hide’：表示产生所有图片,但是并不展示</p>
+</div>
+<div id="其他参数" class="section level4 hasAnchor" number="6.3.9.3">
+<h4><span class="header-section-number">6.3.9.3</span> 其他参数：<a href="id_06-Model-release-and-application.html#其他参数" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>fig.width：设置图片输出的宽度
+fig.height：设置图片输出的高度
+fig.align 设置图片位置排版格式，默认为left,可以为right或者center
+fig.cap ：设置图片的标题
+fig.subcap：设置图片的副标题out.width和out.height选项指定在输出中实际显示的宽和高，如果使用如”90%“这样的百分数单位则可以自动适应输出的大小。</p>
+<p>fig.keep = “all”, 会把低级图形函数修改后的结果单独保存； “last”, 仅保留最后一个图形； “first”, 仅保留第一个图； “none”, 所有图都不显示出来。</p>
+</div>
+<div id="插入外界图片" class="section level4 hasAnchor" number="6.3.9.4">
+<h4><span class="header-section-number">6.3.9.4</span> 插入外界图片：<a href="id_06-Model-release-and-application.html#插入外界图片" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>![图的标题](xxx.png){width=50%}
+
+## 举例：
+{r fig.width=10/2.54, fig.height=10/2.54, out.width=&quot;80%&quot;}</code></pre>
+</div>
+<div id="优化png代码图显示" class="section level4 hasAnchor" number="6.3.9.5">
+<h4><span class="header-section-number">6.3.9.5</span> 优化PNG代码图显示：<a href="id_06-Model-release-and-application.html#优化png代码图显示" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>注意需要安装OptiPNG
+参见：<a href="https://bookdown.org/yihui/rmarkdown-cookbook/optipng.html" class="uri">https://bookdown.org/yihui/rmarkdown-cookbook/optipng.html</a>
+knitr::knit_hooks$set(optipng = knitr::hook_optipng)</p>
+</div>
+</div>
+<div id="表格输出" class="section level3 hasAnchor" number="6.3.10">
+<h3><span class="header-section-number">6.3.10</span> 表格输出<a href="id_06-Model-release-and-application.html#表格输出" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="美化表格输出" class="section level4 hasAnchor" number="6.3.10.1">
+<h4><span class="header-section-number">6.3.10.1</span> 美化表格输出<a href="id_06-Model-release-and-application.html#美化表格输出" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>使用kableExtra</strong>
+kable()函数的digits=选项可以控制小数点后数字位数， caption=选项可以指定表的标题内容。
+knitr::kable(co)</p>
+<p>用kableExtra(Zhu 2020[7])、huxtable (Hugh-Jones 2020[8])等扩展包来美化表格。</p>
+<pre><code>library(knitr)
+library(kableExtra)
+kable(iris) %&gt;%
+  kable_styling(latex_options = &quot;striped&quot;)</code></pre>
+<p><strong>添加外边框：</strong>
+bootstrap_options = “bordered”
+x_html &lt;- knitr:: kable(head(rock), “html”)
+kableExtra::kable_styling(x_html,bootstrap_options = “bordered”)</p>
+<p><strong>设置表格的宽度：</strong></p>
+<pre><code>使用full_width = F使得表格横向不会填满整个页面
+x_html &lt;- knitr:: kable(head(rock), &quot;html&quot;)
+kableExtra::kable_styling(x_html,bootstrap_options = &quot;striped&quot;,
+                          full_width = F)</code></pre>
+<p><strong>表格对齐：</strong></p>
+<pre><code>x_html &lt;- knitr:: kable(head(rock), &quot;html&quot;)
+kableExtra::kable_styling(x_html,bootstrap_options = &quot;striped&quot;,
+                          full_width = F,
+                          position = &quot;left&quot;)</code></pre>
+<p><strong>设置表格字体：</strong></p>
+<pre><code>x_html &lt;- knitr:: kable(head(rock), &quot;html&quot;)
+kableExtra::kable_styling(x_html,bootstrap_options = &quot;striped&quot;,
+                          full_width = T,
+                          font_size = 20) ## 设置表格字体；</code></pre>
+<p><strong>针对指定行或者列设置填充颜色：</strong></p>
+<pre><code>x_html &lt;- knitr:: kable(head(rock), &quot;html&quot;)
+x_html &lt;- kableExtra::kable_styling(x_html,
+                                    bootstrap_options = &quot;striped&quot;,
+                                    full_width = T)
+kableExtra::column_spec(x_html,1:2, ## 针对第1和2列；
+                        bold = T,
+                        color = &quot;white&quot;, # 内部线颜色；
+                        background = &quot;#D7261E&quot;) # 外部背景颜色；</code></pre>
+<p><strong>针对指定单元格实行指定函数式运算：</strong></p>
+<pre><code>x_html &lt;- knitr:: kable(head(rock), &quot;html&quot;)
+x_html &lt;- kableExtra::kable_styling(x_html,
+                                    bootstrap_options = &quot;striped&quot;,
+                                    full_width = T)
+kableExtra::column_spec(x_html,1:2,
+                        bold = T,
+                        color = &quot;white&quot;,
+                        background = &quot;#D7261E&quot;)</code></pre>
+<p><strong>使用滚动表格</strong></p>
+<pre><code>DT::datatable(linelist, 
+              rownames = FALSE, 
+              options = list(pageLength = 5, scrollX = TRUE), 
+              class = &#39;white-space: nowrap&#39; )</code></pre>
+</div>
+</div>
+<div id="结果输出" class="section level3 hasAnchor" number="6.3.11">
+<h3><span class="header-section-number">6.3.11</span> 结果输出<a href="id_06-Model-release-and-application.html#结果输出" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在另外的R脚本中执行命令，然后输出输出rmd的结果：</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="id_06-Model-release-and-application.html#cb242-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rmarkdown::render(&#39;report.Rmd&#39;, &#39;html_document&#39;)</span></span></code></pre></div>
+<div id="生成可重复性的报告" class="section level4 hasAnchor" number="6.3.11.1">
+<h4><span class="header-section-number">6.3.11.1</span> 生成可重复性的报告<a href="id_06-Model-release-and-application.html#生成可重复性的报告" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>使用get()函数来调用外部命令函数或者参数接口，从而实现函数批循环调用：</p>
+<p><strong>例如：</strong></p>
+<pre><code># ----- 在rmarkdown 中的 文件中执行这个文件 -------
+mydata = get(params$name)
+summary(mydata)</code></pre>
+<pre><code># ----- 在rmarkdown的ymal文件中加入这个参数 -----
+---
+title = data_view: ## 这种格式也称之为内联代码；
+author: &quot;Rsh&quot;
+date = &#39;2020/09/1&#39;
+params:
+    name: = &#39;input you data name&#39;
+output:
+    html_document:  ## 输出html格式的 文件；
+        theme:cerulean
+        highlight:tango
+---</code></pre>
+<pre><code># ----- 在外界R环境中调用下面循环体 
+library(datasets)name_list &lt;-c(&quot;airquality&quot;,&quot;mtcars&quot;,&quot;LifeCycleSavings&quot;)for(name in name_list){  render(&quot;用rmarkdown定制你的数据分析报告/可重复分析报告/模版.Rmd&quot;,         params = list(name=name),         output_file = paste0(name,&#39;数据集概览&#39;),  )}</code></pre>
+</div>
+</div>
+<div id="补充知识点" class="section level3 hasAnchor" number="6.3.12">
+<h3><span class="header-section-number">6.3.12</span> 补充知识点<a href="id_06-Model-release-and-application.html#补充知识点" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="使用params" class="section level4 hasAnchor" number="6.3.12.1">
+<h4><span class="header-section-number">6.3.12.1</span> 使用params<a href="id_06-Model-release-and-application.html#使用params" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>---
+title: Parameterized reports
+output: html_document
+params: ## 这个参数可以提供的更多元的内置设置，这样就更方便引入外界参数；
+  state: Nebraska
+  year: 2019
+  midwest: true
+---
+
+上面的代码，还可以启动gui来提高代码的访问效率：
+rmarkdown::render(&quot;input.Rmd&quot;, params = &quot;ask&quot;)</code></pre>
+</div>
+<div id="代码块计时" class="section level4 hasAnchor" number="6.3.12.2">
+<h4><span class="header-section-number">6.3.12.2</span> 代码块计时<a href="id_06-Model-release-and-application.html#代码块计时" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="id_06-Model-release-and-application.html#cb247-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>knit_hooks<span class="sc">$</span><span class="fu">set</span>(<span class="at">time_it =</span> <span class="fu">local</span>({</span>
+<span id="cb247-2"><a href="id_06-Model-release-and-application.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  now <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb247-3"><a href="id_06-Model-release-and-application.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(before, options) {</span>
+<span id="cb247-4"><a href="id_06-Model-release-and-application.html#cb247-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (before) {</span>
+<span id="cb247-5"><a href="id_06-Model-release-and-application.html#cb247-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># record the current time before each chunk</span></span>
+<span id="cb247-6"><a href="id_06-Model-release-and-application.html#cb247-6" aria-hidden="true" tabindex="-1"></a>      now <span class="ot">&lt;&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb247-7"><a href="id_06-Model-release-and-application.html#cb247-7" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb247-8"><a href="id_06-Model-release-and-application.html#cb247-8" aria-hidden="true" tabindex="-1"></a>      <span class="co"># calculate the time difference after a chunk</span></span>
+<span id="cb247-9"><a href="id_06-Model-release-and-application.html#cb247-9" aria-hidden="true" tabindex="-1"></a>      res <span class="ot">&lt;-</span> <span class="fu">difftime</span>(<span class="fu">Sys.time</span>(), now)</span>
+<span id="cb247-10"><a href="id_06-Model-release-and-application.html#cb247-10" aria-hidden="true" tabindex="-1"></a>      <span class="co"># return a character string to show the time</span></span>
+<span id="cb247-11"><a href="id_06-Model-release-and-application.html#cb247-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">paste</span>(<span class="st">&quot;Time for this code chunk to run:&quot;</span>, <span class="fu">round</span>(res,<span class="dv">3</span>))</span>
+<span id="cb247-12"><a href="id_06-Model-release-and-application.html#cb247-12" aria-hidden="true" tabindex="-1"></a>      <span class="do">## 或者只记录时间不打印出来：</span></span>
+<span id="cb247-13"><a href="id_06-Model-release-and-application.html#cb247-13" aria-hidden="true" tabindex="-1"></a>      <span class="co"># all_times[[options$label]] &lt;&lt;- res</span></span>
+<span id="cb247-14"><a href="id_06-Model-release-and-application.html#cb247-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb247-15"><a href="id_06-Model-release-and-application.html#cb247-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb247-16"><a href="id_06-Model-release-and-application.html#cb247-16" aria-hidden="true" tabindex="-1"></a>}))</span></code></pre></div>
+</div>
+<div id="纸张翻转" class="section level4 hasAnchor" number="6.3.12.3">
+<h4><span class="header-section-number">6.3.12.3</span> 纸张翻转<a href="id_06-Model-release-and-application.html#纸张翻转" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>该函数适用于rmd文件中；
+当在rmd文件中输出超长宽表时，希望能够使用word纸张横转的范式：
+使用方法如下（注意在rmd文件中使用）：
+<!---BLOCK_LANDSCAPE_START---></p>
+<p>需要source()这个函数体；</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="id_06-Model-release-and-application.html#cb248-1" aria-hidden="true" tabindex="-1"></a>LANDSCAPE_STOP <span class="ot">&lt;-</span></span>
+<span id="cb248-2"><a href="id_06-Model-release-and-application.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">block_section</span>( </span>
+<span id="cb248-3"><a href="id_06-Model-release-and-application.html#cb248-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop_section</span>(<span class="at">page_size =</span> <span class="fu">page_size</span>(<span class="at">orient =</span> <span class="st">&quot;landscape&quot;</span>), <span class="at">type =</span> <span class="st">&quot;continuous&quot;</span> ))</span></code></pre></div>
+<p>而部分表格则希望有不横转的情况：
+[r LANDSCAPE_STOP] – 将此页横表转长表；</p>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Model-performance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Visualization-Tables-Figures.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/06-Model-release-and-application.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 8 章 常用统计R代码 | 基于 R 的数据处理流程指南</title>
+  <meta name="description" content="R快速查询工具指南" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 8 章 常用统计R代码 | 基于 R 的数据处理流程指南" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="R快速查询工具指南" />
+  <meta name="github-repo" content="nicheerfeng/git_book_ftidy" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 8 章 常用统计R代码 | 基于 R 的数据处理流程指南" />
+  
+  <meta name="twitter:description" content="R快速查询工具指南" />
+  
+
+<meta name="author" content="Teague Tian" />
+
+
+<meta name="date" content="2022-09-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Visualization-Tables-Figures.html"/>
+<link rel="next" href="Statistical-flow-of-clinical-medicine.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Data Workflow</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#学业及工作经历"><i class="fa fa-check"></i>学业及工作经历：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#研究兴趣"><i class="fa fa-check"></i>研究兴趣：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#已完成和正在研究的项目"><i class="fa fa-check"></i>已完成和正在研究的项目</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#医学领域"><i class="fa fa-check"></i>医学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#生态学领域"><i class="fa fa-check"></i>生态学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#r工具开发"><i class="fa fa-check"></i>R工具开发：</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html"><i class="fa fa-check"></i><b>1</b> 确立分析目标</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#基本逻辑"><i class="fa fa-check"></i><b>1.1</b> 基本逻辑</a></li>
+<li class="chapter" data-level="1.2" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#数据分析的基本流程"><i class="fa fa-check"></i><b>1.2</b> 数据分析的基本流程</a></li>
+<li class="chapter" data-level="1.3" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#工作处理经验"><i class="fa fa-check"></i><b>1.3</b> 工作处理经验</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#ppt汇报经验"><i class="fa fa-check"></i><b>1.3.1</b> PPT汇报经验：</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>数据准备</b></span></li>
+<li class="chapter" data-level="2" data-path="Data-extraction.html"><a href="Data-extraction.html"><i class="fa fa-check"></i><b>2</b> 数据提取</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#数据提取的基本范式"><i class="fa fa-check"></i><b>2.1</b> 数据提取的基本范式</a></li>
+<li class="chapter" data-level="2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#数据导入与导出"><i class="fa fa-check"></i><b>2.2</b> 数据导入与导出</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#剪切板中处理数据"><i class="fa fa-check"></i><b>2.2.1</b> 剪切板中处理数据</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#读取excle文件"><i class="fa fa-check"></i><b>2.2.2</b> 读取excle文件</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Data-extraction.html"><a href="Data-extraction.html#加速读取及导出常用数据"><i class="fa fa-check"></i><b>2.2.3</b> 加速读取及导出常用数据</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Data-extraction.html"><a href="Data-extraction.html#office格式及图片导出"><i class="fa fa-check"></i><b>2.2.4</b> OFFICE格式及图片导出</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Data-extraction.html"><a href="Data-extraction.html#在r中使用sql"><i class="fa fa-check"></i><b>2.2.5</b> 在R中使用sql</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html"><i class="fa fa-check"></i><b>3</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据抽取"><i class="fa fa-check"></i><b>3.1</b> 数据抽取</a></li>
+<li class="chapter" data-level="3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据清洗"><i class="fa fa-check"></i><b>3.2</b> 数据清洗</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#选择数据子集"><i class="fa fa-check"></i><b>3.2.1</b> 选择数据子集</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据去重"><i class="fa fa-check"></i><b>3.2.2</b> 数据去重</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#缺失值处理"><i class="fa fa-check"></i><b>3.2.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#一致化处理-1"><i class="fa fa-check"></i><b>3.2.4</b> 一致化处理</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#异常值处理-1"><i class="fa fa-check"></i><b>3.2.5</b> 异常值处理</a></li>
+<li class="chapter" data-level="3.2.6" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#插值填补"><i class="fa fa-check"></i><b>3.2.6</b> 插值填补</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据重组与转换"><i class="fa fa-check"></i><b>3.3</b> 数据重组与转换</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据修改-数据增加与删除"><i class="fa fa-check"></i><b>3.3.1</b> 数据修改-数据增加与删除</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据值重编码非列名"><i class="fa fa-check"></i><b>3.3.2</b> 数据值重编码（非列名）</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据塑形"><i class="fa fa-check"></i><b>3.3.3</b> 数据塑形</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据提取"><i class="fa fa-check"></i><b>3.3.4</b> 数据提取</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>模型拟合</b></span></li>
+<li class="chapter" data-level="4" data-path="Model-building.html"><a href="Model-building.html"><i class="fa fa-check"></i><b>4</b> 构建模型</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-building.html"><a href="Model-building.html#描述统计模型"><i class="fa fa-check"></i><b>4.1</b> 描述统计模型</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="Model-building.html"><a href="Model-building.html#快速构建描述性统计"><i class="fa fa-check"></i><b>4.1.1</b> 快速构建描述性统计</a></li>
+<li class="chapter" data-level="4.1.2" data-path="Model-building.html"><a href="Model-building.html#高级分组统计"><i class="fa fa-check"></i><b>4.1.2</b> 高级分组统计</a></li>
+<li class="chapter" data-level="4.1.3" data-path="Model-building.html"><a href="Model-building.html#常用统计函数"><i class="fa fa-check"></i><b>4.1.3</b> 常用统计函数</a></li>
+<li class="chapter" data-level="4.1.4" data-path="Model-building.html"><a href="Model-building.html#批处理函数"><i class="fa fa-check"></i><b>4.1.4</b> 批处理函数</a></li>
+<li class="chapter" data-level="4.1.5" data-path="Model-building.html"><a href="Model-building.html#broom优雅输出"><i class="fa fa-check"></i><b>4.1.5</b> BROOM优雅输出</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="Model-building.html"><a href="Model-building.html#复杂统计模型"><i class="fa fa-check"></i><b>4.2</b> 复杂统计模型</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="Model-building.html"><a href="Model-building.html#变量筛选"><i class="fa fa-check"></i><b>4.2.1</b> 变量筛选</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Model-building.html"><a href="Model-building.html#线性统计回归"><i class="fa fa-check"></i><b>4.2.2</b> 线性统计回归</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Model-building.html"><a href="Model-building.html#方差检验"><i class="fa fa-check"></i><b>4.2.3</b> 方差检验</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Model-building.html"><a href="Model-building.html#相关统计r包资源"><i class="fa fa-check"></i><b>4.2.4</b> 相关统计R包资源：</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="Model-building.html"><a href="Model-building.html#临床统计模型"><i class="fa fa-check"></i><b>4.3</b> 临床统计模型</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-building.html"><a href="Model-building.html#平衡匹配"><i class="fa fa-check"></i><b>4.3.1</b> 平衡匹配</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-building.html"><a href="Model-building.html#生存分析"><i class="fa fa-check"></i><b>4.3.2</b> 生存分析</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-building.html"><a href="Model-building.html#补充r包"><i class="fa fa-check"></i><b>4.3.3</b> 补充R包</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-building.html"><a href="Model-building.html#构造模型的辅助函数或参数"><i class="fa fa-check"></i><b>4.4</b> 构造模型的辅助函数或参数</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="Model-building.html"><a href="Model-building.html#常用参数"><i class="fa fa-check"></i><b>4.4.1</b> 常用参数</a></li>
+<li class="chapter" data-level="4.4.2" data-path="Model-building.html"><a href="Model-building.html#查询线性模型结果"><i class="fa fa-check"></i><b>4.4.2</b> 查询线性模型结果</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Model-building.html"><a href="Model-building.html#r语言笔记.formula"><i class="fa fa-check"></i><b>4.4.3</b> R语言笔记.formula</a></li>
+<li class="chapter" data-level="4.4.4" data-path="Model-building.html"><a href="Model-building.html#特征工程"><i class="fa fa-check"></i><b>4.4.4</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Model-building.html"><a href="Model-building.html#深度学习"><i class="fa fa-check"></i><b>4.5</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="Model-building.html"><a href="Model-building.html#r-中执行keras"><i class="fa fa-check"></i><b>4.5.1</b> R 中执行keras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="Model-building.html"><a href="Model-building.html#机器学习"><i class="fa fa-check"></i><b>4.6</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="Model-building.html"><a href="Model-building.html#机器学习--mlr3包"><i class="fa fa-check"></i><b>4.6.1</b> 机器学习 -mlr3包</a></li>
+<li class="chapter" data-level="4.6.2" data-path="Model-building.html"><a href="Model-building.html#常规机器学习"><i class="fa fa-check"></i><b>4.6.2</b> 常规机器学习</a></li>
+<li class="chapter" data-level="4.6.3" data-path="Model-building.html"><a href="Model-building.html#朴素贝叶斯"><i class="fa fa-check"></i><b>4.6.3</b> 朴素贝叶斯</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Model-performance.html"><a href="Model-performance.html"><i class="fa fa-check"></i><b>5</b> 模型评估</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Model-performance.html"><a href="Model-performance.html#模型评估辅助"><i class="fa fa-check"></i><b>5.1</b> 模型评估辅助：</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="Model-performance.html"><a href="Model-performance.html#purrr包的pluck函数字符提取"><i class="fa fa-check"></i><b>5.1.1</b> purrr包的pluck()函数字符提取</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Model-performance.html"><a href="Model-performance.html#常用模型辅助评估r包"><i class="fa fa-check"></i><b>5.2</b> 常用模型辅助评估R包：</a></li>
+</ul></li>
+<li class="part"><span><b>模型展示</b></span></li>
+<li class="chapter" data-level="6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html"><i class="fa fa-check"></i><b>6</b> 模型发布与应用</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#flexboard"><i class="fa fa-check"></i><b>6.1</b> flexboard</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#安装工作环境"><i class="fa fa-check"></i><b>6.1.1</b> 安装工作环境</a></li>
+<li class="chapter" data-level="6.1.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#多级导航模块"><i class="fa fa-check"></i><b>6.1.2</b> 多级导航模块</a></li>
+<li class="chapter" data-level="6.1.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#超级链接表"><i class="fa fa-check"></i><b>6.1.3</b> 超级链接表</a></li>
+<li class="chapter" data-level="6.1.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加social-links"><i class="fa fa-check"></i><b>6.1.4</b> 给导航栏添加Social Links</a></li>
+<li class="chapter" data-level="6.1.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加source-code"><i class="fa fa-check"></i><b>6.1.5</b> 给导航栏添加Source Code</a></li>
+<li class="chapter" data-level="6.1.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加一个about"><i class="fa fa-check"></i><b>6.1.6</b> 给导航栏添加一个<code>about</code></a></li>
+<li class="chapter" data-level="6.1.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数"><i class="fa fa-check"></i><b>6.1.7</b> 布局参数</a></li>
+<li class="chapter" data-level="6.1.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#功能块参数"><i class="fa fa-check"></i><b>6.1.8</b> 功能块参数</a></li>
+<li class="chapter" data-level="6.1.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#故事版"><i class="fa fa-check"></i><b>6.1.9</b> 故事版</a></li>
+<li class="chapter" data-level="6.1.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助dashboard展示参数"><i class="fa fa-check"></i><b>6.1.10</b> 辅助dashboard展示参数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#shinydashboard"><i class="fa fa-check"></i><b>6.2</b> shinydashboard</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#基本框架和流程"><i class="fa fa-check"></i><b>6.2.1</b> 基本框架和流程</a></li>
+<li class="chapter" data-level="6.2.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#仪表板的结构"><i class="fa fa-check"></i><b>6.2.2</b> 仪表板的结构</a></li>
+<li class="chapter" data-level="6.2.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数-1"><i class="fa fa-check"></i><b>6.2.3</b> 布局参数</a></li>
+<li class="chapter" data-level="6.2.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#在dashboard中使用css技巧"><i class="fa fa-check"></i><b>6.2.4</b> 在dashboard中使用css技巧</a></li>
+<li class="chapter" data-level="6.2.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#适配于shiny的特殊函数"><i class="fa fa-check"></i><b>6.2.5</b> 适配于shiny的特殊函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#rmarkdown使用进阶"><i class="fa fa-check"></i><b>6.3</b> Rmarkdown使用进阶</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#参考书目"><i class="fa fa-check"></i><b>6.3.1</b> 参考书目</a></li>
+<li class="chapter" data-level="6.3.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#title和autherymal"><i class="fa fa-check"></i><b>6.3.2</b> title和auther/YMAL</a></li>
+<li class="chapter" data-level="6.3.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#字体与格式"><i class="fa fa-check"></i><b>6.3.3</b> 字体与格式</a></li>
+<li class="chapter" data-level="6.3.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助标记"><i class="fa fa-check"></i><b>6.3.4</b> 辅助标记</a></li>
+<li class="chapter" data-level="6.3.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#常用代码标签"><i class="fa fa-check"></i><b>6.3.5</b> 常用代码标签</a></li>
+<li class="chapter" data-level="6.3.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#非常用代码标签"><i class="fa fa-check"></i><b>6.3.6</b> 非常用代码标签</a></li>
+<li class="chapter" data-level="6.3.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#快捷键"><i class="fa fa-check"></i><b>6.3.7</b> 快捷键</a></li>
+<li class="chapter" data-level="6.3.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#标题修改"><i class="fa fa-check"></i><b>6.3.8</b> 标题修改</a></li>
+<li class="chapter" data-level="6.3.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#图片处理"><i class="fa fa-check"></i><b>6.3.9</b> 图片处理</a></li>
+<li class="chapter" data-level="6.3.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#表格输出"><i class="fa fa-check"></i><b>6.3.10</b> 表格输出</a></li>
+<li class="chapter" data-level="6.3.11" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#结果输出"><i class="fa fa-check"></i><b>6.3.11</b> 结果输出</a></li>
+<li class="chapter" data-level="6.3.12" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#补充知识点"><i class="fa fa-check"></i><b>6.3.12</b> 补充知识点</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html"><i class="fa fa-check"></i><b>7</b> 可视化（表与图）</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#表格可视化"><i class="fa fa-check"></i><b>7.1</b> 表格可视化</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#快速图表可视化"><i class="fa fa-check"></i><b>7.1.1</b> 快速图表可视化</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#编辑表"><i class="fa fa-check"></i><b>7.1.2</b> 编辑表</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#静态表格优化展示"><i class="fa fa-check"></i><b>7.1.3</b> 静态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#动态表格优化展示"><i class="fa fa-check"></i><b>7.1.4</b> 动态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#描述性统计表格分析"><i class="fa fa-check"></i><b>7.1.5</b> 描述性统计表格分析</a></li>
+<li class="chapter" data-level="7.1.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计结果表格可视化"><i class="fa fa-check"></i><b>7.1.6</b> 统计结果表格可视化</a></li>
+<li class="chapter" data-level="7.1.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充表格包"><i class="fa fa-check"></i><b>7.1.7</b> 补充表格包</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#图形可视化"><i class="fa fa-check"></i><b>7.2</b> 图形可视化</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#画图参考网站"><i class="fa fa-check"></i><b>7.2.1</b> 画图参考网站</a></li>
+<li class="chapter" data-level="7.2.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#免代码绘制"><i class="fa fa-check"></i><b>7.2.2</b> 免代码绘制</a></li>
+<li class="chapter" data-level="7.2.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计辅助绘图"><i class="fa fa-check"></i><b>7.2.3</b> 统计辅助绘图</a></li>
+<li class="chapter" data-level="7.2.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#base-plotggplot2"><i class="fa fa-check"></i><b>7.2.4</b> base-plot()/ggplot2()</a></li>
+<li class="chapter" data-level="7.2.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#绘图"><i class="fa fa-check"></i><b>7.2.5</b> 绘图</a></li>
+<li class="chapter" data-level="7.2.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计图形代码"><i class="fa fa-check"></i><b>7.2.6</b> 统计图形代码</a></li>
+<li class="chapter" data-level="7.2.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#医学分析图"><i class="fa fa-check"></i><b>7.2.7</b> 医学分析图</a></li>
+<li class="chapter" data-level="7.2.8" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充图形库"><i class="fa fa-check"></i><b>7.2.8</b> 补充图形库</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>工具箱</b></span></li>
+<li class="chapter" data-level="8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html"><i class="fa fa-check"></i><b>8</b> 常用统计R代码</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r-系统功能"><i class="fa fa-check"></i><b>8.1</b> R-系统功能</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用r系统代码"><i class="fa fa-check"></i><b>8.1.1</b> 常用R系统代码</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#辅助r包"><i class="fa fa-check"></i><b>8.1.2</b> 辅助R包：</a></li>
+<li class="chapter" data-level="8.1.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用系统脚本"><i class="fa fa-check"></i><b>8.1.3</b> 常用系统脚本</a></li>
+<li class="chapter" data-level="8.1.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#s3和s4事件"><i class="fa fa-check"></i><b>8.1.4</b> S3和S4事件</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r报错机制学习"><i class="fa fa-check"></i><b>8.2</b> R报错机制学习</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常见异常处理函数"><i class="fa fa-check"></i><b>8.2.1</b> 1 常见异常处理函数</a></li>
+<li class="chapter" data-level="8.2.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#stop"><i class="fa fa-check"></i><b>8.2.2</b> 2 STOP</a></li>
+<li class="chapter" data-level="8.2.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#warning"><i class="fa fa-check"></i><b>8.2.3</b> 3 WARNING</a></li>
+<li class="chapter" data-level="8.2.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕捉错误"><i class="fa fa-check"></i><b>8.2.4</b> 4 捕捉错误</a></li>
+<li class="chapter" data-level="8.2.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码错误调试"><i class="fa fa-check"></i><b>8.2.5</b> 5 代码错误调试</a></li>
+<li class="chapter" data-level="8.2.6" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码时间消耗跟踪"><i class="fa fa-check"></i><b>8.2.6</b> 6 代码时间消耗跟踪</a></li>
+<li class="chapter" data-level="8.2.7" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#补充案例"><i class="fa fa-check"></i><b>8.2.7</b> 7 补充案例</a></li>
+<li class="chapter" data-level="8.2.8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#相关资料"><i class="fa fa-check"></i><b>8.2.8</b> 8 相关资料</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用快捷命令"><i class="fa fa-check"></i><b>8.3</b> 常用快捷命令</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#高效管道符号"><i class="fa fa-check"></i><b>8.3.1</b> 高效管道符号</a></li>
+<li class="chapter" data-level="8.3.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用辅助函数"><i class="fa fa-check"></i><b>8.3.2</b> 常用辅助函数：</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#正则表达式"><i class="fa fa-check"></i><b>8.4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-1"><i class="fa fa-check"></i><b>8.4.1</b> 常用正则表达式命令-1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-2"><i class="fa fa-check"></i><b>8.4.2</b> 常用正则表达式命令-2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#量词"><i class="fa fa-check"></i><b>8.4.3</b> 量词</a></li>
+<li class="chapter" data-level="8.4.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕获分组"><i class="fa fa-check"></i><b>8.4.4</b> 捕获分组</a></li>
+<li class="chapter" data-level="8.4.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#python使用编译"><i class="fa fa-check"></i><b>8.4.5</b> python使用编译</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html"><i class="fa fa-check"></i><b>9</b> 临床医学统计流</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#common.r"><i class="fa fa-check"></i><b>9.1</b> COMMON.R</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载r包和配置全局环境"><i class="fa fa-check"></i><b>9.1.1</b> 加载R包和配置全局环境</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#使用officer来启动函数参数"><i class="fa fa-check"></i><b>9.1.2</b> 使用officer来启动函数参数：</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#table-of-content"><i class="fa fa-check"></i><b>9.1.3</b> Table of content</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#cover-template--封面"><i class="fa fa-check"></i><b>9.1.4</b> Cover template -封面</a></li>
+<li class="chapter" data-level="9.1.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷辅助函数"><i class="fa fa-check"></i><b>9.1.5</b> 快捷辅助函数：</a></li>
+<li class="chapter" data-level="9.1.6" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷统计函数"><i class="fa fa-check"></i><b>9.1.6</b> 快捷统计函数：</a></li>
+<li class="chapter" data-level="9.1.7" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#描述性分析统计函数"><i class="fa fa-check"></i><b>9.1.7</b> 描述性分析统计函数</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#rawdata-cleaning-pipeline"><i class="fa fa-check"></i><b>9.2</b> Rawdata cleaning pipeline</a></li>
+<li class="chapter" data-level="9.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#target_groups"><i class="fa fa-check"></i><b>9.3</b> target_groups</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载集成数据集"><i class="fa fa-check"></i><b>9.3.1</b> 加载集成数据集</a></li>
+<li class="chapter" data-level="9.3.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#保存数据集"><i class="fa fa-check"></i><b>9.3.2</b> 保存数据集</a></li>
+<li class="chapter" data-level="9.3.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#患者平衡匹配前后信息比较"><i class="fa fa-check"></i><b>9.3.3</b> 患者平衡匹配前后信息比较</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#dataset_for_analysis"><i class="fa fa-check"></i><b>9.4</b> dataset_for_analysis</a></li>
+<li class="chapter" data-level="9.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#final_analysis"><i class="fa fa-check"></i><b>9.5</b> final_analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Statistical-books.html"><a href="Statistical-books.html"><i class="fa fa-check"></i><b>10</b> 统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Statistical-books.html"><a href="Statistical-books.html#r-统计书籍"><i class="fa fa-check"></i><b>10.1</b> R-统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="Statistical-books.html"><a href="Statistical-books.html#tidyverse相关"><i class="fa fa-check"></i><b>10.1.1</b> tidyverse相关</a></li>
+<li class="chapter" data-level="10.1.2" data-path="Statistical-books.html"><a href="Statistical-books.html#ggplo2相关-网站"><i class="fa fa-check"></i><b>10.1.2</b> ggplo2相关-网站</a></li>
+<li class="chapter" data-level="10.1.3" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图指南"><i class="fa fa-check"></i><b>10.1.3</b> 绘图指南</a></li>
+<li class="chapter" data-level="10.1.4" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图相关的博客"><i class="fa fa-check"></i><b>10.1.4</b> 绘图相关的博客</a></li>
+<li class="chapter" data-level="10.1.5" data-path="Statistical-books.html"><a href="Statistical-books.html#医学指南相关"><i class="fa fa-check"></i><b>10.1.5</b> 医学指南相关</a></li>
+<li class="chapter" data-level="10.1.6" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计r包"><i class="fa fa-check"></i><b>10.1.6</b> 医学统计R包</a></li>
+<li class="chapter" data-level="10.1.7" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计相关博客"><i class="fa fa-check"></i><b>10.1.7</b> 医学统计相关博客</a></li>
+<li class="chapter" data-level="10.1.8" data-path="Statistical-books.html"><a href="Statistical-books.html#统计指南-r代码实现"><i class="fa fa-check"></i><b>10.1.8</b> 统计指南-R代码实现</a></li>
+<li class="chapter" data-level="10.1.9" data-path="Statistical-books.html"><a href="Statistical-books.html#数据建模相关"><i class="fa fa-check"></i><b>10.1.9</b> 数据建模相关</a></li>
+<li class="chapter" data-level="10.1.10" data-path="Statistical-books.html"><a href="Statistical-books.html#整合流程"><i class="fa fa-check"></i><b>10.1.10</b> 整合流程</a></li>
+<li class="chapter" data-level="10.1.11" data-path="Statistical-books.html"><a href="Statistical-books.html#博客社区"><i class="fa fa-check"></i><b>10.1.11</b> 博客社区</a></li>
+<li class="chapter" data-level="10.1.12" data-path="Statistical-books.html"><a href="Statistical-books.html#rmarkdown"><i class="fa fa-check"></i><b>10.1.12</b> Rmarkdown</a></li>
+<li class="chapter" data-level="10.1.13" data-path="Statistical-books.html"><a href="Statistical-books.html#r-rstudio"><i class="fa fa-check"></i><b>10.1.13</b> R-Rstudio</a></li>
+<li class="chapter" data-level="10.1.14" data-path="Statistical-books.html"><a href="Statistical-books.html#shiny"><i class="fa fa-check"></i><b>10.1.14</b> shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="Statistical-books.html"><a href="Statistical-books.html#使用gitbook写书"><i class="fa fa-check"></i><b>10.2</b> 使用gitbook写书</a></li>
+<li class="chapter" data-level="10.3" data-path="Statistical-books.html"><a href="Statistical-books.html#使用bookdwon写书"><i class="fa fa-check"></i><b>10.3</b> 使用bookdwon写书</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="Statistical-books.html"><a href="Statistical-books.html#常用功能标记"><i class="fa fa-check"></i><b>10.3.1</b> 常用功能标记</a></li>
+<li class="chapter" data-level="10.3.2" data-path="Statistical-books.html"><a href="Statistical-books.html#r代码的构建"><i class="fa fa-check"></i><b>10.3.2</b> R代码的构建</a></li>
+<li class="chapter" data-level="10.3.3" data-path="Statistical-books.html"><a href="Statistical-books.html#动态r代码"><i class="fa fa-check"></i><b>10.3.3</b> 动态r代码</a></li>
+<li class="chapter" data-level="10.3.4" data-path="Statistical-books.html"><a href="Statistical-books.html#引入shiny应用"><i class="fa fa-check"></i><b>10.3.4</b> 引入shiny应用</a></li>
+<li class="chapter" data-level="10.3.5" data-path="Statistical-books.html"><a href="Statistical-books.html#指定输出和解析的文件"><i class="fa fa-check"></i><b>10.3.5</b> 指定输出和解析的文件</a></li>
+<li class="chapter" data-level="10.3.6" data-path="Statistical-books.html"><a href="Statistical-books.html#文件最后修改时间"><i class="fa fa-check"></i><b>10.3.6</b> 文件最后修改时间</a></li>
+<li class="chapter" data-level="10.3.7" data-path="Statistical-books.html"><a href="Statistical-books.html#添加指定序号"><i class="fa fa-check"></i><b>10.3.7</b> 添加指定序号</a></li>
+<li class="chapter" data-level="10.3.8" data-path="Statistical-books.html"><a href="Statistical-books.html#辅助知识-"><i class="fa fa-check"></i><b>10.3.8</b> 辅助知识：—-</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html"><i class="fa fa-check"></i><b>11</b> 统计与研究设计</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用参数释义"><i class="fa fa-check"></i><b>11.1</b> 常用参数释义</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#因果回归参数"><i class="fa fa-check"></i><b>11.1.1</b> 因果回归参数</a></li>
+<li class="chapter" data-level="11.1.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#生存分析参数"><i class="fa fa-check"></i><b>11.1.2</b> 生存分析参数</a></li>
+<li class="chapter" data-level="11.1.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析参数解释"><i class="fa fa-check"></i><b>11.1.3</b> 方差分析参数解释</a></li>
+<li class="chapter" data-level="11.1.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归分析中常用参数释义"><i class="fa fa-check"></i><b>11.1.4</b> 回归分析中常用参数释义</a></li>
+<li class="chapter" data-level="11.1.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用分布描述"><i class="fa fa-check"></i><b>11.1.5</b> 常用分布描述</a></li>
+<li class="chapter" data-level="11.1.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#其他统计参数释义"><i class="fa fa-check"></i><b>11.1.6</b> 其他统计参数释义</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#临床研究中常用的统计方法和常见问题"><i class="fa fa-check"></i><b>11.2</b> 临床研究中常用的统计方法和常见问题</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计推断与区间估计"><i class="fa fa-check"></i><b>11.2.1</b> 统计推断与区间估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计方法选择"><i class="fa fa-check"></i><b>11.2.2</b> 统计方法选择：</a></li>
+<li class="chapter" data-level="11.2.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计分析中的常见问题"><i class="fa fa-check"></i><b>11.2.3</b> 统计分析中的常见问题</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#差异分析"><i class="fa fa-check"></i><b>11.3</b> 差异分析</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差检验与t检验的选择"><i class="fa fa-check"></i><b>11.3.1</b> 方差检验与T检验的选择</a></li>
+<li class="chapter" data-level="11.3.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#z-分布t检验f检验和卡方检验"><i class="fa fa-check"></i><b>11.3.2</b> Z 分布、T检验、F检验和卡方检验</a></li>
+<li class="chapter" data-level="11.3.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#t检验"><i class="fa fa-check"></i><b>11.3.3</b> T检验</a></li>
+<li class="chapter" data-level="11.3.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析"><i class="fa fa-check"></i><b>11.3.4</b> 方差分析</a></li>
+<li class="chapter" data-level="11.3.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#卡方检验"><i class="fa fa-check"></i><b>11.3.5</b> 卡方检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归"><i class="fa fa-check"></i><b>11.4</b> 多元线性回归</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的概念和基础公式"><i class="fa fa-check"></i><b>11.4.1</b> 多元线性回归的概念和基础公式</a></li>
+<li class="chapter" data-level="11.4.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的本质"><i class="fa fa-check"></i><b>11.4.2</b> 多元线性回归的本质</a></li>
+<li class="chapter" data-level="11.4.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的参数解释"><i class="fa fa-check"></i><b>11.4.3</b> 回归方程的参数解释：</a></li>
+<li class="chapter" data-level="11.4.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的评价指标"><i class="fa fa-check"></i><b>11.4.4</b> 回归方程的评价指标</a></li>
+<li class="chapter" data-level="11.4.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关参数"><i class="fa fa-check"></i><b>11.4.5</b> 回归解释相关参数：</a></li>
+<li class="chapter" data-level="11.4.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关补充"><i class="fa fa-check"></i><b>11.4.6</b> 回归解释相关补充：</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验"><i class="fa fa-check"></i><b>11.5</b> 相关检验</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验和系数"><i class="fa fa-check"></i><b>11.5.1</b> 相关检验和系数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#医疗相关检验"><i class="fa fa-check"></i><b>11.6</b> 医疗相关检验</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#log-rank检验"><i class="fa fa-check"></i><b>11.6.1</b> Log-rank检验</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html"><i class="fa fa-check"></i><b>12</b> 构筑R package</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构筑r-package相关参数配置"><i class="fa fa-check"></i><b>12.1</b> 构筑R package相关参数配置</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#创建本地环境并使用renv初始化本地安装环境"><i class="fa fa-check"></i><b>12.1.1</b> 创建本地环境并使用renv初始化本地安装环境</a></li>
+<li class="chapter" data-level="12.1.2" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#常用配置"><i class="fa fa-check"></i><b>12.1.2</b> 常用配置</a></li>
+<li class="chapter" data-level="12.1.3" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建函数"><i class="fa fa-check"></i><b>12.1.3</b> 构建函数</a></li>
+<li class="chapter" data-level="12.1.4" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#函数测试"><i class="fa fa-check"></i><b>12.1.4</b> 函数测试</a></li>
+<li class="chapter" data-level="12.1.5" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加项目内置数据集"><i class="fa fa-check"></i><b>12.1.5</b> 添加项目内置数据集</a></li>
+<li class="chapter" data-level="12.1.6" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加辅助描述文件"><i class="fa fa-check"></i><b>12.1.6</b> 添加辅助描述文件</a></li>
+<li class="chapter" data-level="12.1.7" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#r包整体测试"><i class="fa fa-check"></i><b>12.1.7</b> R包整体测试</a></li>
+<li class="chapter" data-level="12.1.8" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建及安装r包"><i class="fa fa-check"></i><b>12.1.8</b> 构建及安装R包</a></li>
+<li class="chapter" data-level="12.1.9" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建后上传到github多平台检查"><i class="fa fa-check"></i><b>12.1.9</b> 构建后上传到github多平台检查</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由bookdown驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于 R 的数据处理流程指南</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Common-statistical-R-code" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">第 8 章</span> 常用统计R代码<a href="Common-statistical-R-code.html#Common-statistical-R-code" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="r-系统功能" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> R-系统功能<a href="Common-statistical-R-code.html#r-系统功能" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="常用r系统代码" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> 常用R系统代码<a href="Common-statistical-R-code.html#常用r系统代码" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="Common-statistical-R-code.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 代码环境的配置信息：</span></span>
+<span id="cb320-2"><a href="Common-statistical-R-code.html#cb320-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb320-3"><a href="Common-statistical-R-code.html#cb320-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-4"><a href="Common-statistical-R-code.html#cb320-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 查看函数的参数：</span></span>
+<span id="cb320-5"><a href="Common-statistical-R-code.html#cb320-5" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(sample)</span>
+<span id="cb320-6"><a href="Common-statistical-R-code.html#cb320-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-7"><a href="Common-statistical-R-code.html#cb320-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 查看文件路径：</span></span>
+<span id="cb320-8"><a href="Common-statistical-R-code.html#cb320-8" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.getenv</span>(<span class="st">&quot;PATH&quot;</span>)</span>
+<span id="cb320-9"><a href="Common-statistical-R-code.html#cb320-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-10"><a href="Common-statistical-R-code.html#cb320-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 默认加载R包：</span></span>
+<span id="cb320-11"><a href="Common-statistical-R-code.html#cb320-11" aria-hidden="true" tabindex="-1"></a>从R的安装目录bai的etc目录下找到duRprofile.site文件(例如R<span class="dv">-2</span>.<span class="fl">15.0</span>\etc\Rprofile.site)，用记事本打开，在这个文dao件最后添加一行：</span>
+<span id="cb320-12"><a href="Common-statistical-R-code.html#cb320-12" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">defaultPackages=</span><span class="fu">c</span>(<span class="fu">getOption</span>(<span class="st">&quot;defaultPackages&quot;</span>), <span class="st">&quot;foreign&quot;</span>, <span class="st">&quot;survival&quot;</span>))</span>
+<span id="cb320-13"><a href="Common-statistical-R-code.html#cb320-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-14"><a href="Common-statistical-R-code.html#cb320-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 查看系统时间：</span></span>
+<span id="cb320-15"><a href="Common-statistical-R-code.html#cb320-15" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(<span class="fu">format</span>(<span class="fu">Sys.time</span>(), <span class="st">&quot;%s&quot;</span>))</span>
+<span id="cb320-16"><a href="Common-statistical-R-code.html#cb320-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-17"><a href="Common-statistical-R-code.html#cb320-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 当前时间：</span></span>
+<span id="cb320-18"><a href="Common-statistical-R-code.html#cb320-18" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span>
+<span id="cb320-19"><a href="Common-statistical-R-code.html#cb320-19" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span>()</span>
+<span id="cb320-20"><a href="Common-statistical-R-code.html#cb320-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-21"><a href="Common-statistical-R-code.html#cb320-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 全局参数配置：</span></span>
+<span id="cb320-22"><a href="Common-statistical-R-code.html#cb320-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 关闭科学技术法：</span></span>
+<span id="cb320-23"><a href="Common-statistical-R-code.html#cb320-23" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)  </span>
+<span id="cb320-24"><a href="Common-statistical-R-code.html#cb320-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 设置全局小数点打印位数：</span></span>
+<span id="cb320-25"><a href="Common-statistical-R-code.html#cb320-25" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">1</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb320-26"><a href="Common-statistical-R-code.html#cb320-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 全局中文字符修正测试;</span></span>
+<span id="cb320-27"><a href="Common-statistical-R-code.html#cb320-27" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">encoding =</span> <span class="st">&#39;UTF-8&#39;</span>)</span>
+<span id="cb320-28"><a href="Common-statistical-R-code.html#cb320-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 修改全局语言-减少中文乱码的可能性：</span></span>
+<span id="cb320-29"><a href="Common-statistical-R-code.html#cb320-29" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="st">&quot;LC_ALL&quot;</span>,<span class="st">&quot;Chinese&quot;</span>)</span>
+<span id="cb320-30"><a href="Common-statistical-R-code.html#cb320-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 全局代码编写参数：</span></span>
+<span id="cb320-31"><a href="Common-statistical-R-code.html#cb320-31" aria-hidden="true" tabindex="-1"></a><span class="co"># -*- coding: utf-8 -*-    # 适用于一般脚本的抬头；</span></span>
+<span id="cb320-32"><a href="Common-statistical-R-code.html#cb320-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 设置java运行的内存：</span></span>
+<span id="cb320-33"><a href="Common-statistical-R-code.html#cb320-33" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">java.parameters =</span> <span class="st">&quot;-Xmx10g&quot;</span> )</span>
+<span id="cb320-34"><a href="Common-statistical-R-code.html#cb320-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb320-35"><a href="Common-statistical-R-code.html#cb320-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 局部参数配置：</span></span>
+<span id="cb320-36"><a href="Common-statistical-R-code.html#cb320-36" aria-hidden="true" tabindex="-1"></a>强制保留3位小数：</span>
+<span id="cb320-37"><a href="Common-statistical-R-code.html#cb320-37" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">round</span>(p.value<span class="sc">*</span><span class="dv">100</span>)<span class="sc">/</span><span class="dv">100</span>,<span class="at">nsmall=</span><span class="dv">3</span>)</span>
+<span id="cb320-38"><a href="Common-statistical-R-code.html#cb320-38" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">round</span>(t1<span class="sc">$</span>p.value,<span class="at">digits =</span><span class="dv">3</span>),<span class="at">nsmall=</span><span class="dv">3</span>)</span></code></pre></div>
+</div>
+<div id="辅助r包" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">8.1.2</span> 辅助R包：<a href="Common-statistical-R-code.html#辅助r包" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="Common-statistical-R-code.html#cb321-1" aria-hidden="true" tabindex="-1"></a><span class="do">##################### 高效安装R包：</span></span>
+<span id="cb321-2"><a href="Common-statistical-R-code.html#cb321-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pacman)</span>
+<span id="cb321-3"><a href="Common-statistical-R-code.html#cb321-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_load</span>(beepr,esquisse)  <span class="do">## 它会自动安装未安装的R包，并加载到环境中；</span></span>
+<span id="cb321-4"><a href="Common-statistical-R-code.html#cb321-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-5"><a href="Common-statistical-R-code.html#cb321-5" aria-hidden="true" tabindex="-1"></a><span class="do">##################### 工作结束后提醒：</span></span>
+<span id="cb321-6"><a href="Common-statistical-R-code.html#cb321-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(beepr)</span>
+<span id="cb321-7"><a href="Common-statistical-R-code.html#cb321-7" aria-hidden="true" tabindex="-1"></a>beepr<span class="sc">::</span><span class="fu">beep</span>(<span class="at">sound =</span><span class="dv">8</span>)</span>
+<span id="cb321-8"><a href="Common-statistical-R-code.html#cb321-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-9"><a href="Common-statistical-R-code.html#cb321-9" aria-hidden="true" tabindex="-1"></a><span class="do">####################### 构建文件树</span></span>
+<span id="cb321-10"><a href="Common-statistical-R-code.html#cb321-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 构建文件树路径：</span></span>
+<span id="cb321-11"><a href="Common-statistical-R-code.html#cb321-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 方法1：中文不识别：</span></span>
+<span id="cb321-12"><a href="Common-statistical-R-code.html#cb321-12" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="at">path =</span> <span class="st">&quot;./&quot;</span>, <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb321-13"><a href="Common-statistical-R-code.html#cb321-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-14"><a href="Common-statistical-R-code.html#cb321-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 方法2：中文识别：</span></span>
+<span id="cb321-15"><a href="Common-statistical-R-code.html#cb321-15" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;drat&quot;</span>)</span>
+<span id="cb321-16"><a href="Common-statistical-R-code.html#cb321-16" aria-hidden="true" tabindex="-1"></a>drat<span class="sc">::</span><span class="fu">addRepo</span>(<span class="st">&quot;stlarepo&quot;</span>)</span>
+<span id="cb321-17"><a href="Common-statistical-R-code.html#cb321-17" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dir2json&quot;</span>)</span>
+<span id="cb321-18"><a href="Common-statistical-R-code.html#cb321-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dir2json)</span>
+<span id="cb321-19"><a href="Common-statistical-R-code.html#cb321-19" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="fu">dir2tree</span>(<span class="st">&quot;./&quot;</span>))</span>
+<span id="cb321-20"><a href="Common-statistical-R-code.html#cb321-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 中文不识别：</span></span>
+<span id="cb321-21"><a href="Common-statistical-R-code.html#cb321-21" aria-hidden="true" tabindex="-1"></a>dir2json<span class="sc">::</span><span class="fu">shinyDirTree</span>(<span class="st">&quot;.&quot;</span>)</span>
+<span id="cb321-22"><a href="Common-statistical-R-code.html#cb321-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-23"><a href="Common-statistical-R-code.html#cb321-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 方法3：</span></span>
+<span id="cb321-24"><a href="Common-statistical-R-code.html#cb321-24" aria-hidden="true" tabindex="-1"></a>使用dos命令中的tree 工具，即tree <span class="sc">/</span>f <span class="sc">&gt;</span> <span class="fl">1.</span>txt </span>
+<span id="cb321-25"><a href="Common-statistical-R-code.html#cb321-25" aria-hidden="true" tabindex="-1"></a>复制到对应的剪切板中：tree <span class="sc">|</span> clip</span>
+<span id="cb321-26"><a href="Common-statistical-R-code.html#cb321-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-27"><a href="Common-statistical-R-code.html#cb321-27" aria-hidden="true" tabindex="-1"></a><span class="do">###################### 代码注释器：</span></span>
+<span id="cb321-28"><a href="Common-statistical-R-code.html#cb321-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 快速生成代码注释器：</span></span>
+<span id="cb321-29"><a href="Common-statistical-R-code.html#cb321-29" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;bannerCommenter&quot;)</span></span>
+<span id="cb321-30"><a href="Common-statistical-R-code.html#cb321-30" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bannerCommenter)</span>
+<span id="cb321-31"><a href="Common-statistical-R-code.html#cb321-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 注释代码：</span></span>
+<span id="cb321-32"><a href="Common-statistical-R-code.html#cb321-32" aria-hidden="true" tabindex="-1"></a><span class="fu">banner</span>(<span class="st">&quot;hkaisydfiukasdjh&quot;</span>)</span>
+<span id="cb321-33"><a href="Common-statistical-R-code.html#cb321-33" aria-hidden="true" tabindex="-1"></a><span class="fu">boxup</span>(<span class="st">&quot;alkwsu&quot;</span>, <span class="st">&quot;akijdsk&quot;</span>)</span>
+<span id="cb321-34"><a href="Common-statistical-R-code.html#cb321-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-35"><a href="Common-statistical-R-code.html#cb321-35" aria-hidden="true" tabindex="-1"></a><span class="do">################### 查看函数的查看内存和运行时间</span></span>
+<span id="cb321-36"><a href="Common-statistical-R-code.html#cb321-36" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb321-37"><a href="Common-statistical-R-code.html#cb321-37" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb321-38"><a href="Common-statistical-R-code.html#cb321-38" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb321-39"><a href="Common-statistical-R-code.html#cb321-39" aria-hidden="true" tabindex="-1"></a>tbl.test <span class="ot">&lt;-</span> <span class="fu">data.table</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="fl">1e6</span>))</span>
+<span id="cb321-40"><a href="Common-statistical-R-code.html#cb321-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-41"><a href="Common-statistical-R-code.html#cb321-41" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb321-42"><a href="Common-statistical-R-code.html#cb321-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">fcase =</span> tbl.test[, .(<span class="fu">fcase</span>(x <span class="sc">&lt;</span> <span class="dv">1</span>, x <span class="sc">+</span> <span class="dv">1</span>, <span class="fu">rep_len</span>(<span class="cn">TRUE</span>, <span class="fu">length</span>(x)), x))],<span class="at">case_when =</span> tbl.test[, .(<span class="fu">case_when</span>(x <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">~</span> x <span class="sc">+</span> <span class="dv">1</span>, <span class="cn">TRUE</span> <span class="sc">~</span> x))])</span>
+<span id="cb321-43"><a href="Common-statistical-R-code.html#cb321-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   expression      min   median `itr/sec` mem_alloc `gc/sec`</span></span>
+<span id="cb321-44"><a href="Common-statistical-R-code.html#cb321-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;</span></span>
+<span id="cb321-45"><a href="Common-statistical-R-code.html#cb321-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 fcase        16.5ms   24.3ms     33.3     36.1MB     43.1</span></span>
+<span id="cb321-46"><a href="Common-statistical-R-code.html#cb321-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 case_when   146.4ms  147.9ms      6.60   129.9MB     28.1</span></span>
+<span id="cb321-47"><a href="Common-statistical-R-code.html#cb321-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-48"><a href="Common-statistical-R-code.html#cb321-48" aria-hidden="true" tabindex="-1"></a><span class="do">###################### 整理脚本集中的代码：</span></span>
+<span id="cb321-49"><a href="Common-statistical-R-code.html#cb321-49" aria-hidden="true" tabindex="-1"></a><span class="do">## 方法1：</span></span>
+<span id="cb321-50"><a href="Common-statistical-R-code.html#cb321-50" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;styler&quot;</span>)</span>
+<span id="cb321-51"><a href="Common-statistical-R-code.html#cb321-51" aria-hidden="true" tabindex="-1"></a><span class="do">## 运行下面代码：1、代码保存成文件形式；2、代码无执行错误；</span></span>
+<span id="cb321-52"><a href="Common-statistical-R-code.html#cb321-52" aria-hidden="true" tabindex="-1"></a>styler<span class="sc">::</span>：<span class="fu">style_active_file</span>() </span>
+<span id="cb321-53"><a href="Common-statistical-R-code.html#cb321-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb321-54"><a href="Common-statistical-R-code.html#cb321-54" aria-hidden="true" tabindex="-1"></a><span class="do">## 方法2：</span></span>
+<span id="cb321-55"><a href="Common-statistical-R-code.html#cb321-55" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">&quot;ROpenSci/Rclean&quot;</span>)</span>
+<span id="cb321-56"><a href="Common-statistical-R-code.html#cb321-56" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rclean)</span>
+<span id="cb321-57"><a href="Common-statistical-R-code.html#cb321-57" aria-hidden="true" tabindex="-1"></a>script <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;example&quot;</span>, <span class="st">&quot;long_script.R&quot;</span>, </span>
+<span id="cb321-58"><a href="Common-statistical-R-code.html#cb321-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">package =</span> <span class="st">&quot;Rclean&quot;</span>)</span>
+<span id="cb321-59"><a href="Common-statistical-R-code.html#cb321-59" aria-hidden="true" tabindex="-1"></a><span class="fu">clean</span>(script, <span class="st">&quot;fit_sqrt_A&quot;</span>)</span></code></pre></div>
+</div>
+<div id="常用系统脚本" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">8.1.3</span> 常用系统脚本<a href="Common-statistical-R-code.html#常用系统脚本" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="r置换系统r包迁移" class="section level4 hasAnchor" number="8.1.3.1">
+<h4><span class="header-section-number">8.1.3.1</span> R置换系统R包迁移<a href="Common-statistical-R-code.html#r置换系统r包迁移" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>#启动当前版本，输入以下命令
+oldip &lt;- installed.packages()[,1]
+save(oldip, file=&quot;installedPackages.Rdata&quot;)
+#卸载旧版本
+#下载安装新版本，启动新版本输入以下命令
+load(&quot;installedPackages.Rdata&quot;)
+newip &lt;- installed.packages()[,1]
+for(i in setdiff(oldip, newip)) install.packages(i)</code></pre>
+</div>
+<div id="r与linux交互" class="section level4 hasAnchor" number="8.1.3.2">
+<h4><span class="header-section-number">8.1.3.2</span> R与linux交互<a href="Common-statistical-R-code.html#r与linux交互" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="Common-statistical-R-code.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">require</span>(ape, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">&#39;ape&#39;</span>)</span>
+<span id="cb323-2"><a href="Common-statistical-R-code.html#cb323-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb323-3"><a href="Common-statistical-R-code.html#cb323-3" aria-hidden="true" tabindex="-1"></a>args <span class="ot">&lt;-</span> <span class="fu">commandArgs</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb323-4"><a href="Common-statistical-R-code.html#cb323-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(args) <span class="sc">&gt;</span><span class="dv">3</span> <span class="sc">&amp;&amp;</span>  <span class="fu">length</span>(args) <span class="sc">&lt;</span><span class="dv">2</span>) {</span>
+<span id="cb323-5"><a href="Common-statistical-R-code.html#cb323-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;usage: Rscript fasta2nexus.R dirname postfix filterout</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb323-6"><a href="Common-statistical-R-code.html#cb323-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;filterout: joined with comma</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb323-7"><a href="Common-statistical-R-code.html#cb323-7" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb323-8"><a href="Common-statistical-R-code.html#cb323-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">setwd</span>(args[<span class="dv">1</span>])</span>
+<span id="cb323-9"><a href="Common-statistical-R-code.html#cb323-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(args)<span class="sc">==</span><span class="dv">2</span>) arg[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb323-10"><a href="Common-statistical-R-code.html#cb323-10" aria-hidden="true" tabindex="-1"></a>  filter <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(arg[<span class="dv">3</span>],<span class="st">&quot;,&quot;</span>))</span>
+<span id="cb323-11"><a href="Common-statistical-R-code.html#cb323-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">grep</span>(<span class="fu">paste0</span>(args[<span class="dv">2</span>], <span class="st">&quot;$&quot;</span>), <span class="at">value =</span> <span class="cn">TRUE</span>, <span class="fu">list.files</span>())) {</span>
+<span id="cb323-12"><a href="Common-statistical-R-code.html#cb323-12" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> <span class="fu">read.FASTA</span>(i)</span>
+<span id="cb323-13"><a href="Common-statistical-R-code.html#cb323-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(temp) <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;@.*&quot;</span>, <span class="st">&quot;&quot;</span>, <span class="fu">names</span>(temp))</span>
+<span id="cb323-14"><a href="Common-statistical-R-code.html#cb323-14" aria-hidden="true" tabindex="-1"></a>    temp <span class="ot">&lt;-</span> temp[<span class="fu">setdiff</span>(<span class="fu">names</span>(temp),filter)]</span>
+<span id="cb323-15"><a href="Common-statistical-R-code.html#cb323-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write.nexus.data</span>(temp, <span class="fu">paste0</span>(i, <span class="st">&quot;.nex&quot;</span>))</span>
+<span id="cb323-16"><a href="Common-statistical-R-code.html#cb323-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb323-17"><a href="Common-statistical-R-code.html#cb323-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="键盘和鼠标监听" class="section level4 hasAnchor" number="8.1.3.3">
+<h4><span class="header-section-number">8.1.3.3</span> 键盘和鼠标监听<a href="Common-statistical-R-code.html#键盘和鼠标监听" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="Common-statistical-R-code.html#cb324-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 案例 1：</span></span>
+<span id="cb324-2"><a href="Common-statistical-R-code.html#cb324-2" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span> 利用R语言画图，根据键盘输入显示对应的文字。</span>
+<span id="cb324-3"><a href="Common-statistical-R-code.html#cb324-3" aria-hidden="true" tabindex="-1"></a><span class="fl">2.</span> 每按一下键盘，输出一个字母在屏幕上面。</span>
+<span id="cb324-4"><a href="Common-statistical-R-code.html#cb324-4" aria-hidden="true" tabindex="-1"></a><span class="fl">3.</span> 按ctrl<span class="sc">+</span>c时，停止键盘事件</span>
+<span id="cb324-5"><a href="Common-statistical-R-code.html#cb324-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-6"><a href="Common-statistical-R-code.html#cb324-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 字母工具</span></span>
+<span id="cb324-7"><a href="Common-statistical-R-code.html#cb324-7" aria-hidden="true" tabindex="-1"></a>letter<span class="ot">&lt;-</span><span class="cf">function</span>(){</span>
+<span id="cb324-8"><a href="Common-statistical-R-code.html#cb324-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-9"><a href="Common-statistical-R-code.html#cb324-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图函数</span></span>
+<span id="cb324-10"><a href="Common-statistical-R-code.html#cb324-10" aria-hidden="true" tabindex="-1"></a>  draw<span class="ot">&lt;-</span><span class="cf">function</span>(<span class="at">label=</span><span class="st">&#39;&#39;</span>,<span class="at">x=</span><span class="dv">0</span>,<span class="at">y=</span><span class="dv">0</span>){</span>
+<span id="cb324-11"><a href="Common-statistical-R-code.html#cb324-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(x,y,<span class="at">type=</span><span class="st">&#39;n&#39;</span>)</span>
+<span id="cb324-12"><a href="Common-statistical-R-code.html#cb324-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">text</span>(x,y,<span class="at">label=</span>label,<span class="at">cex=</span><span class="dv">5</span>)</span>
+<span id="cb324-13"><a href="Common-statistical-R-code.html#cb324-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb324-14"><a href="Common-statistical-R-code.html#cb324-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-15"><a href="Common-statistical-R-code.html#cb324-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 键盘事件</span></span>
+<span id="cb324-16"><a href="Common-statistical-R-code.html#cb324-16" aria-hidden="true" tabindex="-1"></a>  keydown<span class="ot">&lt;-</span><span class="cf">function</span>(K){</span>
+<span id="cb324-17"><a href="Common-statistical-R-code.html#cb324-17" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (K <span class="sc">==</span> <span class="st">&quot;ctrl-C&quot;</span>) <span class="fu">return</span>(<span class="fu">invisible</span>(<span class="dv">1</span>))</span>
+<span id="cb324-18"><a href="Common-statistical-R-code.html#cb324-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(K)</span>
+<span id="cb324-19"><a href="Common-statistical-R-code.html#cb324-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw</span>(K)</span>
+<span id="cb324-20"><a href="Common-statistical-R-code.html#cb324-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb324-21"><a href="Common-statistical-R-code.html#cb324-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-22"><a href="Common-statistical-R-code.html#cb324-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 画图</span></span>
+<span id="cb324-23"><a href="Common-statistical-R-code.html#cb324-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">draw</span>()</span>
+<span id="cb324-24"><a href="Common-statistical-R-code.html#cb324-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-25"><a href="Common-statistical-R-code.html#cb324-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 注册键盘事件，启动监听</span></span>
+<span id="cb324-26"><a href="Common-statistical-R-code.html#cb324-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">getGraphicsEvent</span>(<span class="at">prompt=</span><span class="st">&quot;Letter Tool&quot;</span>,<span class="at">onKeybd =</span> keydown)</span>
+<span id="cb324-27"><a href="Common-statistical-R-code.html#cb324-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb324-28"><a href="Common-statistical-R-code.html#cb324-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb324-29"><a href="Common-statistical-R-code.html#cb324-29" aria-hidden="true" tabindex="-1"></a><span class="co">#启动程序</span></span>
+<span id="cb324-30"><a href="Common-statistical-R-code.html#cb324-30" aria-hidden="true" tabindex="-1"></a><span class="fu">letter</span>()</span></code></pre></div>
+</div>
+<div id="文件管理" class="section level4 hasAnchor" number="8.1.3.4">
+<h4><span class="header-section-number">8.1.3.4</span> 文件管理<a href="Common-statistical-R-code.html#文件管理" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="常用文件管理" class="section level5 hasAnchor" number="8.1.3.4.1">
+<h5><span class="header-section-number">8.1.3.4.1</span> 3.4.1 常用文件管理：<a href="Common-statistical-R-code.html#常用文件管理" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="Common-statistical-R-code.html#cb325-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 修改文件夹的内的文件名：</span></span>
+<span id="cb325-2"><a href="Common-statistical-R-code.html#cb325-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb325-3"><a href="Common-statistical-R-code.html#cb325-3" aria-hidden="true" tabindex="-1"></a>newname<span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">&quot;E:/sjdata/F2_ENVS/aseutif/&quot;</span>,<span class="at">pattern =</span> <span class="st">&quot;tif&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">strsplit</span>(.,<span class="st">&quot;.tif&quot;</span>)</span>
+<span id="cb325-4"><a href="Common-statistical-R-code.html#cb325-4" aria-hidden="true" tabindex="-1"></a>nw <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb325-5"><a href="Common-statistical-R-code.html#cb325-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">42</span>){</span>
+<span id="cb325-6"><a href="Common-statistical-R-code.html#cb325-6" aria-hidden="true" tabindex="-1"></a>  nw <span class="ot">&lt;-</span> <span class="fu">c</span>(nw,newname[[i]][<span class="dv">1</span>])}</span>
+<span id="cb325-7"><a href="Common-statistical-R-code.html#cb325-7" aria-hidden="true" tabindex="-1"></a>nw</span>
+<span id="cb325-8"><a href="Common-statistical-R-code.html#cb325-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-9"><a href="Common-statistical-R-code.html#cb325-9" aria-hidden="true" tabindex="-1"></a>news <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;E:/sjdata/F2_ENVS/aseutif/&quot;</span>,nw,<span class="st">&quot;.tif&quot;</span>)</span>
+<span id="cb325-10"><a href="Common-statistical-R-code.html#cb325-10" aria-hidden="true" tabindex="-1"></a><span class="fu">file.rename</span>(<span class="at">from =</span> <span class="fu">list.files</span>(<span class="at">path=</span><span class="st">&quot;E:/sjdata/F2_ENVS/aseutif/&quot;</span>,<span class="at">pattern =</span> <span class="st">&quot;tif&quot;</span>,<span class="at">full.names =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb325-11"><a href="Common-statistical-R-code.html#cb325-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">to =</span> news)</span>
+<span id="cb325-12"><a href="Common-statistical-R-code.html#cb325-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-13"><a href="Common-statistical-R-code.html#cb325-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 查看文件大小：</span></span>
+<span id="cb325-14"><a href="Common-statistical-R-code.html#cb325-14" aria-hidden="true" tabindex="-1"></a><span class="do">### 查看数据集的大小：</span></span>
+<span id="cb325-15"><a href="Common-statistical-R-code.html#cb325-15" aria-hidden="true" tabindex="-1"></a><span class="do">## fs包：</span></span>
+<span id="cb325-16"><a href="Common-statistical-R-code.html#cb325-16" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">file_size</span>(file)</span>
+<span id="cb325-17"><a href="Common-statistical-R-code.html#cb325-17" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>cran.r<span class="sc">-</span>project.org<span class="sc">/</span>web<span class="sc">/</span>packages<span class="sc">/</span>fs<span class="sc">/</span>fs.pdf</span>
+<span id="cb325-18"><a href="Common-statistical-R-code.html#cb325-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-19"><a href="Common-statistical-R-code.html#cb325-19" aria-hidden="true" tabindex="-1"></a><span class="do">## dir_info() </span></span>
+<span id="cb325-20"><a href="Common-statistical-R-code.html#cb325-20" aria-hidden="true" tabindex="-1"></a>查看指定路径下文件的元数据信息；</span>
+<span id="cb325-21"><a href="Common-statistical-R-code.html#cb325-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-22"><a href="Common-statistical-R-code.html#cb325-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 使用dir重新替代list.files()</span></span>
+<span id="cb325-23"><a href="Common-statistical-R-code.html#cb325-23" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>() 函数等价于 <span class="fu">dir</span>() 函数被替代了；</span>
+<span id="cb325-24"><a href="Common-statistical-R-code.html#cb325-24" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span> ( <span class="st">&quot;../. .&quot;</span> ,  <span class="at">pattern  =</span>  <span class="st">&quot;^[a-lr]&quot;</span> ,  <span class="at">full.names  =</span>  <span class="cn">TRUE</span> ,  <span class="at">ignore.case  =</span>  <span class="cn">TRUE</span> )</span>
+<span id="cb325-25"><a href="Common-statistical-R-code.html#cb325-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-26"><a href="Common-statistical-R-code.html#cb325-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 构建文件树路径；</span></span>
+<span id="cb325-27"><a href="Common-statistical-R-code.html#cb325-27" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb325-28"><a href="Common-statistical-R-code.html#cb325-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-29"><a href="Common-statistical-R-code.html#cb325-29" aria-hidden="true" tabindex="-1"></a><span class="do">##### 关于here的用法补充 #####</span></span>
+<span id="cb325-30"><a href="Common-statistical-R-code.html#cb325-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 直接读取上层文件夹下的数据路径层：</span></span>
+<span id="cb325-31"><a href="Common-statistical-R-code.html#cb325-31" aria-hidden="true" tabindex="-1"></a><span class="fu">dir</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>))</span>
+<span id="cb325-32"><a href="Common-statistical-R-code.html#cb325-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 注意here这里的data是针对的上层文件夹；</span></span>
+<span id="cb325-33"><a href="Common-statistical-R-code.html#cb325-33" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb325-34"><a href="Common-statistical-R-code.html#cb325-34" aria-hidden="true" tabindex="-1"></a><span class="do">## here中连接的子文件夹中不需要再写对应的参数位置；</span></span>
+<span id="cb325-35"><a href="Common-statistical-R-code.html#cb325-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 如下所示，就是表示data文件夹下的aa文件夹；但感觉这个思路也很蠢！！！</span></span>
+<span id="cb325-36"><a href="Common-statistical-R-code.html#cb325-36" aria-hidden="true" tabindex="-1"></a>fs<span class="sc">::</span><span class="fu">dir_tree</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;aa&quot;</span>), <span class="at">recurse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb325-37"><a href="Common-statistical-R-code.html#cb325-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-38"><a href="Common-statistical-R-code.html#cb325-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb325-39"><a href="Common-statistical-R-code.html#cb325-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 获取当前数据名称下内存的占用：</span></span>
+<span id="cb325-40"><a href="Common-statistical-R-code.html#cb325-40" aria-hidden="true" tabindex="-1"></a>l2 <span class="ot">&lt;-</span> <span class="fu">list</span>(mtcars, mtcars, mtcars, mtcars)</span>
+<span id="cb325-41"><a href="Common-statistical-R-code.html#cb325-41" aria-hidden="true" tabindex="-1"></a>lobstr<span class="sc">::</span><span class="fu">obj_size</span>(l2)</span></code></pre></div>
+</div>
+<div id="全集-处理r文件" class="section level5 hasAnchor" number="8.1.3.4.2">
+<h5><span class="header-section-number">8.1.3.4.2</span> 3.4.2 全集-处理R文件<a href="Common-statistical-R-code.html#全集-处理r文件" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="Common-statistical-R-code.html#cb326-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 创建code文件夹：</span></span>
+<span id="cb326-2"><a href="Common-statistical-R-code.html#cb326-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(<span class="st">&quot;code&quot;</span>)) <span class="fu">dir.create</span>(<span class="st">&quot;code&quot;</span>)</span>
+<span id="cb326-3"><a href="Common-statistical-R-code.html#cb326-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-4"><a href="Common-statistical-R-code.html#cb326-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建并写入数据到文件A.txt和B.txt</span></span>
+<span id="cb326-5"><a href="Common-statistical-R-code.html#cb326-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;file A</span><span class="sc">\n</span><span class="st">&quot;</span>, <span class="at">file =</span> <span class="st">&quot;A.txt&quot;</span>)</span>
+<span id="cb326-6"><a href="Common-statistical-R-code.html#cb326-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-7"><a href="Common-statistical-R-code.html#cb326-7" aria-hidden="true" tabindex="-1"></a><span class="co">#新建tmp文件夹，并拷贝A.txt和B.txt到tmp文件夹下</span></span>
+<span id="cb326-8"><a href="Common-statistical-R-code.html#cb326-8" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">&quot;tmp&quot;</span>)</span>
+<span id="cb326-9"><a href="Common-statistical-R-code.html#cb326-9" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(<span class="fu">c</span>(<span class="st">&quot;A.txt&quot;</span>, <span class="st">&quot;B.txt&quot;</span>), <span class="st">&quot;tmp&quot;</span>)</span>
+<span id="cb326-10"><a href="Common-statistical-R-code.html#cb326-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-11"><a href="Common-statistical-R-code.html#cb326-11" aria-hidden="true" tabindex="-1"></a><span class="co">#删除tmp文件夹,并删除里面的内容,当recursive = TRUE;</span></span>
+<span id="cb326-12"><a href="Common-statistical-R-code.html#cb326-12" aria-hidden="true" tabindex="-1"></a><span class="fu">unlink</span>(<span class="st">&quot;tmp&quot;</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb326-13"><a href="Common-statistical-R-code.html#cb326-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-14"><a href="Common-statistical-R-code.html#cb326-14" aria-hidden="true" tabindex="-1"></a><span class="co">#修改文件名C.txt为D.txt</span></span>
+<span id="cb326-15"><a href="Common-statistical-R-code.html#cb326-15" aria-hidden="true" tabindex="-1"></a><span class="fu">file.rename</span>(<span class="st">&quot;C.txt&quot;</span>, <span class="st">&quot;D.txt&quot;</span>)</span>
+<span id="cb326-16"><a href="Common-statistical-R-code.html#cb326-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-17"><a href="Common-statistical-R-code.html#cb326-17" aria-hidden="true" tabindex="-1"></a><span class="co">#读取bin目录下所有文件及目录(包含全路径)</span></span>
+<span id="cb326-18"><a href="Common-statistical-R-code.html#cb326-18" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">dir</span>(<span class="fu">file.path</span>(<span class="fu">R.home</span>(), <span class="st">&quot;bin&quot;</span>), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb326-19"><a href="Common-statistical-R-code.html#cb326-19" aria-hidden="true" tabindex="-1"></a><span class="co">#返回当前目录下所有文件及目录的信息</span></span>
+<span id="cb326-20"><a href="Common-statistical-R-code.html#cb326-20" aria-hidden="true" tabindex="-1"></a><span class="fu">file.info</span>(<span class="fu">list.files</span>())</span>
+<span id="cb326-21"><a href="Common-statistical-R-code.html#cb326-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-22"><a href="Common-statistical-R-code.html#cb326-22" aria-hidden="true" tabindex="-1"></a><span class="co">#返回当前目录下所有文件的最近一次修改时间</span></span>
+<span id="cb326-23"><a href="Common-statistical-R-code.html#cb326-23" aria-hidden="true" tabindex="-1"></a><span class="fu">file.mtime</span>(<span class="fu">list.files</span>())</span>
+<span id="cb326-24"><a href="Common-statistical-R-code.html#cb326-24" aria-hidden="true" tabindex="-1"></a><span class="fu">file.info</span>(<span class="fu">list.files</span>())<span class="sc">$</span>mtime</span>
+<span id="cb326-25"><a href="Common-statistical-R-code.html#cb326-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-26"><a href="Common-statistical-R-code.html#cb326-26" aria-hidden="true" tabindex="-1"></a><span class="co">#返回当前目录下所有文件的大小，目录size返回为0</span></span>
+<span id="cb326-27"><a href="Common-statistical-R-code.html#cb326-27" aria-hidden="true" tabindex="-1"></a><span class="fu">file.size</span>(<span class="fu">list.files</span>(()))</span>
+<span id="cb326-28"><a href="Common-statistical-R-code.html#cb326-28" aria-hidden="true" tabindex="-1"></a><span class="fu">file.info</span>(<span class="fu">list.files</span>())<span class="sc">$</span>size</span>
+<span id="cb326-29"><a href="Common-statistical-R-code.html#cb326-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-30"><a href="Common-statistical-R-code.html#cb326-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 复制文件</span></span>
+<span id="cb326-31"><a href="Common-statistical-R-code.html#cb326-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-32"><a href="Common-statistical-R-code.html#cb326-32" aria-hidden="true" tabindex="-1"></a>file.copy用于</span>
+<span id="cb326-33"><a href="Common-statistical-R-code.html#cb326-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-34"><a href="Common-statistical-R-code.html#cb326-34" aria-hidden="true" tabindex="-1"></a><span class="fu">file.copy</span>(from, to, <span class="at">overwrite =</span> recursive, <span class="at">recursive =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb326-35"><a href="Common-statistical-R-code.html#cb326-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">copy.mode =</span> <span class="cn">TRUE</span>, <span class="at">copy.date =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb326-36"><a href="Common-statistical-R-code.html#cb326-36" aria-hidden="true" tabindex="-1"></a>from是原始文件（目录）名，to是新文件（目录）名，二者可以是vector，但是长度需相同；</span>
+<span id="cb326-37"><a href="Common-statistical-R-code.html#cb326-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-38"><a href="Common-statistical-R-code.html#cb326-38" aria-hidden="true" tabindex="-1"></a>overwrite 若为TRUE，则文件被覆盖；</span>
+<span id="cb326-39"><a href="Common-statistical-R-code.html#cb326-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-40"><a href="Common-statistical-R-code.html#cb326-40" aria-hidden="true" tabindex="-1"></a>recursive 复制目录时recursive需为TRUE；</span>
+<span id="cb326-41"><a href="Common-statistical-R-code.html#cb326-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-42"><a href="Common-statistical-R-code.html#cb326-42" aria-hidden="true" tabindex="-1"></a>copy.mode若为TRUE，permission bits一并复制过来；</span>
+<span id="cb326-43"><a href="Common-statistical-R-code.html#cb326-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-44"><a href="Common-statistical-R-code.html#cb326-44" aria-hidden="true" tabindex="-1"></a>copy.date若为TRUE，文件日期一并复制过来。</span>
+<span id="cb326-45"><a href="Common-statistical-R-code.html#cb326-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb326-46"><a href="Common-statistical-R-code.html#cb326-46" aria-hidden="true" tabindex="-1"></a><span class="do">## 删除</span></span>
+<span id="cb326-47"><a href="Common-statistical-R-code.html#cb326-47" aria-hidden="true" tabindex="-1"></a>函数unlink可以用来删除文件或目录，函数file.remove可以用来删除文件。</span></code></pre></div>
+</div>
+</div>
+<div id="工作环境保存" class="section level4 hasAnchor" number="8.1.3.5">
+<h4><span class="header-section-number">8.1.3.5</span> 工作环境保存<a href="Common-statistical-R-code.html#工作环境保存" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="Common-statistical-R-code.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="do">## RDS格式的数据共享：</span></span>
+<span id="cb327-2"><a href="Common-statistical-R-code.html#cb327-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 单一的多维数据矩阵：</span></span>
+<span id="cb327-3"><a href="Common-statistical-R-code.html#cb327-3" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(linelist, <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;clean&quot;</span>, <span class="st">&quot;my_linelist.rds&quot;</span>))</span>
+<span id="cb327-4"><a href="Common-statistical-R-code.html#cb327-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb327-5"><a href="Common-statistical-R-code.html#cb327-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Rdata格式的数据共享:</span></span>
+<span id="cb327-6"><a href="Common-statistical-R-code.html#cb327-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 可以同时包含多个数据框、模型结果、列表；</span></span>
+<span id="cb327-7"><a href="Common-statistical-R-code.html#cb327-7" aria-hidden="true" tabindex="-1"></a>rio<span class="sc">::</span><span class="fu">export</span>(my_list, my_dataframe, my_vector, <span class="st">&quot;my_objects.Rdata&quot;</span>)</span>
+<span id="cb327-8"><a href="Common-statistical-R-code.html#cb327-8" aria-hidden="true" tabindex="-1"></a>rio<span class="sc">::</span><span class="fu">import_list</span>(<span class="st">&quot;my_list.Rdata&quot;</span>)</span>
+<span id="cb327-9"><a href="Common-statistical-R-code.html#cb327-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb327-10"><a href="Common-statistical-R-code.html#cb327-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取数据：</span></span>
+<span id="cb327-11"><a href="Common-statistical-R-code.html#cb327-11" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;mydata.RData&quot;</span>)</span>
+<span id="cb327-12"><a href="Common-statistical-R-code.html#cb327-12" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;mydata.rda&quot;</span>)</span>
+<span id="cb327-13"><a href="Common-statistical-R-code.html#cb327-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb327-14"><a href="Common-statistical-R-code.html#cb327-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  将数据结果导出到rdata:</span></span>
+<span id="cb327-15"><a href="Common-statistical-R-code.html#cb327-15" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(object1, object2, <span class="at">file=</span>“mywork.rda<span class="st">&quot;) # Slected objects</span></span></code></pre></div>
+</div>
+<div id="配置git-rstudio" class="section level4 hasAnchor" number="8.1.3.6">
+<h4><span class="header-section-number">8.1.3.6</span> 配置git-RSTUDIO<a href="Common-statistical-R-code.html#配置git-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="配置git-rstudio-1" class="section level5 hasAnchor" number="8.1.3.6.1">
+<h5><span class="header-section-number">8.1.3.6.1</span> 配置git-RSTUDIO<a href="Common-statistical-R-code.html#配置git-rstudio-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure">
+<img src="image/08/image-20220909160449309.png" alt="" />
+<p class="caption">image-20220909160449309</p>
+</div>
+<pre><code>https://www.bilibili.com/video/BV1QQ4y1v7p1?spm_id_from=333.337.search-card.all.click</code></pre>
+</div>
+<div id="github配置r报错相关" class="section level5 hasAnchor" number="8.1.3.6.2">
+<h5><span class="header-section-number">8.1.3.6.2</span> github配置R报错相关<a href="Common-statistical-R-code.html#github配置r报错相关" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="Common-statistical-R-code.html#cb329-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决报错1：</span></span>
+<span id="cb329-2"><a href="Common-statistical-R-code.html#cb329-2" aria-hidden="true" tabindex="-1"></a>在使用github客户端提交代码时，报错</span>
+<span id="cb329-3"><a href="Common-statistical-R-code.html#cb329-3" aria-hidden="true" tabindex="-1"></a>failed to receive handshake ssl<span class="sc">/</span>tls connection failed</span>
+<span id="cb329-4"><a href="Common-statistical-R-code.html#cb329-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决方法：</span></span>
+<span id="cb329-5"><a href="Common-statistical-R-code.html#cb329-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 任意位置git-bush：</span></span>
+<span id="cb329-6"><a href="Common-statistical-R-code.html#cb329-6" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span> git config <span class="sc">--</span>global http.sslBackend <span class="st">&quot;openssl&quot;</span></span>
+<span id="cb329-7"><a href="Common-statistical-R-code.html#cb329-7" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span> git config <span class="sc">--</span>global http.sslCAInfo [path to .pem file]</span>
+<span id="cb329-8"><a href="Common-statistical-R-code.html#cb329-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-9"><a href="Common-statistical-R-code.html#cb329-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决报错2：</span></span>
+<span id="cb329-10"><a href="Common-statistical-R-code.html#cb329-10" aria-hidden="true" tabindex="-1"></a>报错解决]Error <span class="cf">in</span> <span class="fu">nchar</span>(object, <span class="at">type =</span> <span class="st">&quot;chars&quot;</span>) <span class="sc">:</span> invalid multibyte string, element <span class="dv">1</span></span>
+<span id="cb329-11"><a href="Common-statistical-R-code.html#cb329-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决方法：</span></span>
+<span id="cb329-12"><a href="Common-statistical-R-code.html#cb329-12" aria-hidden="true" tabindex="-1"></a>在R的窗口上运行Sys<span class="fu">.setlocale</span>(<span class="at">category =</span> <span class="st">&quot;LC_ALL&quot;</span>, <span class="at">locale =</span> <span class="st">&quot;us&quot;</span>)即可解决</span>
+<span id="cb329-13"><a href="Common-statistical-R-code.html#cb329-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb329-14"><a href="Common-statistical-R-code.html#cb329-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决报错3：</span></span>
+<span id="cb329-15"><a href="Common-statistical-R-code.html#cb329-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 关于一个非常复杂的报错：</span></span>
+<span id="cb329-16"><a href="Common-statistical-R-code.html#cb329-16" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> Failed to install <span class="st">&#39;unknown package&#39;</span> from GitHub<span class="sc">:</span> HTTP error <span class="fl">401.</span> Bad</span>
+<span id="cb329-17"><a href="Common-statistical-R-code.html#cb329-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 解决办法：</span></span>
+<span id="cb329-18"><a href="Common-statistical-R-code.html#cb329-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 先利用:</span></span>
+<span id="cb329-19"><a href="Common-statistical-R-code.html#cb329-19" aria-hidden="true" tabindex="-1"></a><span class="co"># R中打开：</span></span>
+<span id="cb329-20"><a href="Common-statistical-R-code.html#cb329-20" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">browse_github_pat</span>()</span>
+<span id="cb329-21"><a href="Common-statistical-R-code.html#cb329-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 网页端打开github：R:GITHUB_PAT=nicheer124499</span></span>
+<span id="cb329-22"><a href="Common-statistical-R-code.html#cb329-22" aria-hidden="true" tabindex="-1"></a><span class="co"># R打开：</span></span>
+<span id="cb329-23"><a href="Common-statistical-R-code.html#cb329-23" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_r_environ</span>()</span>
+<span id="cb329-24"><a href="Common-statistical-R-code.html#cb329-24" aria-hidden="true" tabindex="-1"></a>这会打开一个环境页，将刚才设置的R.GITHUB_PAT<span class="ot">=</span>gouzahndang123 粘贴复制上 然后保存，重启R就可以了。注意剪切上去的形式不是和上面的一致：需要：</span>
+<span id="cb329-25"><a href="Common-statistical-R-code.html#cb329-25" aria-hidden="true" tabindex="-1"></a>GITHUB_PAT<span class="ot">=</span><span class="fu">gouzahndang123</span>(等价的秘钥)</span>
+<span id="cb329-26"><a href="Common-statistical-R-code.html#cb329-26" aria-hidden="true" tabindex="-1"></a>然后打开还会持续报错；</span>
+<span id="cb329-27"><a href="Common-statistical-R-code.html#cb329-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 在git中使用：</span></span>
+<span id="cb329-28"><a href="Common-statistical-R-code.html#cb329-28" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span> git config <span class="sc">--</span>global http.sslBackend <span class="st">&quot;openssl&quot;</span></span>
+<span id="cb329-29"><a href="Common-statistical-R-code.html#cb329-29" aria-hidden="true" tabindex="-1"></a>git config <span class="sc">--</span>global http.sslCAInfo D<span class="sc">:</span><span class="er">/</span>bclang<span class="sc">/</span>R<span class="dv">-4</span>.<span class="fl">0.2</span><span class="sc">/</span>library<span class="sc">/</span>openssl<span class="sc">/</span>cacert.pem</span>
+<span id="cb329-30"><a href="Common-statistical-R-code.html#cb329-30" aria-hidden="true" tabindex="-1"></a>之后，使用</span>
+<span id="cb329-31"><a href="Common-statistical-R-code.html#cb329-31" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;GITHUB_PAT&quot;</span>)</span>
+<span id="cb329-32"><a href="Common-statistical-R-code.html#cb329-32" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">Sys.unsetenv</span>(<span class="st">&quot;GITHUB_PAT&quot;</span>)</span>
+<span id="cb329-33"><a href="Common-statistical-R-code.html#cb329-33" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">Sys.getenv</span>(<span class="st">&quot;GITHUB_PAT&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="默认加载r包" class="section level4 hasAnchor" number="8.1.3.7">
+<h4><span class="header-section-number">8.1.3.7</span> 默认加载R包：<a href="Common-statistical-R-code.html#默认加载r包" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 默认加载R包
+从R的安装目录的etc目录下找到Rprofile.site文件(例如R-2.15.0\etc\Rprofile.site)，用记事本打开，在这个文件最后添加一行：
+options(defaultPackages=c(getOption(&quot;defaultPackages&quot;), &quot;foreign&quot;, &quot;survival&quot;))
+把&quot;foreign&quot;, &quot;survival&quot;改成你需要自动加载的包就行了</code></pre>
+</div>
+<div id="改变r-的临时缓冲目录" class="section level4 hasAnchor" number="8.1.3.8">
+<h4><span class="header-section-number">8.1.3.8</span> 改变R 的临时缓冲目录<a href="Common-statistical-R-code.html#改变r-的临时缓冲目录" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## 因为在构建模型过程中会涉及大量的rep，而部分R包的优化效果并不好，会产生局量 的临时缓存文件，但C盘往往是不够的；因此需要改变系统的临时缓冲文件到其他盘；
+## 网络上检索到的各种办法都不能实际解决临时缓冲文件的问题：
+## 解决办法是在对应版本的R文件下：
+## 如：创建一个名为：Renviron.site的文件：
+（例如C：\ Program Files \ R \ R-3.3.2 \ etc）
+## 创建后的文件，用notepad++打开：
+## E:/rtemp 为临时文件缓冲路径：实测有效！！
+TMPDIR=E:/rtemp 
+TMP=E:/rtemp 
+TEMP=E:/rtemp</code></pre>
+</div>
+</div>
+<div id="s3和s4事件" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">8.1.4</span> S3和S4事件<a href="Common-statistical-R-code.html#s3和s4事件" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="Common-statistical-R-code.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S3 类型，list函数的变体，一个对象可以有多个类；使用attr来定义对象的类；</span></span>
+<span id="cb332-2"><a href="Common-statistical-R-code.html#cb332-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb332-3"><a href="Common-statistical-R-code.html#cb332-3" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(x, <span class="st">&quot;class&quot;</span>) <span class="ot">&lt;-</span> <span class="st">&quot;foo&quot;</span>  <span class="sc">/</span><span class="er">/</span> <span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>)</span>
+<span id="cb332-4"><a href="Common-statistical-R-code.html#cb332-4" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb332-5"><a href="Common-statistical-R-code.html#cb332-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-6"><a href="Common-statistical-R-code.html#cb332-6" aria-hidden="true" tabindex="-1"></a><span class="do">## S3构造的形式：</span></span>
+<span id="cb332-7"><a href="Common-statistical-R-code.html#cb332-7" aria-hidden="true" tabindex="-1"></a>myClass <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(), <span class="at">class =</span> <span class="st">&quot;myClass&quot;</span>)</span>
+<span id="cb332-8"><a href="Common-statistical-R-code.html#cb332-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-9"><a href="Common-statistical-R-code.html#cb332-9" aria-hidden="true" tabindex="-1"></a>myClass <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb332-10"><a href="Common-statistical-R-code.html#cb332-10" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(myClass) <span class="ot">&lt;-</span> <span class="st">&quot;myClass&quot;</span></span>
+<span id="cb332-11"><a href="Common-statistical-R-code.html#cb332-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-12"><a href="Common-statistical-R-code.html#cb332-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 继续添加类型；</span></span>
+<span id="cb332-13"><a href="Common-statistical-R-code.html#cb332-13" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dnaseq) <span class="ot">=</span> <span class="fu">append</span>(<span class="fu">class</span>(dnaseq),<span class="st">&quot;DNAseq&quot;</span>)</span>
+<span id="cb332-14"><a href="Common-statistical-R-code.html#cb332-14" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dnaseq)</span>
+<span id="cb332-15"><a href="Common-statistical-R-code.html#cb332-15" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">&quot;list&quot;</span>   <span class="st">&quot;DNAseq&quot;</span></span>
+<span id="cb332-16"><a href="Common-statistical-R-code.html#cb332-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-17"><a href="Common-statistical-R-code.html#cb332-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取类型，使用$;</span></span>
+<span id="cb332-18"><a href="Common-statistical-R-code.html#cb332-18" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x)</span>
+<span id="cb332-19"><a href="Common-statistical-R-code.html#cb332-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-20"><a href="Common-statistical-R-code.html#cb332-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取顺序：</span></span>
+<span id="cb332-21"><a href="Common-statistical-R-code.html#cb332-21" aria-hidden="true" tabindex="-1"></a>如果 class 属性是一个向量 <span class="fu">c</span>(”foo”, ”bar”), 则优先寻找</span>
+<span id="cb332-22"><a href="Common-statistical-R-code.html#cb332-22" aria-hidden="true" tabindex="-1"></a>mean.foo, 然后 mean.bar, 最后 mean.default.</span>
+<span id="cb332-23"><a href="Common-statistical-R-code.html#cb332-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-24"><a href="Common-statistical-R-code.html#cb332-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 继承关系；</span></span>
+<span id="cb332-25"><a href="Common-statistical-R-code.html#cb332-25" aria-hidden="true" tabindex="-1"></a>由于 class 属性可以是向量, 所以 S3 中的继承关系自然地表</span>
+<span id="cb332-26"><a href="Common-statistical-R-code.html#cb332-26" aria-hidden="true" tabindex="-1"></a>现为 class 属性的前一个分量是后一个的子类<span class="fu">.NextMethod</span>() 函</span>
+<span id="cb332-27"><a href="Common-statistical-R-code.html#cb332-27" aria-hidden="true" tabindex="-1"></a>数可以使得一系列的方法被依次应用于对象上.</span>
+<span id="cb332-28"><a href="Common-statistical-R-code.html#cb332-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-29"><a href="Common-statistical-R-code.html#cb332-29" aria-hidden="true" tabindex="-1"></a>bar <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">UseMethod</span>(<span class="st">&quot;bar&quot;</span>, x)</span>
+<span id="cb332-30"><a href="Common-statistical-R-code.html#cb332-30" aria-hidden="true" tabindex="-1"></a>bar.son <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="st">&quot;I am son.&quot;</span>, <span class="fu">NextMethod</span>())</span>
+<span id="cb332-31"><a href="Common-statistical-R-code.html#cb332-31" aria-hidden="true" tabindex="-1"></a>bar.father <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="st">&quot;I am father.&quot;</span>)</span>
+<span id="cb332-32"><a href="Common-statistical-R-code.html#cb332-32" aria-hidden="true" tabindex="-1"></a>foo <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="dv">1</span>, <span class="at">class =</span> <span class="fu">c</span>(<span class="st">&quot;son&quot;</span>, <span class="st">&quot;father&quot;</span>))</span>
+<span id="cb332-33"><a href="Common-statistical-R-code.html#cb332-33" aria-hidden="true" tabindex="-1"></a><span class="fu">bar</span>(foo)  <span class="do">## 注意这里调用的方法，是根据bar.son中的结果返回下一个类；</span></span>
+<span id="cb332-34"><a href="Common-statistical-R-code.html#cb332-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb332-35"><a href="Common-statistical-R-code.html#cb332-35" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span></code></pre></div>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="Common-statistical-R-code.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="do">## S4 类型：</span></span>
+<span id="cb333-2"><a href="Common-statistical-R-code.html#cb333-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-3"><a href="Common-statistical-R-code.html#cb333-3" aria-hidden="true" tabindex="-1"></a>S4 调度很复杂，因为 S4 有两个重要的特性：</span>
+<span id="cb333-4"><a href="Common-statistical-R-code.html#cb333-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-5"><a href="Common-statistical-R-code.html#cb333-5" aria-hidden="true" tabindex="-1"></a>多重继承，即一个类可以有多个父类，</span>
+<span id="cb333-6"><a href="Common-statistical-R-code.html#cb333-6" aria-hidden="true" tabindex="-1"></a>多重分派，即泛型可以使用多个参数来选择一个方法。</span>
+<span id="cb333-7"><a href="Common-statistical-R-code.html#cb333-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-8"><a href="Common-statistical-R-code.html#cb333-8" aria-hidden="true" tabindex="-1"></a><span class="do">###---------------------S4类-------------------</span></span>
+<span id="cb333-9"><a href="Common-statistical-R-code.html#cb333-9" aria-hidden="true" tabindex="-1"></a><span class="co"># setClass(Class, representation, prototype, contains=character(), </span></span>
+<span id="cb333-10"><a href="Common-statistical-R-code.html#cb333-10" aria-hidden="true" tabindex="-1"></a><span class="co">#          validity, access, where, version, sealed, package,  </span></span>
+<span id="cb333-11"><a href="Common-statistical-R-code.html#cb333-11" aria-hidden="true" tabindex="-1"></a><span class="co">#          S3methods = FALSE, slots)</span></span>
+<span id="cb333-12"><a href="Common-statistical-R-code.html#cb333-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Class：定义的类名</span></span>
+<span id="cb333-13"><a href="Common-statistical-R-code.html#cb333-13" aria-hidden="true" tabindex="-1"></a><span class="co">#slots：定义类的属性</span></span>
+<span id="cb333-14"><a href="Common-statistical-R-code.html#cb333-14" aria-hidden="true" tabindex="-1"></a><span class="co">#prototype：定义属性的默认值（这个有什么用，我还没有发掘）</span></span>
+<span id="cb333-15"><a href="Common-statistical-R-code.html#cb333-15" aria-hidden="true" tabindex="-1"></a><span class="co">#contains = character()：定义父类和继承关系</span></span>
+<span id="cb333-16"><a href="Common-statistical-R-code.html#cb333-16" aria-hidden="true" tabindex="-1"></a><span class="co">#where：定义存储空间</span></span>
+<span id="cb333-17"><a href="Common-statistical-R-code.html#cb333-17" aria-hidden="true" tabindex="-1"></a><span class="co">#sealed：若是TRUE，则同类名不能被定义</span></span>
+<span id="cb333-18"><a href="Common-statistical-R-code.html#cb333-18" aria-hidden="true" tabindex="-1"></a><span class="co">#package：定义所属包</span></span>
+<span id="cb333-19"><a href="Common-statistical-R-code.html#cb333-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-20"><a href="Common-statistical-R-code.html#cb333-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-21"><a href="Common-statistical-R-code.html#cb333-21" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Person&quot;</span>, <span class="at">slots =</span> <span class="fu">list</span>(<span class="at">name=</span><span class="st">&quot;character&quot;</span>,<span class="at">age=</span><span class="st">&quot;numeric&quot;</span>))</span>
+<span id="cb333-22"><a href="Common-statistical-R-code.html#cb333-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-23"><a href="Common-statistical-R-code.html#cb333-23" aria-hidden="true" tabindex="-1"></a><span class="co">#实例化一个人,也就是创建一个对象,这里使用new来实例化对象：</span></span>
+<span id="cb333-24"><a href="Common-statistical-R-code.html#cb333-24" aria-hidden="true" tabindex="-1"></a>Person3 <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>,<span class="at">name=</span><span class="st">&quot;potter&quot;</span>,<span class="at">age=</span><span class="dv">49</span>) </span>
+<span id="cb333-25"><a href="Common-statistical-R-code.html#cb333-25" aria-hidden="true" tabindex="-1"></a>Person3</span>
+<span id="cb333-26"><a href="Common-statistical-R-code.html#cb333-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-27"><a href="Common-statistical-R-code.html#cb333-27" aria-hidden="true" tabindex="-1"></a><span class="co">#创建一个子类</span></span>
+<span id="cb333-28"><a href="Common-statistical-R-code.html#cb333-28" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Student&quot;</span>,<span class="at">slots =</span> <span class="fu">list</span>(<span class="at">ID=</span><span class="st">&quot;character&quot;</span>,<span class="at">school=</span> <span class="st">&quot;character&quot;</span>),</span>
+<span id="cb333-29"><a href="Common-statistical-R-code.html#cb333-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">contains =</span> <span class="st">&quot;Person&quot;</span>)   <span class="co">#contain表明类的继承关系，继承自Person</span></span>
+<span id="cb333-30"><a href="Common-statistical-R-code.html#cb333-30" aria-hidden="true" tabindex="-1"></a><span class="co">#实例化类</span></span>
+<span id="cb333-31"><a href="Common-statistical-R-code.html#cb333-31" aria-hidden="true" tabindex="-1"></a>Person3 <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>,<span class="at">name=</span><span class="st">&quot;potter&quot;</span>,<span class="at">age=</span><span class="dv">49</span>)</span>
+<span id="cb333-32"><a href="Common-statistical-R-code.html#cb333-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-33"><a href="Common-statistical-R-code.html#cb333-33" aria-hidden="true" tabindex="-1"></a>Student1 <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">&quot;Student&quot;</span>,<span class="at">name=</span><span class="st">&quot;liming&quot;</span>,<span class="at">age=</span><span class="dv">16</span>,<span class="at">ID=</span><span class="st">&quot;2020051419&quot;</span>,<span class="at">school=</span><span class="st">&quot;Taiwan University&quot;</span>)</span>
+<span id="cb333-34"><a href="Common-statistical-R-code.html#cb333-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-35"><a href="Common-statistical-R-code.html#cb333-35" aria-hidden="true" tabindex="-1"></a>Student1</span>
+<span id="cb333-36"><a href="Common-statistical-R-code.html#cb333-36" aria-hidden="true" tabindex="-1"></a><span class="do">## 使用@ 来检测类的属性：</span></span>
+<span id="cb333-37"><a href="Common-statistical-R-code.html#cb333-37" aria-hidden="true" tabindex="-1"></a>Student1<span class="sc">@</span>name</span>
+<span id="cb333-38"><a href="Common-statistical-R-code.html#cb333-38" aria-hidden="true" tabindex="-1"></a>Student1<span class="sc">@</span>school</span>
+<span id="cb333-39"><a href="Common-statistical-R-code.html#cb333-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-40"><a href="Common-statistical-R-code.html#cb333-40" aria-hidden="true" tabindex="-1"></a>work<span class="ot">&lt;-</span><span class="cf">function</span>(x) <span class="fu">cat</span>(x, <span class="st">&quot;is working&quot;</span>)</span>
+<span id="cb333-41"><a href="Common-statistical-R-code.html#cb333-41" aria-hidden="true" tabindex="-1"></a><span class="fu">work</span>(<span class="st">&#39;Conan&#39;</span>)</span>
+<span id="cb333-42"><a href="Common-statistical-R-code.html#cb333-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义Person对象</span></span>
+<span id="cb333-43"><a href="Common-statistical-R-code.html#cb333-43" aria-hidden="true" tabindex="-1"></a><span class="fu">setClass</span>(<span class="st">&quot;Person&quot;</span>,<span class="at">slots=</span><span class="fu">list</span>(<span class="at">name=</span><span class="st">&quot;character&quot;</span>,<span class="at">age=</span><span class="st">&quot;numeric&quot;</span>))</span>
+<span id="cb333-44"><a href="Common-statistical-R-code.html#cb333-44" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义泛型函数work，即接口</span></span>
+<span id="cb333-45"><a href="Common-statistical-R-code.html#cb333-45" aria-hidden="true" tabindex="-1"></a><span class="fu">setGeneric</span>(<span class="st">&quot;work&quot;</span>,<span class="cf">function</span>(object) <span class="fu">standardGeneric</span>(<span class="st">&quot;work&quot;</span>))</span>
+<span id="cb333-46"><a href="Common-statistical-R-code.html#cb333-46" aria-hidden="true" tabindex="-1"></a><span class="co"># 定义work的实现，并指定参数类型为Person对象</span></span>
+<span id="cb333-47"><a href="Common-statistical-R-code.html#cb333-47" aria-hidden="true" tabindex="-1"></a><span class="fu">setMethod</span>(<span class="st">&quot;work&quot;</span>, <span class="fu">signature</span>(<span class="at">object =</span> <span class="st">&quot;Person&quot;</span>), <span class="cf">function</span>(object) <span class="fu">cat</span>(object<span class="sc">@</span>name , <span class="st">&quot;is working&quot;</span>) )</span>
+<span id="cb333-48"><a href="Common-statistical-R-code.html#cb333-48" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个Person对象a</span></span>
+<span id="cb333-49"><a href="Common-statistical-R-code.html#cb333-49" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span><span class="fu">new</span>(<span class="st">&quot;Person&quot;</span>,<span class="at">name=</span><span class="st">&quot;Conan&quot;</span>,<span class="at">age=</span><span class="dv">16</span>)</span>
+<span id="cb333-50"><a href="Common-statistical-R-code.html#cb333-50" aria-hidden="true" tabindex="-1"></a><span class="co"># 把对象a传入work函数</span></span>
+<span id="cb333-51"><a href="Common-statistical-R-code.html#cb333-51" aria-hidden="true" tabindex="-1"></a><span class="fu">work</span>(a)</span>
+<span id="cb333-52"><a href="Common-statistical-R-code.html#cb333-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 检查work的类型</span></span>
+<span id="cb333-53"><a href="Common-statistical-R-code.html#cb333-53" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(work)</span>
+<span id="cb333-54"><a href="Common-statistical-R-code.html#cb333-54" aria-hidden="true" tabindex="-1"></a><span class="co"># 直接查看work函数</span></span>
+<span id="cb333-55"><a href="Common-statistical-R-code.html#cb333-55" aria-hidden="true" tabindex="-1"></a>work</span>
+<span id="cb333-56"><a href="Common-statistical-R-code.html#cb333-56" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看work函数的现实定义</span></span>
+<span id="cb333-57"><a href="Common-statistical-R-code.html#cb333-57" aria-hidden="true" tabindex="-1"></a><span class="fu">showMethods</span>(work)</span>
+<span id="cb333-58"><a href="Common-statistical-R-code.html#cb333-58" aria-hidden="true" tabindex="-1"></a><span class="co"># 查看Person对象的work函数现实</span></span>
+<span id="cb333-59"><a href="Common-statistical-R-code.html#cb333-59" aria-hidden="true" tabindex="-1"></a><span class="fu">getMethod</span>(<span class="st">&quot;work&quot;</span>, <span class="st">&quot;Person&quot;</span>)</span>
+<span id="cb333-60"><a href="Common-statistical-R-code.html#cb333-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb333-61"><a href="Common-statistical-R-code.html#cb333-61" aria-hidden="true" tabindex="-1"></a><span class="fu">selectMethod</span>(<span class="st">&quot;work&quot;</span>, <span class="st">&quot;Person&quot;</span>)</span>
+<span id="cb333-62"><a href="Common-statistical-R-code.html#cb333-62" aria-hidden="true" tabindex="-1"></a><span class="co"># 检查Person对象有没有work函数</span></span>
+<span id="cb333-63"><a href="Common-statistical-R-code.html#cb333-63" aria-hidden="true" tabindex="-1"></a><span class="fu">existsMethod</span>(<span class="st">&quot;work&quot;</span>, <span class="st">&quot;Person&quot;</span>)</span>
+<span id="cb333-64"><a href="Common-statistical-R-code.html#cb333-64" aria-hidden="true" tabindex="-1"></a><span class="fu">hasMethod</span>(<span class="st">&quot;work&quot;</span>, <span class="st">&quot;Person&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="r报错机制学习" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> R报错机制学习<a href="Common-statistical-R-code.html#r报错机制学习" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="常见异常处理函数" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> 1 常见异常处理函数<a href="Common-statistical-R-code.html#常见异常处理函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="Common-statistical-R-code.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 报错及反馈机制学习</span></span>
+<span id="cb334-2"><a href="Common-statistical-R-code.html#cb334-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 异常处理是指在程序（脚本）运行期间发生的异常，是一种预先知道的状态。</span></span>
+<span id="cb334-3"><a href="Common-statistical-R-code.html#cb334-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 错误是异常，异常并不总是错误。</span></span>
+<span id="cb334-4"><a href="Common-statistical-R-code.html#cb334-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-5"><a href="Common-statistical-R-code.html#cb334-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 常见异常处理函数；</span></span>
+<span id="cb334-6"><a href="Common-statistical-R-code.html#cb334-6" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">stop</span>()</span>
+<span id="cb334-7"><a href="Common-statistical-R-code.html#cb334-7" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">stopifnot</span>()</span>
+<span id="cb334-8"><a href="Common-statistical-R-code.html#cb334-8" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">warning</span>()</span>
+<span id="cb334-9"><a href="Common-statistical-R-code.html#cb334-9" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">supressWarnings</span>()</span>
+<span id="cb334-10"><a href="Common-statistical-R-code.html#cb334-10" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">error</span>()</span>
+<span id="cb334-11"><a href="Common-statistical-R-code.html#cb334-11" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">on.exit</span>()</span>
+<span id="cb334-12"><a href="Common-statistical-R-code.html#cb334-12" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span><span class="fu">warn</span>()</span>
+<span id="cb334-13"><a href="Common-statistical-R-code.html#cb334-13" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>Try</span>
+<span id="cb334-14"><a href="Common-statistical-R-code.html#cb334-14" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>TryCatch</span>
+<span id="cb334-15"><a href="Common-statistical-R-code.html#cb334-15" aria-hidden="true" tabindex="-1"></a><span class="sc">-</span>withCallingHandlers</span>
+<span id="cb334-16"><a href="Common-statistical-R-code.html#cb334-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-17"><a href="Common-statistical-R-code.html#cb334-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 异常处理的辅助函数：</span></span>
+<span id="cb334-18"><a href="Common-statistical-R-code.html#cb334-18" aria-hidden="true" tabindex="-1"></a><span class="do">## message()：</span></span>
+<span id="cb334-19"><a href="Common-statistical-R-code.html#cb334-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 在函数内部输出(并且message内部可以执行预算）</span></span>
+<span id="cb334-20"><a href="Common-statistical-R-code.html#cb334-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 类似于print()，更适合函数编程打印；</span></span>
+<span id="cb334-21"><a href="Common-statistical-R-code.html#cb334-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb334-22"><a href="Common-statistical-R-code.html#cb334-22" aria-hidden="true" tabindex="-1"></a><span class="do">## class:</span></span>
+<span id="cb334-23"><a href="Common-statistical-R-code.html#cb334-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 解析Error和Warning message;</span></span></code></pre></div>
+</div>
+<div id="stop" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> 2 STOP<a href="Common-statistical-R-code.html#stop" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="Common-statistical-R-code.html#cb335-1" aria-hidden="true" tabindex="-1"></a><span class="do">################# 停止 ######</span></span>
+<span id="cb335-2"><a href="Common-statistical-R-code.html#cb335-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.1 stop():</span></span>
+<span id="cb335-3"><a href="Common-statistical-R-code.html#cb335-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 停止表达式，并中断函数体：</span></span>
+<span id="cb335-4"><a href="Common-statistical-R-code.html#cb335-4" aria-hidden="true" tabindex="-1"></a>test_stop <span class="ot">&lt;-</span> <span class="cf">function</span>(min, max) {</span>
+<span id="cb335-5"><a href="Common-statistical-R-code.html#cb335-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (max <span class="sc">&lt;</span> min) </span>
+<span id="cb335-6"><a href="Common-statistical-R-code.html#cb335-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&#39;Upsii:max &lt; min&#39;</span>)</span>
+<span id="cb335-7"><a href="Common-statistical-R-code.html#cb335-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&#39;We are good: max &gt; min&#39;</span>)</span>
+<span id="cb335-8"><a href="Common-statistical-R-code.html#cb335-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb335-9"><a href="Common-statistical-R-code.html#cb335-9" aria-hidden="true" tabindex="-1"></a><span class="fu">test_stop</span>(<span class="dv">22</span>,<span class="dv">10</span>)</span>
+<span id="cb335-10"><a href="Common-statistical-R-code.html#cb335-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in test(22, 10) : max &lt; min</span></span>
+<span id="cb335-11"><a href="Common-statistical-R-code.html#cb335-11" aria-hidden="true" tabindex="-1"></a><span class="fu">test_stop</span>(<span class="dv">10</span>,<span class="dv">22</span>)</span>
+<span id="cb335-12"><a href="Common-statistical-R-code.html#cb335-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;We are good: max &gt; min&quot;</span></span>
+<span id="cb335-13"><a href="Common-statistical-R-code.html#cb335-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb335-14"><a href="Common-statistical-R-code.html#cb335-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 2.2 stopifnot() ：</span></span>
+<span id="cb335-15"><a href="Common-statistical-R-code.html#cb335-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 条件判断：</span></span>
+<span id="cb335-16"><a href="Common-statistical-R-code.html#cb335-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 分为两种情况：</span></span>
+<span id="cb335-17"><a href="Common-statistical-R-code.html#cb335-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 第一种是在stopifnot内部设置条件判断，true执行计算，不返回；否则，报错Error；</span></span>
+<span id="cb335-18"><a href="Common-statistical-R-code.html#cb335-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 第二种是在stopifnot前，也即在输入stopifnot内部前设置条件判断，</span></span>
+<span id="cb335-19"><a href="Common-statistical-R-code.html#cb335-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 并基于条件判断给出反馈。</span></span>
+<span id="cb335-20"><a href="Common-statistical-R-code.html#cb335-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb335-21"><a href="Common-statistical-R-code.html#cb335-21" aria-hidden="true" tabindex="-1"></a>input_numbers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>,<span class="dv">22</span>,<span class="dv">25</span>)</span>
+<span id="cb335-22"><a href="Common-statistical-R-code.html#cb335-22" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(input_numbers)) <span class="co">#all TRUE</span></span>
+<span id="cb335-23"><a href="Common-statistical-R-code.html#cb335-23" aria-hidden="true" tabindex="-1"></a>input_statements <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span><span class="sc">==</span><span class="dv">10</span>, <span class="dv">22</span> <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb335-24"><a href="Common-statistical-R-code.html#cb335-24" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(input_statements) <span class="co">#all TRUE</span></span>
+<span id="cb335-25"><a href="Common-statistical-R-code.html#cb335-25" aria-hidden="true" tabindex="-1"></a>input_pi <span class="ot">&lt;-</span> <span class="fl">3.15</span> <span class="co">#this is not a PI number!</span></span>
+<span id="cb335-26"><a href="Common-statistical-R-code.html#cb335-26" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all.equal</span>(pi, input_pi)) <span class="co">#Error returned</span></span></code></pre></div>
+</div>
+<div id="warning" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> 3 WARNING<a href="Common-statistical-R-code.html#warning" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="Common-statistical-R-code.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="do">############## 警告 ########</span></span>
+<span id="cb336-2"><a href="Common-statistical-R-code.html#cb336-2" aria-hidden="true" tabindex="-1"></a><span class="co"># warning() and supressWarnings() functions</span></span>
+<span id="cb336-3"><a href="Common-statistical-R-code.html#cb336-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 3.1 warning() </span></span>
+<span id="cb336-4"><a href="Common-statistical-R-code.html#cb336-4" aria-hidden="true" tabindex="-1"></a>test_warning <span class="ot">&lt;-</span> <span class="cf">function</span>(min, max){</span>
+<span id="cb336-5"><a href="Common-statistical-R-code.html#cb336-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(max <span class="sc">&lt;</span> min) {</span>
+<span id="cb336-6"><a href="Common-statistical-R-code.html#cb336-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">warning</span>(<span class="st">&quot;Warning, warning. Max &lt; Min&quot;</span>)</span>
+<span id="cb336-7"><a href="Common-statistical-R-code.html#cb336-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb336-8"><a href="Common-statistical-R-code.html#cb336-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(max <span class="sc">&gt;</span> min) {</span>
+<span id="cb336-9"><a href="Common-statistical-R-code.html#cb336-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="st">&quot;Well, max &gt; min&quot;</span>)}}</span>
+<span id="cb336-10"><a href="Common-statistical-R-code.html#cb336-10" aria-hidden="true" tabindex="-1"></a><span class="fu">test_warning</span>(<span class="dv">20</span>,<span class="dv">10</span>)  <span class="ot">-&gt;</span> t1</span>
+<span id="cb336-11"><a href="Common-statistical-R-code.html#cb336-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb336-12"><a href="Common-statistical-R-code.html#cb336-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb336-13"><a href="Common-statistical-R-code.html#cb336-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning message:</span></span>
+<span id="cb336-14"><a href="Common-statistical-R-code.html#cb336-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; In test_warning(20, 10) : Warning, warning. Max &lt; Min</span></span>
+<span id="cb336-15"><a href="Common-statistical-R-code.html#cb336-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb336-16"><a href="Common-statistical-R-code.html#cb336-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.2 supressWarnings():禁止警告；也即警告消息不反馈；</span></span>
+<span id="cb336-17"><a href="Common-statistical-R-code.html#cb336-17" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressWarnings</span>(<span class="fu">test_warning</span>(<span class="dv">10</span>,<span class="dv">20</span>))</span>
+<span id="cb336-18"><a href="Common-statistical-R-code.html#cb336-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 这个函数功能也可以在option中设置：</span></span>
+<span id="cb336-19"><a href="Common-statistical-R-code.html#cb336-19" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">warning =</span> F) <span class="co"># ----还需要确定</span></span></code></pre></div>
+</div>
+<div id="捕捉错误" class="section level3 hasAnchor" number="8.2.4">
+<h3><span class="header-section-number">8.2.4</span> 4 捕捉错误<a href="Common-statistical-R-code.html#捕捉错误" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="Common-statistical-R-code.html#cb337-1" aria-hidden="true" tabindex="-1"></a><span class="do">################# 捕捉错误： ###########</span></span>
+<span id="cb337-2"><a href="Common-statistical-R-code.html#cb337-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.1 try()：捕捉错误，并忽略，收集错误信息</span></span>
+<span id="cb337-3"><a href="Common-statistical-R-code.html#cb337-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-4"><a href="Common-statistical-R-code.html#cb337-4" aria-hidden="true" tabindex="-1"></a>input_list <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">&#39;R Rules&#39;</span>, <span class="dv">10</span>, <span class="sc">-</span><span class="dv">500</span>, <span class="fl">1.23</span>, <span class="dv">0</span>, <span class="dv">1024</span>)</span>
+<span id="cb337-5"><a href="Common-statistical-R-code.html#cb337-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-6"><a href="Common-statistical-R-code.html#cb337-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(inp <span class="cf">in</span> input_list) {</span>
+<span id="cb337-7"><a href="Common-statistical-R-code.html#cb337-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Power to the 2 of&quot;</span>, inp, <span class="st">&quot;is: &quot;</span>, inp<span class="sc">**</span><span class="dv">2</span>))</span>
+<span id="cb337-8"><a href="Common-statistical-R-code.html#cb337-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-9"><a href="Common-statistical-R-code.html#cb337-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Try() with silent ON</span></span>
+<span id="cb337-10"><a href="Common-statistical-R-code.html#cb337-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(inp <span class="cf">in</span> input_list) {</span>
+<span id="cb337-11"><a href="Common-statistical-R-code.html#cb337-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">try</span>(<span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Power to the 2 of&quot;</span>, inp, <span class="st">&quot;is: &quot;</span>, inp<span class="sc">**</span><span class="dv">2</span>)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb337-12"><a href="Common-statistical-R-code.html#cb337-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-13"><a href="Common-statistical-R-code.html#cb337-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-14"><a href="Common-statistical-R-code.html#cb337-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Try() without silent：会挑选出条件错误判断语句，并返回错误！</span></span>
+<span id="cb337-15"><a href="Common-statistical-R-code.html#cb337-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(inp <span class="cf">in</span> input_list) {</span>
+<span id="cb337-16"><a href="Common-statistical-R-code.html#cb337-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">try</span>(<span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Power to the 2 of&quot;</span>, inp, <span class="st">&quot;is: &quot;</span>, inp<span class="sc">**</span><span class="dv">2</span>)))</span>
+<span id="cb337-17"><a href="Common-statistical-R-code.html#cb337-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-18"><a href="Common-statistical-R-code.html#cb337-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-19"><a href="Common-statistical-R-code.html#cb337-19" aria-hidden="true" tabindex="-1"></a><span class="co"># try()函数的另外一个重要作用是解析错误，并返回错误属性；</span></span>
+<span id="cb337-20"><a href="Common-statistical-R-code.html#cb337-20" aria-hidden="true" tabindex="-1"></a>sos <span class="ot">=</span><span class="cf">function</span>(x,y){x<span class="sc">*</span>y}</span>
+<span id="cb337-21"><a href="Common-statistical-R-code.html#cb337-21" aria-hidden="true" tabindex="-1"></a>x.inv <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">sos</span>(<span class="dv">1</span>,<span class="st">&#39;2&#39;</span>), <span class="at">silent=</span><span class="cn">TRUE</span>)  </span>
+<span id="cb337-22"><a href="Common-statistical-R-code.html#cb337-22" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">&#39;try-error&#39;</span> <span class="sc">%in%</span> <span class="fu">class</span>(x.inv))  <span class="do">## TRUE</span></span>
+<span id="cb337-23"><a href="Common-statistical-R-code.html#cb337-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-24"><a href="Common-statistical-R-code.html#cb337-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.2 TryCatch()： 捕捉错误，停止，并基于错误进行下一步条件判断；</span></span>
+<span id="cb337-25"><a href="Common-statistical-R-code.html#cb337-25" aria-hidden="true" tabindex="-1"></a>TC_fun <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
+<span id="cb337-26"><a href="Common-statistical-R-code.html#cb337-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>(x<span class="sc">**</span><span class="dv">2</span>,</span>
+<span id="cb337-27"><a href="Common-statistical-R-code.html#cb337-27" aria-hidden="true" tabindex="-1"></a>           <span class="at">warning =</span> <span class="cf">function</span>(w) {<span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;negative argument&quot;</span>, x)); </span>
+<span id="cb337-28"><a href="Common-statistical-R-code.html#cb337-28" aria-hidden="true" tabindex="-1"></a>             <span class="sc">-</span>inp<span class="sc">**</span>x},</span>
+<span id="cb337-29"><a href="Common-statistical-R-code.html#cb337-29" aria-hidden="true" tabindex="-1"></a>           <span class="at">error =</span> <span class="cf">function</span>(e) {<span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;non-numeric argument&quot;</span>, x)); </span>
+<span id="cb337-30"><a href="Common-statistical-R-code.html#cb337-30" aria-hidden="true" tabindex="-1"></a>             <span class="cn">NaN</span>}) </span>
+<span id="cb337-31"><a href="Common-statistical-R-code.html#cb337-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-32"><a href="Common-statistical-R-code.html#cb337-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 关于warning，在catch体系中不打印，直接执行函数体；</span></span>
+<span id="cb337-33"><a href="Common-statistical-R-code.html#cb337-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 关于error：识别到错误，打印错误，并基于错误执行二次函数运算；</span></span>
+<span id="cb337-34"><a href="Common-statistical-R-code.html#cb337-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(input <span class="cf">in</span> input_list) {</span>
+<span id="cb337-35"><a href="Common-statistical-R-code.html#cb337-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;TryCatch function of&quot;</span>, input, <span class="st">&quot;=&quot;</span>, <span class="fu">TC_fun</span>(input)))</span>
+<span id="cb337-36"><a href="Common-statistical-R-code.html#cb337-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb337-37"><a href="Common-statistical-R-code.html#cb337-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-38"><a href="Common-statistical-R-code.html#cb337-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.3 流控制：</span></span>
+<span id="cb337-39"><a href="Common-statistical-R-code.html#cb337-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.3.1 在内部执行参数运算：</span></span>
+<span id="cb337-40"><a href="Common-statistical-R-code.html#cb337-40" aria-hidden="true" tabindex="-1"></a>power_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
+<span id="cb337-41"><a href="Common-statistical-R-code.html#cb337-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>(</span>
+<span id="cb337-42"><a href="Common-statistical-R-code.html#cb337-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">expr =</span> {</span>
+<span id="cb337-43"><a href="Common-statistical-R-code.html#cb337-43" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(x<span class="sc">**</span>y)</span>
+<span id="cb337-44"><a href="Common-statistical-R-code.html#cb337-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">&quot;Successfully calculated x to power of y.&quot;</span>)</span>
+<span id="cb337-45"><a href="Common-statistical-R-code.html#cb337-45" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb337-46"><a href="Common-statistical-R-code.html#cb337-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">error =</span> <span class="cf">function</span>(e){</span>
+<span id="cb337-47"><a href="Common-statistical-R-code.html#cb337-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">&#39;Caught an error!&#39;</span>)</span>
+<span id="cb337-48"><a href="Common-statistical-R-code.html#cb337-48" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(e)</span>
+<span id="cb337-49"><a href="Common-statistical-R-code.html#cb337-49" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb337-50"><a href="Common-statistical-R-code.html#cb337-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">warning =</span> <span class="cf">function</span>(w){</span>
+<span id="cb337-51"><a href="Common-statistical-R-code.html#cb337-51" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">&#39;Caught an warning!&#39;</span>)</span>
+<span id="cb337-52"><a href="Common-statistical-R-code.html#cb337-52" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(w)</span>
+<span id="cb337-53"><a href="Common-statistical-R-code.html#cb337-53" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb337-54"><a href="Common-statistical-R-code.html#cb337-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">finally =</span> {</span>
+<span id="cb337-55"><a href="Common-statistical-R-code.html#cb337-55" aria-hidden="true" tabindex="-1"></a>      <span class="fu">message</span>(<span class="st">&#39;... Program execution finished ...&#39;</span>)})}</span>
+<span id="cb337-56"><a href="Common-statistical-R-code.html#cb337-56" aria-hidden="true" tabindex="-1"></a><span class="fu">power_calculation</span>(<span class="dv">0</span>,<span class="dv">3</span>)</span>
+<span id="cb337-57"><a href="Common-statistical-R-code.html#cb337-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-58"><a href="Common-statistical-R-code.html#cb337-58" aria-hidden="true" tabindex="-1"></a><span class="do">## 4.3.2 在外部执行参数运算：</span></span>
+<span id="cb337-59"><a href="Common-statistical-R-code.html#cb337-59" aria-hidden="true" tabindex="-1"></a>beera <span class="ot">&lt;-</span> <span class="cf">function</span>(expr){</span>
+<span id="cb337-60"><a href="Common-statistical-R-code.html#cb337-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>(expr,</span>
+<span id="cb337-61"><a href="Common-statistical-R-code.html#cb337-61" aria-hidden="true" tabindex="-1"></a>           <span class="at">error =</span> <span class="cf">function</span>(e){</span>
+<span id="cb337-62"><a href="Common-statistical-R-code.html#cb337-62" aria-hidden="true" tabindex="-1"></a>             <span class="fu">message</span>(<span class="st">&quot;An error occurred:</span><span class="sc">\n</span><span class="st">&quot;</span>, e)</span>
+<span id="cb337-63"><a href="Common-statistical-R-code.html#cb337-63" aria-hidden="true" tabindex="-1"></a>           },</span>
+<span id="cb337-64"><a href="Common-statistical-R-code.html#cb337-64" aria-hidden="true" tabindex="-1"></a>           <span class="at">warning =</span> <span class="cf">function</span>(w){</span>
+<span id="cb337-65"><a href="Common-statistical-R-code.html#cb337-65" aria-hidden="true" tabindex="-1"></a>             <span class="fu">message</span>(<span class="st">&quot;A warning occured:</span><span class="sc">\n</span><span class="st">&quot;</span>, w)</span>
+<span id="cb337-66"><a href="Common-statistical-R-code.html#cb337-66" aria-hidden="true" tabindex="-1"></a>           },</span>
+<span id="cb337-67"><a href="Common-statistical-R-code.html#cb337-67" aria-hidden="true" tabindex="-1"></a>           <span class="at">finally =</span> {</span>
+<span id="cb337-68"><a href="Common-statistical-R-code.html#cb337-68" aria-hidden="true" tabindex="-1"></a>             <span class="fu">message</span>(<span class="st">&quot;Finally done!&quot;</span>)</span>
+<span id="cb337-69"><a href="Common-statistical-R-code.html#cb337-69" aria-hidden="true" tabindex="-1"></a>           })}</span>
+<span id="cb337-70"><a href="Common-statistical-R-code.html#cb337-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb337-71"><a href="Common-statistical-R-code.html#cb337-71" aria-hidden="true" tabindex="-1"></a><span class="fu">beera</span>({<span class="dv">2</span> <span class="sc">+</span> <span class="st">&#39;2&#39;</span>})</span></code></pre></div>
+</div>
+<div id="代码错误调试" class="section level3 hasAnchor" number="8.2.5">
+<h3><span class="header-section-number">8.2.5</span> 5 代码错误调试<a href="Common-statistical-R-code.html#代码错误调试" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="Common-statistical-R-code.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 调试：错误跟踪：----</span></span>
+<span id="cb338-2"><a href="Common-statistical-R-code.html#cb338-2" aria-hidden="true" tabindex="-1"></a><span class="fu">traceback</span>()</span>
+<span id="cb338-3"><a href="Common-statistical-R-code.html#cb338-3" aria-hidden="true" tabindex="-1"></a>check_n_value <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb338-4"><a href="Common-statistical-R-code.html#cb338-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(n <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb338-5"><a href="Common-statistical-R-code.html#cb338-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">browser</span>()  <span class="do">## Error occurs around here</span></span>
+<span id="cb338-6"><a href="Common-statistical-R-code.html#cb338-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;n should be &lt;= 0&quot;</span>)</span>
+<span id="cb338-7"><a href="Common-statistical-R-code.html#cb338-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb338-8"><a href="Common-statistical-R-code.html#cb338-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb338-9"><a href="Common-statistical-R-code.html#cb338-9" aria-hidden="true" tabindex="-1"></a><span class="fu">check_n_value</span>(<span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="代码时间消耗跟踪" class="section level3 hasAnchor" number="8.2.6">
+<h3><span class="header-section-number">8.2.6</span> 6 代码时间消耗跟踪<a href="Common-statistical-R-code.html#代码时间消耗跟踪" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="Common-statistical-R-code.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 时间消耗跟踪：-----</span></span>
+<span id="cb339-2"><a href="Common-statistical-R-code.html#cb339-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(microbenchmark)</span>
+<span id="cb339-3"><a href="Common-statistical-R-code.html#cb339-3" aria-hidden="true" tabindex="-1"></a><span class="fu">microbenchmark</span>(a <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>), </span>
+<span id="cb339-4"><a href="Common-statistical-R-code.html#cb339-4" aria-hidden="true" tabindex="-1"></a>               b <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>)))</span>
+<span id="cb339-5"><a href="Common-statistical-R-code.html#cb339-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-6"><a href="Common-statistical-R-code.html#cb339-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 函数运算时间统计：</span></span>
+<span id="cb339-7"><a href="Common-statistical-R-code.html#cb339-7" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span><span class="fu">proc.time</span>()</span>
+<span id="cb339-8"><a href="Common-statistical-R-code.html#cb339-8" aria-hidden="true" tabindex="-1"></a><span class="fu">proc.time</span>()<span class="sc">-</span>start</span>
+<span id="cb339-9"><a href="Common-statistical-R-code.html#cb339-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-10"><a href="Common-statistical-R-code.html#cb339-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb339-11"><a href="Common-statistical-R-code.html#cb339-11" aria-hidden="true" tabindex="-1"></a>  time_start<span class="ot">&lt;-</span><span class="fu">Sys.time</span>()</span>
+<span id="cb339-12"><a href="Common-statistical-R-code.html#cb339-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="dv">1</span>)</span>
+<span id="cb339-13"><a href="Common-statistical-R-code.html#cb339-13" aria-hidden="true" tabindex="-1"></a>  exc_time<span class="ot">&lt;-</span><span class="fu">difftime</span>(<span class="fu">Sys.time</span>(),time_start,<span class="at">units =</span> <span class="st">&#39;secs&#39;</span>)</span>
+<span id="cb339-14"><a href="Common-statistical-R-code.html#cb339-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">&#39;code执行时间：&#39;</span>,<span class="fu">round</span>(exc_time,<span class="dv">2</span>),<span class="st">&#39;secs&#39;</span>))</span></code></pre></div>
+</div>
+<div id="补充案例" class="section level3 hasAnchor" number="8.2.7">
+<h3><span class="header-section-number">8.2.7</span> 7 补充案例<a href="Common-statistical-R-code.html#补充案例" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="Common-statistical-R-code.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="do">######################## stop：</span></span>
+<span id="cb340-2"><a href="Common-statistical-R-code.html#cb340-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stop</span>(<span class="st">&quot;na entries in table&quot;</span>)</span>
+<span id="cb340-3"><a href="Common-statistical-R-code.html#cb340-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 另外的用途在于可以在函数中使用:</span></span>
+<span id="cb340-4"><a href="Common-statistical-R-code.html#cb340-4" aria-hidden="true" tabindex="-1"></a>例如else之后的结果可以直接使用 <span class="cf">else</span> <span class="fu">stop</span>(<span class="st">&quot;这是个错误！&quot;</span>)</span>
+<span id="cb340-5"><a href="Common-statistical-R-code.html#cb340-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-6"><a href="Common-statistical-R-code.html#cb340-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用try来避开错误循环的影响结果：直接进行下一个循环；</span></span>
+<span id="cb340-7"><a href="Common-statistical-R-code.html#cb340-7" aria-hidden="true" tabindex="-1"></a><span class="do">###answer1:#####</span></span>
+<span id="cb340-8"><a href="Common-statistical-R-code.html#cb340-8" aria-hidden="true" tabindex="-1"></a>count <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb340-9"><a href="Common-statistical-R-code.html#cb340-9" aria-hidden="true" tabindex="-1"></a>inverses <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">&quot;list&quot;</span>, <span class="dv">100</span>)  </span>
+<span id="cb340-10"><a href="Common-statistical-R-code.html#cb340-10" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {  </span>
+<span id="cb340-11"><a href="Common-statistical-R-code.html#cb340-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (count <span class="sc">==</span> <span class="dv">100</span>) <span class="cf">break</span>  </span>
+<span id="cb340-12"><a href="Common-statistical-R-code.html#cb340-12" aria-hidden="true" tabindex="-1"></a>  count <span class="ot">&lt;-</span> count <span class="sc">+</span> <span class="dv">1</span>  </span>
+<span id="cb340-13"><a href="Common-statistical-R-code.html#cb340-13" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">sample</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">4</span>, <span class="at">replace =</span> T), <span class="dv">2</span>, <span class="dv">2</span>)  </span>
+<span id="cb340-14"><a href="Common-statistical-R-code.html#cb340-14" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 这一步收集错误，并使得函数能够继续运行，并且不报错！</span></span>
+<span id="cb340-15"><a href="Common-statistical-R-code.html#cb340-15" aria-hidden="true" tabindex="-1"></a>  x.inv <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">solve</span>(x), <span class="at">silent=</span><span class="cn">TRUE</span>)  </span>
+<span id="cb340-16"><a href="Common-statistical-R-code.html#cb340-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">&#39;try-error&#39;</span> <span class="sc">%in%</span> <span class="fu">class</span>(x.inv)) {</span>
+<span id="cb340-17"><a href="Common-statistical-R-code.html#cb340-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span>  <span class="do">## 这里是 函数不返回信息，也可以选择输出一些指定参数说明；</span></span>
+<span id="cb340-18"><a href="Common-statistical-R-code.html#cb340-18" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span>{ </span>
+<span id="cb340-19"><a href="Common-statistical-R-code.html#cb340-19" aria-hidden="true" tabindex="-1"></a>    inverses[[count]] <span class="ot">&lt;-</span> x.inv  </span>
+<span id="cb340-20"><a href="Common-statistical-R-code.html#cb340-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb340-21"><a href="Common-statistical-R-code.html#cb340-21" aria-hidden="true" tabindex="-1"></a>} </span>
+<span id="cb340-22"><a href="Common-statistical-R-code.html#cb340-22" aria-hidden="true" tabindex="-1"></a>inverses</span>
+<span id="cb340-23"><a href="Common-statistical-R-code.html#cb340-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-24"><a href="Common-statistical-R-code.html#cb340-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 使用tryCatch()来设计收集函数错误；并且返回错误位置，下次方便继续运行；</span></span>
+<span id="cb340-25"><a href="Common-statistical-R-code.html#cb340-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(productlink)){</span>
+<span id="cb340-26"><a href="Common-statistical-R-code.html#cb340-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tryCatch</span>({</span>
+<span id="cb340-27"><a href="Common-statistical-R-code.html#cb340-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(productlink[n],<span class="fu">paste0</span>(<span class="fu">getwd</span>(),<span class="st">&quot;/html/&quot;</span>,productid[n,],<span class="st">&quot;.html&quot;</span>),<span class="at">cacheOK =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb340-28"><a href="Common-statistical-R-code.html#cb340-28" aria-hidden="true" tabindex="-1"></a>  },<span class="at">error=</span><span class="cf">function</span>(e){<span class="fu">cat</span>(<span class="st">&quot;ERROR :&quot;</span>,<span class="fu">conditionMessage</span>(e),<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)})</span>
+<span id="cb340-29"><a href="Common-statistical-R-code.html#cb340-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>) <span class="co">#增加了Sys.sleep(seconds)函数，让每一步循环都暂停一段时间。这个虽然会降低程序速度，但对于有访问限制的网站，不失为一个好的办法。</span></span>
+<span id="cb340-30"><a href="Common-statistical-R-code.html#cb340-30" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb340-31"><a href="Common-statistical-R-code.html#cb340-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-32"><a href="Common-statistical-R-code.html#cb340-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 在这里数据监测有效性，在利用stop返回错误；</span></span>
+<span id="cb340-33"><a href="Common-statistical-R-code.html#cb340-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-34"><a href="Common-statistical-R-code.html#cb340-34" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">sum</span>(check)<span class="sc">==</span><span class="fu">length</span>(productlink)) {</span>
+<span id="cb340-35"><a href="Common-statistical-R-code.html#cb340-35" aria-hidden="true" tabindex="-1"></a>  productlink<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb340-36"><a href="Common-statistical-R-code.html#cb340-36" aria-hidden="true" tabindex="-1"></a>  productid<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb340-37"><a href="Common-statistical-R-code.html#cb340-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stop</span>(<span class="st">&quot;invalid productid please double check if any space or else in, and resave the file or the script will not run&quot;</span>)</span>
+<span id="cb340-38"><a href="Common-statistical-R-code.html#cb340-38" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb340-39"><a href="Common-statistical-R-code.html#cb340-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-40"><a href="Common-statistical-R-code.html#cb340-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 直接显式收集错误，然后将错误按照打印输出；类似于stop的形式；</span></span>
+<span id="cb340-41"><a href="Common-statistical-R-code.html#cb340-41" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="cf">function</span>(n){</span>
+<span id="cb340-42"><a href="Common-statistical-R-code.html#cb340-42" aria-hidden="true" tabindex="-1"></a>  <span class="do">####隐掉获得productname/price/category的代码</span></span>
+<span id="cb340-43"><a href="Common-statistical-R-code.html#cb340-43" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="sc">!</span><span class="fu">length</span>(productname)<span class="sc">==</span><span class="dv">1</span>) {productname<span class="ot">=</span><span class="st">&quot;Product not download or not existing&quot;</span>}</span>
+<span id="cb340-44"><a href="Common-statistical-R-code.html#cb340-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(price)<span class="sc">==</span><span class="dv">1</span>) {</span>
+<span id="cb340-45"><a href="Common-statistical-R-code.html#cb340-45" aria-hidden="true" tabindex="-1"></a>    price<span class="ot">=</span><span class="cn">NA</span> </span>
+<span id="cb340-46"><a href="Common-statistical-R-code.html#cb340-46" aria-hidden="true" tabindex="-1"></a>    category<span class="ot">&lt;-</span><span class="st">&quot;Product not download or not existing&quot;</span></span>
+<span id="cb340-47"><a href="Common-statistical-R-code.html#cb340-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb340-48"><a href="Common-statistical-R-code.html#cb340-48" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(productname,price,category)</span></code></pre></div>
+</div>
+<div id="相关资料" class="section level3 hasAnchor" number="8.2.8">
+<h3><span class="header-section-number">8.2.8</span> 8 相关资料<a href="Common-statistical-R-code.html#相关资料" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>https://www.geeksforgeeks.org/handling-errors-in-r-programming/
+
+https://bookdown.org/rdpeng/RProgDA/error-handling-and-generation.html
+
+http://adv-r.had.co.nz/Exceptions-Debugging.html</code></pre>
+</div>
+</div>
+<div id="常用快捷命令" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> 常用快捷命令<a href="Common-statistical-R-code.html#常用快捷命令" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="高效管道符号" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> 高效管道符号<a href="Common-statistical-R-code.html#高效管道符号" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="使用来传递属性值" class="section level4 hasAnchor" number="8.3.1.1">
+<h4><span class="header-section-number">8.3.1.1</span> 使用%$%来传递属性值<a href="Common-statistical-R-code.html#使用来传递属性值" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="Common-statistical-R-code.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 在传统的base R统计中：</span></span>
+<span id="cb342-2"><a href="Common-statistical-R-code.html#cb342-2" aria-hidden="true" tabindex="-1"></a><span class="sc">%$%</span> 的作用是把左侧数据的属性名传给右侧，让右侧的调用函数直接通过名字，就可以获取左侧的数据。</span>
+<span id="cb342-3"><a href="Common-statistical-R-code.html#cb342-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-4"><a href="Common-statistical-R-code.html#cb342-4" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span> <span class="fu">table</span>() <span class="sc">--</span> 无法直接运用；</span>
+<span id="cb342-5"><a href="Common-statistical-R-code.html#cb342-5" aria-hidden="true" tabindex="-1"></a>但可以使用<span class="sc">%$%</span>来进行优化base_R的管道运行；</span>
+<span id="cb342-6"><a href="Common-statistical-R-code.html#cb342-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb342-7"><a href="Common-statistical-R-code.html#cb342-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 执行高效运算：</span></span>
+<span id="cb342-8"><a href="Common-statistical-R-code.html#cb342-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb342-9"><a href="Common-statistical-R-code.html#cb342-9" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">y=</span><span class="fu">rnorm</span>(<span class="dv">10</span>),<span class="at">z=</span>letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]) <span class="sc">%$%</span> .[x<span class="sc">&gt;</span><span class="dv">5</span>,]</span></code></pre></div>
+</div>
+<div id="使用t向左遍历输出" class="section level4 hasAnchor" number="8.3.1.2">
+<h4><span class="header-section-number">8.3.1.2</span> 使用%T&gt;%向左遍历输出：<a href="Common-statistical-R-code.html#使用t向左遍历输出" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="Common-statistical-R-code.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb343-2"><a href="Common-statistical-R-code.html#cb343-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb343-3"><a href="Common-statistical-R-code.html#cb343-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb343-4"><a href="Common-statistical-R-code.html#cb343-4" aria-hidden="true" tabindex="-1"></a>  abs <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">*</span><span class="st">`</span> (<span class="dv">50</span>)  <span class="sc">%&gt;%</span>  <span class="do">## 指定参数运算时，可以直接使用``进行注释运算；</span></span>
+<span id="cb343-5"><a href="Common-statistical-R-code.html#cb343-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol=</span><span class="dv">100</span>)  <span class="sc">%&gt;%</span></span>
+<span id="cb343-6"><a href="Common-statistical-R-code.html#cb343-6" aria-hidden="true" tabindex="-1"></a>  rowMeans <span class="sc">%&gt;%</span> round <span class="sc">%&gt;%</span> </span>
+<span id="cb343-7"><a href="Common-statistical-R-code.html#cb343-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 传统在分析时，需要先将结果导出后在执行hist，这里还是用%T&gt;%就可以实现边出图边向右输出。执行逻辑是在执行%T&gt;%之前进行前后向遍历；</span></span>
+<span id="cb343-8"><a href="Common-statistical-R-code.html#cb343-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">%%</span><span class="st">`</span>(<span class="dv">7</span>) <span class="sc">%T&gt;%</span> hist <span class="sc">%&gt;%</span> sum  </span></code></pre></div>
+</div>
+<div id="复合操作符" class="section level4 hasAnchor" number="8.3.1.3">
+<h4><span class="header-section-number">8.3.1.3</span> <strong>%&lt;&gt;%</strong> 复合操作符<a href="Common-statistical-R-code.html#复合操作符" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="Common-statistical-R-code.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="sc">%&lt;&gt;%</span>复合赋值操作符， 功能与 <span class="sc">%&gt;%</span> 基本是一样的，多了一项额外的操作，就是把结果写回到最左侧的对象（覆盖原来的值）。</span>
+<span id="cb344-2"><a href="Common-statistical-R-code.html#cb344-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb344-3"><a href="Common-statistical-R-code.html#cb344-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb344-4"><a href="Common-statistical-R-code.html#cb344-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb344-5"><a href="Common-statistical-R-code.html#cb344-5" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb344-6"><a href="Common-statistical-R-code.html#cb344-6" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&lt;&gt;%</span> abs <span class="sc">%&gt;%</span> sort   <span class="do">## 等价于,相当于直接赋值更新；</span></span>
+<span id="cb344-7"><a href="Common-statistical-R-code.html#cb344-7" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> abs <span class="sc">%&gt;%</span> sort <span class="ot">-&gt;</span>x </span></code></pre></div>
+</div>
+<div id="验证函数" class="section level4 hasAnchor" number="8.3.1.4">
+<h4><span class="header-section-number">8.3.1.4</span> %||% 验证函数<a href="Common-statistical-R-code.html#验证函数" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="Common-statistical-R-code.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="do">## %||%是rlang包的一个验证函数参数：</span></span>
+<span id="cb345-2"><a href="Common-statistical-R-code.html#cb345-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 原函数如下：</span></span>
+<span id="cb345-3"><a href="Common-statistical-R-code.html#cb345-3" aria-hidden="true" tabindex="-1"></a><span class="cf">function</span> (x, y)</span>
+<span id="cb345-4"><a href="Common-statistical-R-code.html#cb345-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## x为非na时，输出y，否则输出x；</span></span>
+<span id="cb345-5"><a href="Common-statistical-R-code.html#cb345-5" aria-hidden="true" tabindex="-1"></a>{ <span class="cf">if</span> (<span class="fu">is_null</span>(x)) y  <span class="cf">else</span> x} </span>
+<span id="cb345-6"><a href="Common-statistical-R-code.html#cb345-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 对执行一些默认函数输出时很有用，比如ggplot2中的画图参数常有默认值，就需要执行用户参数判断来输出是否验证结果形式。</span></span></code></pre></div>
+</div>
+<div id="矩阵乘积" class="section level4 hasAnchor" number="8.3.1.5">
+<h4><span class="header-section-number">8.3.1.5</span> %&amp;% 矩阵乘积<a href="Common-statistical-R-code.html#矩阵乘积" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>%&amp;% 是Matrix包一个取矩阵乘积的函数；</code></pre>
+</div>
+<div id="参数赋值" class="section level4 hasAnchor" number="8.3.1.6">
+<h4><span class="header-section-number">8.3.1.6</span> <code>&lt;&lt;—</code> 参数赋值<a href="Common-statistical-R-code.html#参数赋值" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="Common-statistical-R-code.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 使用全局赋值函数在tidy体内部来实现参数的外部函数命名：</span></span>
+<span id="cb347-2"><a href="Common-statistical-R-code.html#cb347-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 在这里可以看到传统写法是将cox.zph() -&gt; zph_result;</span></span>
+<span id="cb347-3"><a href="Common-statistical-R-code.html#cb347-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 但在这里使用的是{zph_result &lt;&lt;- .} ，其中{}是dplyr流的固定写法；</span></span>
+<span id="cb347-4"><a href="Common-statistical-R-code.html#cb347-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 并且基于这种全局参数赋值方法以后，并不影响后续函数的结果的持续输出和转换：</span></span>
+<span id="cb347-5"><a href="Common-statistical-R-code.html#cb347-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 也即在cox.zph()输出结果的结果还可以直接传递到plot()体系中；</span></span>
+<span id="cb347-6"><a href="Common-statistical-R-code.html#cb347-6" aria-hidden="true" tabindex="-1"></a>melanoma <span class="sc">%&gt;%</span> </span>
+<span id="cb347-7"><a href="Common-statistical-R-code.html#cb347-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coxphmulti</span>(dependent_os, explanatory) <span class="sc">%&gt;%</span> </span>
+<span id="cb347-8"><a href="Common-statistical-R-code.html#cb347-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cox.zph</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb347-9"><a href="Common-statistical-R-code.html#cb347-9" aria-hidden="true" tabindex="-1"></a>  {zph_result <span class="ot">&lt;&lt;-</span> .} <span class="sc">%&gt;%</span> </span>
+<span id="cb347-10"><a href="Common-statistical-R-code.html#cb347-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="at">var=</span><span class="dv">5</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="常用辅助函数" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> 常用辅助函数：<a href="Common-statistical-R-code.html#常用辅助函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="添加自动注释" class="section level4 hasAnchor" number="8.3.2.1">
+<h4><span class="header-section-number">8.3.2.1</span> <code>#&gt;</code> 添加自动注释<a href="Common-statistical-R-code.html#添加自动注释" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="Common-statistical-R-code.html#cb348-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 下面这种#&gt;写法，会在使用回车键后下一行的开头，也同步再增加一个#&gt;来写注释；</span></span>
+<span id="cb348-2"><a href="Common-statistical-R-code.html#cb348-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;We are good: max &gt; min&quot;</span></span></code></pre></div>
+</div>
+<div id="使用来执行条件运算" class="section level4 hasAnchor" number="8.3.2.2">
+<h4><span class="header-section-number">8.3.2.2</span> 使用``来执行条件运算<a href="Common-statistical-R-code.html#使用来执行条件运算" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="Common-statistical-R-code.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 举例1：</span></span>
+<span id="cb349-2"><a href="Common-statistical-R-code.html#cb349-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb349-3"><a href="Common-statistical-R-code.html#cb349-3" aria-hidden="true" tabindex="-1"></a>  abs <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">*</span><span class="st">`</span> (<span class="dv">50</span>) </span>
+<span id="cb349-4"><a href="Common-statistical-R-code.html#cb349-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb349-5"><a href="Common-statistical-R-code.html#cb349-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 举例2：</span></span>
+<span id="cb349-6"><a href="Common-statistical-R-code.html#cb349-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rename_at</span>(<span class="fu">vars</span>(<span class="fu">names</span>(.)) ,<span class="sc">~</span> name1_ms) <span class="sc">%&gt;%</span> </span>
+<span id="cb349-7"><a href="Common-statistical-R-code.html#cb349-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">slice</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">row.names&lt;-</span><span class="st">`</span>(<span class="st">&quot;1&quot;</span>)</span></code></pre></div>
+</div>
+<div id="rstudio-view" class="section level4 hasAnchor" number="8.3.2.3">
+<h4><span class="header-section-number">8.3.2.3</span> Rstudio View()<a href="Common-statistical-R-code.html#rstudio-view" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="Common-statistical-R-code.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 最有用的快捷键：</span></span>
+<span id="cb350-2"><a href="Common-statistical-R-code.html#cb350-2" aria-hidden="true" tabindex="-1"></a>安装ctrl，并点击数据集对应的名称即可；</span></code></pre></div>
+</div>
+<div id="查看r包内的所有函数" class="section level4 hasAnchor" number="8.3.2.4">
+<h4><span class="header-section-number">8.3.2.4</span> 查看R包内的所有函数：<a href="Common-statistical-R-code.html#查看r包内的所有函数" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>ls(&quot;package::ggplot2&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="正则表达式" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> 正则表达式<a href="Common-statistical-R-code.html#正则表达式" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="常用正则表达式命令-1" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">8.4.1</span> 常用正则表达式命令-1<a href="Common-statistical-R-code.html#常用正则表达式命令-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="Common-statistical-R-code.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 正则表达式：</span></span>
+<span id="cb352-2"><a href="Common-statistical-R-code.html#cb352-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;New theme&quot;</span>, <span class="st">&quot;Old times&quot;</span>, <span class="st">&quot;In the present theme&quot;</span>)</span>
+<span id="cb352-3"><a href="Common-statistical-R-code.html#cb352-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(x, <span class="st">&quot;the&quot;</span>)</span>
+<span id="cb352-4"><a href="Common-statistical-R-code.html#cb352-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-5"><a href="Common-statistical-R-code.html#cb352-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 常用正则：</span></span>
+<span id="cb352-6"><a href="Common-statistical-R-code.html#cb352-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1、匹配任意字符：使用点号：</span></span>
+<span id="cb352-7"><a href="Common-statistical-R-code.html#cb352-7" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;abc&quot;</span>, <span class="st">&quot;cabs&quot;</span>, <span class="st">&quot;lab&quot;</span>)</span>
+<span id="cb352-8"><a href="Common-statistical-R-code.html#cb352-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view_all</span>(s, <span class="st">&quot;ab.&quot;</span>) <span class="co"># 点号表示提取任意字符；</span></span>
+<span id="cb352-9"><a href="Common-statistical-R-code.html#cb352-9" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view_all</span>(<span class="fu">c</span>(<span class="st">&quot;a.txt&quot;</span>, <span class="st">&quot;a0txt&quot;</span>), <span class="st">&quot;a[.]txt&quot;</span>) <span class="co"># [.]不做特殊解释；</span></span>
+<span id="cb352-10"><a href="Common-statistical-R-code.html#cb352-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-11"><a href="Common-statistical-R-code.html#cb352-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2、使用[] 来定义条件筛选：</span></span>
+<span id="cb352-12"><a href="Common-statistical-R-code.html#cb352-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 模式“[ns]a.[.]xls” 表示匹配的第一个字符是n或s， 第二个字符是a，第三个字符任意，第四个字符是句点， 然后是xls。 </span></span>
+<span id="cb352-13"><a href="Common-statistical-R-code.html#cb352-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-14"><a href="Common-statistical-R-code.html#cb352-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 3、原位匹配：所谓原位匹配是设定标准进行数据寻找：</span></span>
+<span id="cb352-15"><a href="Common-statistical-R-code.html#cb352-15" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;int x</span><span class="sc">\\</span><span class="st">[5</span><span class="sc">\\</span><span class="st">]&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;int x;&quot;</span>, <span class="st">&quot;int x[5]&quot;</span>), <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
+<span id="cb352-16"><a href="Common-statistical-R-code.html#cb352-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 案例2</span></span>
+<span id="cb352-17"><a href="Common-statistical-R-code.html#cb352-17" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;2008-08-08&quot;</span>, <span class="st">&quot;2017-01-18&quot;</span>)</span>
+<span id="cb352-18"><a href="Common-statistical-R-code.html#cb352-18" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">regexpr</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d(</span><span class="sc">\\</span><span class="st">d</span><span class="sc">\\</span><span class="st">d)-</span><span class="sc">\\</span><span class="st">1-</span><span class="sc">\\</span><span class="st">1&quot;</span>, x)</span>
+<span id="cb352-19"><a href="Common-statistical-R-code.html#cb352-19" aria-hidden="true" tabindex="-1"></a><span class="fu">regmatches</span>(x, m)</span>
+<span id="cb352-20"><a href="Common-statistical-R-code.html#cb352-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 4、匹配数字 [[:digit:]]+</span></span>
+<span id="cb352-21"><a href="Common-statistical-R-code.html#cb352-21" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;n</span><span class="sc">\\</span><span class="st">d[.]xls&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;n1.xls&quot;</span>, <span class="st">&quot;na.xls&quot;</span>), <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
+<span id="cb352-22"><a href="Common-statistical-R-code.html#cb352-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-23"><a href="Common-statistical-R-code.html#cb352-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 5、加好重复匹配：</span></span>
+<span id="cb352-24"><a href="Common-statistical-R-code.html#cb352-24" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;sa1&quot;</span>, <span class="st">&quot;dsa123&quot;</span>)</span>
+<span id="cb352-25"><a href="Common-statistical-R-code.html#cb352-25" aria-hidden="true" tabindex="-1"></a>mres <span class="ot">&lt;-</span> <span class="fu">regexpr</span>(<span class="st">&quot;sa[[:digit:]]+&quot;</span>, s, <span class="at">perl=</span><span class="cn">TRUE</span>)</span>
+<span id="cb352-26"><a href="Common-statistical-R-code.html#cb352-26" aria-hidden="true" tabindex="-1"></a><span class="fu">regmatches</span>(s, mres)</span>
+<span id="cb352-27"><a href="Common-statistical-R-code.html#cb352-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-28"><a href="Common-statistical-R-code.html#cb352-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 6、计数重复：</span></span>
+<span id="cb352-29"><a href="Common-statistical-R-code.html#cb352-29" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span>(<span class="st">&quot;[[:digit:]]{3}&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>, <span class="st">&quot;12&quot;</span>, <span class="st">&quot;123&quot;</span>, <span class="st">&quot;1234&quot;</span>))</span>
+<span id="cb352-30"><a href="Common-statistical-R-code.html#cb352-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb352-31"><a href="Common-statistical-R-code.html#cb352-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 7、正整数：</span></span>
+<span id="cb352-32"><a href="Common-statistical-R-code.html#cb352-32" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;</span><span class="sc">\\</span><span class="st">A[0-9]+</span><span class="sc">\\</span><span class="st">Z&quot;</span></span></code></pre></div>
+</div>
+<div id="常用正则表达式命令-2" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">8.4.2</span> 常用正则表达式命令-2<a href="Common-statistical-R-code.html#常用正则表达式命令-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>1、 查询目录下包含data,并以dat结尾的文件：
+1.1   使用函数 . *  :其中 .表示匹配除 \n 之外的其他单个字符；而*号则表示单次或多次重复*之前的内容
+这样就可以使用 data.*.dat  :正则的效果就可以提现出来实现筛选和提取
+1.2   使用 函数 ? \w   :
+问号 ? 一般表示匹配单个字符，另外?则表示匹配前面的子表达式零次或一次。
+而\w则匹配包括下划线在内的任何单个字符，相当于[a-zA-Z0-9_]
+
+2、 ^ 表示该正则开始的位置，$ 表示该正则结束的位置；通常abv$,表示匹配abv结尾的数据格式；
+
+3、() 表示一个子表达式开始和结束的位置  
+
+4、
+   + 匹配前面的子表达式一次或多次
+   *  匹配前面零次到多次
+
+5、&quot;\d&quot;: 匹配数字    
+
+6、 &quot;\s&quot;：匹配空格,如有字符间有多个空格直接把&quot;\s&quot; 写成 &quot;\s+&quot;
+
+7、常用的几种反义：
+&quot;\W&quot;   匹配任意不是字母，数字，下划线 的字符
+&quot;\S&quot;   匹配任意不是空白符的字符
+&quot;\D&quot;  匹配任意非数字的字符
+&quot;\B&quot;  匹配不是单词开头或结束的位置
+&quot;[^abc]&quot;  匹配除了abc以外的任意字符
+
+8、[abc] 字符组  匹配包含括号内元素的字符 ，如可以写成[a-z]</code></pre>
+</div>
+<div id="量词" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">8.4.3</span> 量词<a href="Common-statistical-R-code.html#量词" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>&quot;*&quot;(贪婪)   重复零次或更多
+　　　  例如&quot;aaaaaaaa&quot; 匹配字符串中所有的a  正则： &quot;a*&quot;   会出到所有的字符&quot;a&quot;
+&quot;+&quot;(懒惰)   重复一次或更多次
+　　    例如&quot;aaaaaaaa&quot; 匹配字符串中所有的a  正则： &quot;a+&quot;  会取到字符中所有的a字符，  &quot;a+&quot;与&quot;a*&quot;不同在于&quot;+&quot;至少是一次而&quot;*&quot; 可以是0次，稍后会与&quot;?&quot;字符结合来体现这种区别
+
+ &quot;?&quot;(占有)   重复零次或一次
+ 例如&quot;aaaaaaaa&quot; 匹配字符串中的a 正则 ： &quot;a?&quot; 只会匹配一次，也就是结果只是单个字符a
+
+ &quot;{n}&quot;    重复n次
+　　     例如从&quot;aaaaaaaa&quot; 匹配字符串的a 并重复3次 正则：  &quot;a{3}&quot;  结果就是取到3个a字符  &quot;aaa&quot;;
+ &quot;{n,m}&quot;  重复n到m次
+　　     例如正则 &quot;a{3,4}&quot; 将a重复匹配3次或者4次 所以供匹配的字符可以是三个&quot;aaa&quot;也可以是四个&quot;aaaa&quot; 正则都可以匹配到
+  &quot;{n,}&quot;  重复n次或更多次
+ 　　    与{n,m}不同之处就在于匹配的次数将没有上限，但至少要重复n次 如 正则&quot;a{3,}&quot; a至少要重复3次</code></pre>
+</div>
+<div id="捕获分组" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">8.4.4</span> 捕获分组<a href="Common-statistical-R-code.html#捕获分组" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>## 常用捕获分组
+&quot;(exp)&quot;    匹配exp,并捕获文本到自动命名的组里
+&quot;(?&lt;name&gt;exp)&quot;   匹配exp,并捕获文本到名称为name的组里
+&quot;(?:exp)&quot;  匹配exp,不捕获匹配的文本，也不给此分组分配组号
+
+## 以下为零宽断言
+&quot;(?=exp)&quot;  匹配exp前面的位置
+　　如 &quot;How are you doing&quot; 正则&quot;(?&lt;txt&gt;.+(?=ing))&quot; 这里取ing前所有的字符，并定义了一个捕获分组名字为 &quot;txt&quot; 而&quot;txt&quot;这个组里的值为&quot;How are you do&quot;;
+　　
+&quot;(?&lt;=exp)&quot;  匹配exp后面的位置
+　　如 &quot;How are you doing&quot; 正则&quot;(?&lt;txt&gt;(?&lt;=How).+)&quot; 这里取&quot;How&quot;之后所有的字符，并定义了一个捕获分组名字为 &quot;txt&quot; 而&quot;txt&quot;这个组里的值为&quot; are you doing&quot;;
+
+&quot;(?!exp)&quot;  匹配后面跟的不是exp的位置
+　　如 &quot;123abc&quot; 正则 &quot;\d{3}(?!\d)&quot;匹配3位数字后非数字的结果
+
+&quot;(?&lt;!exp)&quot;  匹配前面不是exp的位置
+　　如 &quot;abc123 &quot; 正则 &quot;(?&lt;![0-9])123&quot; 匹配&quot;123&quot;前面是非数字的结果也可写成&quot;(?!&lt;\d)123&quot;</code></pre>
+</div>
+<div id="python使用编译" class="section level3 hasAnchor" number="8.4.5">
+<h3><span class="header-section-number">8.4.5</span> python使用编译<a href="Common-statistical-R-code.html#python使用编译" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<!-- >>> import re -->
+<!-- # 编译: -->
+<!-- >>> re_telephone = re.compile(r'^(\d{3})-(\d{3,8})$')  ##这里的{3,8}表示提取数据对应的第三到第八的位置； -->
+<!-- # 使用： -->
+<!-- >>> re_telephone.match('010-12345').groups() -->
+<!-- ('010', '12345') -->
+<!-- >>> re_telephone.match('010-8086').groups() -->
+<!-- ('010', '8086') -->
+<!-- ~~~ -->
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Visualization-Tables-Figures.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Statistical-flow-of-clinical-medicine.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/08-Common-statistical-R-code.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

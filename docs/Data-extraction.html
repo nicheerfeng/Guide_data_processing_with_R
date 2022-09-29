@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 2 章 数据提取 | 基于 R 的数据处理流程指南</title>
+  <meta name="description" content="R快速查询工具指南" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 2 章 数据提取 | 基于 R 的数据处理流程指南" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="R快速查询工具指南" />
+  <meta name="github-repo" content="nicheerfeng/git_book_ftidy" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 2 章 数据提取 | 基于 R 的数据处理流程指南" />
+  
+  <meta name="twitter:description" content="R快速查询工具指南" />
+  
+
+<meta name="author" content="Teague Tian" />
+
+
+<meta name="date" content="2022-09-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Establish-analysis-objectives.html"/>
+<link rel="next" href="Data-preprocessing.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Data Workflow</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html"><i class="fa fa-check"></i>作者简介</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#学业及工作经历"><i class="fa fa-check"></i>学业及工作经历：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#研究兴趣"><i class="fa fa-check"></i>研究兴趣：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#已完成和正在研究的项目"><i class="fa fa-check"></i>已完成和正在研究的项目</a>
+<ul>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#医学领域"><i class="fa fa-check"></i>医学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#生态学领域"><i class="fa fa-check"></i>生态学领域：</a></li>
+<li class="chapter" data-level="" data-path="author.html"><a href="author.html#r工具开发"><i class="fa fa-check"></i>R工具开发：</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html"><i class="fa fa-check"></i><b>1</b> 确立分析目标</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#基本逻辑"><i class="fa fa-check"></i><b>1.1</b> 基本逻辑</a></li>
+<li class="chapter" data-level="1.2" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#数据分析的基本流程"><i class="fa fa-check"></i><b>1.2</b> 数据分析的基本流程</a></li>
+<li class="chapter" data-level="1.3" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#工作处理经验"><i class="fa fa-check"></i><b>1.3</b> 工作处理经验</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Establish-analysis-objectives.html"><a href="Establish-analysis-objectives.html#ppt汇报经验"><i class="fa fa-check"></i><b>1.3.1</b> PPT汇报经验：</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>数据准备</b></span></li>
+<li class="chapter" data-level="2" data-path="Data-extraction.html"><a href="Data-extraction.html"><i class="fa fa-check"></i><b>2</b> 数据提取</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#数据提取的基本范式"><i class="fa fa-check"></i><b>2.1</b> 数据提取的基本范式</a></li>
+<li class="chapter" data-level="2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#数据导入与导出"><i class="fa fa-check"></i><b>2.2</b> 数据导入与导出</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="Data-extraction.html"><a href="Data-extraction.html#剪切板中处理数据"><i class="fa fa-check"></i><b>2.2.1</b> 剪切板中处理数据</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Data-extraction.html"><a href="Data-extraction.html#读取excle文件"><i class="fa fa-check"></i><b>2.2.2</b> 读取excle文件</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Data-extraction.html"><a href="Data-extraction.html#加速读取及导出常用数据"><i class="fa fa-check"></i><b>2.2.3</b> 加速读取及导出常用数据</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Data-extraction.html"><a href="Data-extraction.html#office格式及图片导出"><i class="fa fa-check"></i><b>2.2.4</b> OFFICE格式及图片导出</a></li>
+<li class="chapter" data-level="2.2.5" data-path="Data-extraction.html"><a href="Data-extraction.html#在r中使用sql"><i class="fa fa-check"></i><b>2.2.5</b> 在R中使用sql</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html"><i class="fa fa-check"></i><b>3</b> 数据预处理</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据抽取"><i class="fa fa-check"></i><b>3.1</b> 数据抽取</a></li>
+<li class="chapter" data-level="3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据清洗"><i class="fa fa-check"></i><b>3.2</b> 数据清洗</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#选择数据子集"><i class="fa fa-check"></i><b>3.2.1</b> 选择数据子集</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据去重"><i class="fa fa-check"></i><b>3.2.2</b> 数据去重</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#缺失值处理"><i class="fa fa-check"></i><b>3.2.3</b> 缺失值处理</a></li>
+<li class="chapter" data-level="3.2.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#一致化处理-1"><i class="fa fa-check"></i><b>3.2.4</b> 一致化处理</a></li>
+<li class="chapter" data-level="3.2.5" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#异常值处理-1"><i class="fa fa-check"></i><b>3.2.5</b> 异常值处理</a></li>
+<li class="chapter" data-level="3.2.6" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#插值填补"><i class="fa fa-check"></i><b>3.2.6</b> 插值填补</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据重组与转换"><i class="fa fa-check"></i><b>3.3</b> 数据重组与转换</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据修改-数据增加与删除"><i class="fa fa-check"></i><b>3.3.1</b> 数据修改-数据增加与删除</a></li>
+<li class="chapter" data-level="3.3.2" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据值重编码非列名"><i class="fa fa-check"></i><b>3.3.2</b> 数据值重编码（非列名）</a></li>
+<li class="chapter" data-level="3.3.3" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据塑形"><i class="fa fa-check"></i><b>3.3.3</b> 数据塑形</a></li>
+<li class="chapter" data-level="3.3.4" data-path="Data-preprocessing.html"><a href="Data-preprocessing.html#数据提取"><i class="fa fa-check"></i><b>3.3.4</b> 数据提取</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>模型拟合</b></span></li>
+<li class="chapter" data-level="4" data-path="Model-building.html"><a href="Model-building.html"><i class="fa fa-check"></i><b>4</b> 构建模型</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="Model-building.html"><a href="Model-building.html#描述统计模型"><i class="fa fa-check"></i><b>4.1</b> 描述统计模型</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="Model-building.html"><a href="Model-building.html#快速构建描述性统计"><i class="fa fa-check"></i><b>4.1.1</b> 快速构建描述性统计</a></li>
+<li class="chapter" data-level="4.1.2" data-path="Model-building.html"><a href="Model-building.html#高级分组统计"><i class="fa fa-check"></i><b>4.1.2</b> 高级分组统计</a></li>
+<li class="chapter" data-level="4.1.3" data-path="Model-building.html"><a href="Model-building.html#常用统计函数"><i class="fa fa-check"></i><b>4.1.3</b> 常用统计函数</a></li>
+<li class="chapter" data-level="4.1.4" data-path="Model-building.html"><a href="Model-building.html#批处理函数"><i class="fa fa-check"></i><b>4.1.4</b> 批处理函数</a></li>
+<li class="chapter" data-level="4.1.5" data-path="Model-building.html"><a href="Model-building.html#broom优雅输出"><i class="fa fa-check"></i><b>4.1.5</b> BROOM优雅输出</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="Model-building.html"><a href="Model-building.html#复杂统计模型"><i class="fa fa-check"></i><b>4.2</b> 复杂统计模型</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="Model-building.html"><a href="Model-building.html#变量筛选"><i class="fa fa-check"></i><b>4.2.1</b> 变量筛选</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Model-building.html"><a href="Model-building.html#线性统计回归"><i class="fa fa-check"></i><b>4.2.2</b> 线性统计回归</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Model-building.html"><a href="Model-building.html#方差检验"><i class="fa fa-check"></i><b>4.2.3</b> 方差检验</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Model-building.html"><a href="Model-building.html#相关统计r包资源"><i class="fa fa-check"></i><b>4.2.4</b> 相关统计R包资源：</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="Model-building.html"><a href="Model-building.html#临床统计模型"><i class="fa fa-check"></i><b>4.3</b> 临床统计模型</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="Model-building.html"><a href="Model-building.html#平衡匹配"><i class="fa fa-check"></i><b>4.3.1</b> 平衡匹配</a></li>
+<li class="chapter" data-level="4.3.2" data-path="Model-building.html"><a href="Model-building.html#生存分析"><i class="fa fa-check"></i><b>4.3.2</b> 生存分析</a></li>
+<li class="chapter" data-level="4.3.3" data-path="Model-building.html"><a href="Model-building.html#补充r包"><i class="fa fa-check"></i><b>4.3.3</b> 补充R包</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="Model-building.html"><a href="Model-building.html#构造模型的辅助函数或参数"><i class="fa fa-check"></i><b>4.4</b> 构造模型的辅助函数或参数</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="Model-building.html"><a href="Model-building.html#常用参数"><i class="fa fa-check"></i><b>4.4.1</b> 常用参数</a></li>
+<li class="chapter" data-level="4.4.2" data-path="Model-building.html"><a href="Model-building.html#查询线性模型结果"><i class="fa fa-check"></i><b>4.4.2</b> 查询线性模型结果</a></li>
+<li class="chapter" data-level="4.4.3" data-path="Model-building.html"><a href="Model-building.html#r语言笔记.formula"><i class="fa fa-check"></i><b>4.4.3</b> R语言笔记.formula</a></li>
+<li class="chapter" data-level="4.4.4" data-path="Model-building.html"><a href="Model-building.html#特征工程"><i class="fa fa-check"></i><b>4.4.4</b> 特征工程</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="Model-building.html"><a href="Model-building.html#深度学习"><i class="fa fa-check"></i><b>4.5</b> 深度学习</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="Model-building.html"><a href="Model-building.html#r-中执行keras"><i class="fa fa-check"></i><b>4.5.1</b> R 中执行keras</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="Model-building.html"><a href="Model-building.html#机器学习"><i class="fa fa-check"></i><b>4.6</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="Model-building.html"><a href="Model-building.html#机器学习--mlr3包"><i class="fa fa-check"></i><b>4.6.1</b> 机器学习 -mlr3包</a></li>
+<li class="chapter" data-level="4.6.2" data-path="Model-building.html"><a href="Model-building.html#常规机器学习"><i class="fa fa-check"></i><b>4.6.2</b> 常规机器学习</a></li>
+<li class="chapter" data-level="4.6.3" data-path="Model-building.html"><a href="Model-building.html#朴素贝叶斯"><i class="fa fa-check"></i><b>4.6.3</b> 朴素贝叶斯</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Model-performance.html"><a href="Model-performance.html"><i class="fa fa-check"></i><b>5</b> 模型评估</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Model-performance.html"><a href="Model-performance.html#模型评估辅助"><i class="fa fa-check"></i><b>5.1</b> 模型评估辅助：</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="Model-performance.html"><a href="Model-performance.html#purrr包的pluck函数字符提取"><i class="fa fa-check"></i><b>5.1.1</b> purrr包的pluck()函数字符提取</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Model-performance.html"><a href="Model-performance.html#常用模型辅助评估r包"><i class="fa fa-check"></i><b>5.2</b> 常用模型辅助评估R包：</a></li>
+</ul></li>
+<li class="part"><span><b>模型展示</b></span></li>
+<li class="chapter" data-level="6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html"><i class="fa fa-check"></i><b>6</b> 模型发布与应用</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#flexboard"><i class="fa fa-check"></i><b>6.1</b> flexboard</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#安装工作环境"><i class="fa fa-check"></i><b>6.1.1</b> 安装工作环境</a></li>
+<li class="chapter" data-level="6.1.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#多级导航模块"><i class="fa fa-check"></i><b>6.1.2</b> 多级导航模块</a></li>
+<li class="chapter" data-level="6.1.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#超级链接表"><i class="fa fa-check"></i><b>6.1.3</b> 超级链接表</a></li>
+<li class="chapter" data-level="6.1.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加social-links"><i class="fa fa-check"></i><b>6.1.4</b> 给导航栏添加Social Links</a></li>
+<li class="chapter" data-level="6.1.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加source-code"><i class="fa fa-check"></i><b>6.1.5</b> 给导航栏添加Source Code</a></li>
+<li class="chapter" data-level="6.1.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#给导航栏添加一个about"><i class="fa fa-check"></i><b>6.1.6</b> 给导航栏添加一个<code>about</code></a></li>
+<li class="chapter" data-level="6.1.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数"><i class="fa fa-check"></i><b>6.1.7</b> 布局参数</a></li>
+<li class="chapter" data-level="6.1.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#功能块参数"><i class="fa fa-check"></i><b>6.1.8</b> 功能块参数</a></li>
+<li class="chapter" data-level="6.1.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#故事版"><i class="fa fa-check"></i><b>6.1.9</b> 故事版</a></li>
+<li class="chapter" data-level="6.1.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助dashboard展示参数"><i class="fa fa-check"></i><b>6.1.10</b> 辅助dashboard展示参数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#shinydashboard"><i class="fa fa-check"></i><b>6.2</b> shinydashboard</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#基本框架和流程"><i class="fa fa-check"></i><b>6.2.1</b> 基本框架和流程</a></li>
+<li class="chapter" data-level="6.2.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#仪表板的结构"><i class="fa fa-check"></i><b>6.2.2</b> 仪表板的结构</a></li>
+<li class="chapter" data-level="6.2.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#布局参数-1"><i class="fa fa-check"></i><b>6.2.3</b> 布局参数</a></li>
+<li class="chapter" data-level="6.2.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#在dashboard中使用css技巧"><i class="fa fa-check"></i><b>6.2.4</b> 在dashboard中使用css技巧</a></li>
+<li class="chapter" data-level="6.2.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#适配于shiny的特殊函数"><i class="fa fa-check"></i><b>6.2.5</b> 适配于shiny的特殊函数</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#rmarkdown使用进阶"><i class="fa fa-check"></i><b>6.3</b> Rmarkdown使用进阶</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#参考书目"><i class="fa fa-check"></i><b>6.3.1</b> 参考书目</a></li>
+<li class="chapter" data-level="6.3.2" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#title和autherymal"><i class="fa fa-check"></i><b>6.3.2</b> title和auther/YMAL</a></li>
+<li class="chapter" data-level="6.3.3" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#字体与格式"><i class="fa fa-check"></i><b>6.3.3</b> 字体与格式</a></li>
+<li class="chapter" data-level="6.3.4" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#辅助标记"><i class="fa fa-check"></i><b>6.3.4</b> 辅助标记</a></li>
+<li class="chapter" data-level="6.3.5" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#常用代码标签"><i class="fa fa-check"></i><b>6.3.5</b> 常用代码标签</a></li>
+<li class="chapter" data-level="6.3.6" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#非常用代码标签"><i class="fa fa-check"></i><b>6.3.6</b> 非常用代码标签</a></li>
+<li class="chapter" data-level="6.3.7" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#快捷键"><i class="fa fa-check"></i><b>6.3.7</b> 快捷键</a></li>
+<li class="chapter" data-level="6.3.8" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#标题修改"><i class="fa fa-check"></i><b>6.3.8</b> 标题修改</a></li>
+<li class="chapter" data-level="6.3.9" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#图片处理"><i class="fa fa-check"></i><b>6.3.9</b> 图片处理</a></li>
+<li class="chapter" data-level="6.3.10" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#表格输出"><i class="fa fa-check"></i><b>6.3.10</b> 表格输出</a></li>
+<li class="chapter" data-level="6.3.11" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#结果输出"><i class="fa fa-check"></i><b>6.3.11</b> 结果输出</a></li>
+<li class="chapter" data-level="6.3.12" data-path="id_06-Model-release-and-application.html"><a href="id_06-Model-release-and-application.html#补充知识点"><i class="fa fa-check"></i><b>6.3.12</b> 补充知识点</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html"><i class="fa fa-check"></i><b>7</b> 可视化（表与图）</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#表格可视化"><i class="fa fa-check"></i><b>7.1</b> 表格可视化</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#快速图表可视化"><i class="fa fa-check"></i><b>7.1.1</b> 快速图表可视化</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#编辑表"><i class="fa fa-check"></i><b>7.1.2</b> 编辑表</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#静态表格优化展示"><i class="fa fa-check"></i><b>7.1.3</b> 静态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#动态表格优化展示"><i class="fa fa-check"></i><b>7.1.4</b> 动态表格优化展示</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#描述性统计表格分析"><i class="fa fa-check"></i><b>7.1.5</b> 描述性统计表格分析</a></li>
+<li class="chapter" data-level="7.1.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计结果表格可视化"><i class="fa fa-check"></i><b>7.1.6</b> 统计结果表格可视化</a></li>
+<li class="chapter" data-level="7.1.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充表格包"><i class="fa fa-check"></i><b>7.1.7</b> 补充表格包</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#图形可视化"><i class="fa fa-check"></i><b>7.2</b> 图形可视化</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#画图参考网站"><i class="fa fa-check"></i><b>7.2.1</b> 画图参考网站</a></li>
+<li class="chapter" data-level="7.2.2" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#免代码绘制"><i class="fa fa-check"></i><b>7.2.2</b> 免代码绘制</a></li>
+<li class="chapter" data-level="7.2.3" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计辅助绘图"><i class="fa fa-check"></i><b>7.2.3</b> 统计辅助绘图</a></li>
+<li class="chapter" data-level="7.2.4" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#base-plotggplot2"><i class="fa fa-check"></i><b>7.2.4</b> base-plot()/ggplot2()</a></li>
+<li class="chapter" data-level="7.2.5" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#绘图"><i class="fa fa-check"></i><b>7.2.5</b> 绘图</a></li>
+<li class="chapter" data-level="7.2.6" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#统计图形代码"><i class="fa fa-check"></i><b>7.2.6</b> 统计图形代码</a></li>
+<li class="chapter" data-level="7.2.7" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#医学分析图"><i class="fa fa-check"></i><b>7.2.7</b> 医学分析图</a></li>
+<li class="chapter" data-level="7.2.8" data-path="Visualization-Tables-Figures.html"><a href="Visualization-Tables-Figures.html#补充图形库"><i class="fa fa-check"></i><b>7.2.8</b> 补充图形库</a></li>
+</ul></li>
+</ul></li>
+<li class="part"><span><b>工具箱</b></span></li>
+<li class="chapter" data-level="8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html"><i class="fa fa-check"></i><b>8</b> 常用统计R代码</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r-系统功能"><i class="fa fa-check"></i><b>8.1</b> R-系统功能</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用r系统代码"><i class="fa fa-check"></i><b>8.1.1</b> 常用R系统代码</a></li>
+<li class="chapter" data-level="8.1.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#辅助r包"><i class="fa fa-check"></i><b>8.1.2</b> 辅助R包：</a></li>
+<li class="chapter" data-level="8.1.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用系统脚本"><i class="fa fa-check"></i><b>8.1.3</b> 常用系统脚本</a></li>
+<li class="chapter" data-level="8.1.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#s3和s4事件"><i class="fa fa-check"></i><b>8.1.4</b> S3和S4事件</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#r报错机制学习"><i class="fa fa-check"></i><b>8.2</b> R报错机制学习</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常见异常处理函数"><i class="fa fa-check"></i><b>8.2.1</b> 1 常见异常处理函数</a></li>
+<li class="chapter" data-level="8.2.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#stop"><i class="fa fa-check"></i><b>8.2.2</b> 2 STOP</a></li>
+<li class="chapter" data-level="8.2.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#warning"><i class="fa fa-check"></i><b>8.2.3</b> 3 WARNING</a></li>
+<li class="chapter" data-level="8.2.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕捉错误"><i class="fa fa-check"></i><b>8.2.4</b> 4 捕捉错误</a></li>
+<li class="chapter" data-level="8.2.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码错误调试"><i class="fa fa-check"></i><b>8.2.5</b> 5 代码错误调试</a></li>
+<li class="chapter" data-level="8.2.6" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#代码时间消耗跟踪"><i class="fa fa-check"></i><b>8.2.6</b> 6 代码时间消耗跟踪</a></li>
+<li class="chapter" data-level="8.2.7" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#补充案例"><i class="fa fa-check"></i><b>8.2.7</b> 7 补充案例</a></li>
+<li class="chapter" data-level="8.2.8" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#相关资料"><i class="fa fa-check"></i><b>8.2.8</b> 8 相关资料</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用快捷命令"><i class="fa fa-check"></i><b>8.3</b> 常用快捷命令</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#高效管道符号"><i class="fa fa-check"></i><b>8.3.1</b> 高效管道符号</a></li>
+<li class="chapter" data-level="8.3.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用辅助函数"><i class="fa fa-check"></i><b>8.3.2</b> 常用辅助函数：</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#正则表达式"><i class="fa fa-check"></i><b>8.4</b> 正则表达式</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-1"><i class="fa fa-check"></i><b>8.4.1</b> 常用正则表达式命令-1</a></li>
+<li class="chapter" data-level="8.4.2" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#常用正则表达式命令-2"><i class="fa fa-check"></i><b>8.4.2</b> 常用正则表达式命令-2</a></li>
+<li class="chapter" data-level="8.4.3" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#量词"><i class="fa fa-check"></i><b>8.4.3</b> 量词</a></li>
+<li class="chapter" data-level="8.4.4" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#捕获分组"><i class="fa fa-check"></i><b>8.4.4</b> 捕获分组</a></li>
+<li class="chapter" data-level="8.4.5" data-path="Common-statistical-R-code.html"><a href="Common-statistical-R-code.html#python使用编译"><i class="fa fa-check"></i><b>8.4.5</b> python使用编译</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html"><i class="fa fa-check"></i><b>9</b> 临床医学统计流</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#common.r"><i class="fa fa-check"></i><b>9.1</b> COMMON.R</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载r包和配置全局环境"><i class="fa fa-check"></i><b>9.1.1</b> 加载R包和配置全局环境</a></li>
+<li class="chapter" data-level="9.1.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#使用officer来启动函数参数"><i class="fa fa-check"></i><b>9.1.2</b> 使用officer来启动函数参数：</a></li>
+<li class="chapter" data-level="9.1.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#table-of-content"><i class="fa fa-check"></i><b>9.1.3</b> Table of content</a></li>
+<li class="chapter" data-level="9.1.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#cover-template--封面"><i class="fa fa-check"></i><b>9.1.4</b> Cover template -封面</a></li>
+<li class="chapter" data-level="9.1.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷辅助函数"><i class="fa fa-check"></i><b>9.1.5</b> 快捷辅助函数：</a></li>
+<li class="chapter" data-level="9.1.6" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#快捷统计函数"><i class="fa fa-check"></i><b>9.1.6</b> 快捷统计函数：</a></li>
+<li class="chapter" data-level="9.1.7" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#描述性分析统计函数"><i class="fa fa-check"></i><b>9.1.7</b> 描述性分析统计函数</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#rawdata-cleaning-pipeline"><i class="fa fa-check"></i><b>9.2</b> Rawdata cleaning pipeline</a></li>
+<li class="chapter" data-level="9.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#target_groups"><i class="fa fa-check"></i><b>9.3</b> target_groups</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#加载集成数据集"><i class="fa fa-check"></i><b>9.3.1</b> 加载集成数据集</a></li>
+<li class="chapter" data-level="9.3.2" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#保存数据集"><i class="fa fa-check"></i><b>9.3.2</b> 保存数据集</a></li>
+<li class="chapter" data-level="9.3.3" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#患者平衡匹配前后信息比较"><i class="fa fa-check"></i><b>9.3.3</b> 患者平衡匹配前后信息比较</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#dataset_for_analysis"><i class="fa fa-check"></i><b>9.4</b> dataset_for_analysis</a></li>
+<li class="chapter" data-level="9.5" data-path="Statistical-flow-of-clinical-medicine.html"><a href="Statistical-flow-of-clinical-medicine.html#final_analysis"><i class="fa fa-check"></i><b>9.5</b> final_analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="Statistical-books.html"><a href="Statistical-books.html"><i class="fa fa-check"></i><b>10</b> 统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="Statistical-books.html"><a href="Statistical-books.html#r-统计书籍"><i class="fa fa-check"></i><b>10.1</b> R-统计书籍</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="Statistical-books.html"><a href="Statistical-books.html#tidyverse相关"><i class="fa fa-check"></i><b>10.1.1</b> tidyverse相关</a></li>
+<li class="chapter" data-level="10.1.2" data-path="Statistical-books.html"><a href="Statistical-books.html#ggplo2相关-网站"><i class="fa fa-check"></i><b>10.1.2</b> ggplo2相关-网站</a></li>
+<li class="chapter" data-level="10.1.3" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图指南"><i class="fa fa-check"></i><b>10.1.3</b> 绘图指南</a></li>
+<li class="chapter" data-level="10.1.4" data-path="Statistical-books.html"><a href="Statistical-books.html#绘图相关的博客"><i class="fa fa-check"></i><b>10.1.4</b> 绘图相关的博客</a></li>
+<li class="chapter" data-level="10.1.5" data-path="Statistical-books.html"><a href="Statistical-books.html#医学指南相关"><i class="fa fa-check"></i><b>10.1.5</b> 医学指南相关</a></li>
+<li class="chapter" data-level="10.1.6" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计r包"><i class="fa fa-check"></i><b>10.1.6</b> 医学统计R包</a></li>
+<li class="chapter" data-level="10.1.7" data-path="Statistical-books.html"><a href="Statistical-books.html#医学统计相关博客"><i class="fa fa-check"></i><b>10.1.7</b> 医学统计相关博客</a></li>
+<li class="chapter" data-level="10.1.8" data-path="Statistical-books.html"><a href="Statistical-books.html#统计指南-r代码实现"><i class="fa fa-check"></i><b>10.1.8</b> 统计指南-R代码实现</a></li>
+<li class="chapter" data-level="10.1.9" data-path="Statistical-books.html"><a href="Statistical-books.html#数据建模相关"><i class="fa fa-check"></i><b>10.1.9</b> 数据建模相关</a></li>
+<li class="chapter" data-level="10.1.10" data-path="Statistical-books.html"><a href="Statistical-books.html#整合流程"><i class="fa fa-check"></i><b>10.1.10</b> 整合流程</a></li>
+<li class="chapter" data-level="10.1.11" data-path="Statistical-books.html"><a href="Statistical-books.html#博客社区"><i class="fa fa-check"></i><b>10.1.11</b> 博客社区</a></li>
+<li class="chapter" data-level="10.1.12" data-path="Statistical-books.html"><a href="Statistical-books.html#rmarkdown"><i class="fa fa-check"></i><b>10.1.12</b> Rmarkdown</a></li>
+<li class="chapter" data-level="10.1.13" data-path="Statistical-books.html"><a href="Statistical-books.html#r-rstudio"><i class="fa fa-check"></i><b>10.1.13</b> R-Rstudio</a></li>
+<li class="chapter" data-level="10.1.14" data-path="Statistical-books.html"><a href="Statistical-books.html#shiny"><i class="fa fa-check"></i><b>10.1.14</b> shiny</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="Statistical-books.html"><a href="Statistical-books.html#使用gitbook写书"><i class="fa fa-check"></i><b>10.2</b> 使用gitbook写书</a></li>
+<li class="chapter" data-level="10.3" data-path="Statistical-books.html"><a href="Statistical-books.html#使用bookdwon写书"><i class="fa fa-check"></i><b>10.3</b> 使用bookdwon写书</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="Statistical-books.html"><a href="Statistical-books.html#常用功能标记"><i class="fa fa-check"></i><b>10.3.1</b> 常用功能标记</a></li>
+<li class="chapter" data-level="10.3.2" data-path="Statistical-books.html"><a href="Statistical-books.html#r代码的构建"><i class="fa fa-check"></i><b>10.3.2</b> R代码的构建</a></li>
+<li class="chapter" data-level="10.3.3" data-path="Statistical-books.html"><a href="Statistical-books.html#动态r代码"><i class="fa fa-check"></i><b>10.3.3</b> 动态r代码</a></li>
+<li class="chapter" data-level="10.3.4" data-path="Statistical-books.html"><a href="Statistical-books.html#引入shiny应用"><i class="fa fa-check"></i><b>10.3.4</b> 引入shiny应用</a></li>
+<li class="chapter" data-level="10.3.5" data-path="Statistical-books.html"><a href="Statistical-books.html#指定输出和解析的文件"><i class="fa fa-check"></i><b>10.3.5</b> 指定输出和解析的文件</a></li>
+<li class="chapter" data-level="10.3.6" data-path="Statistical-books.html"><a href="Statistical-books.html#文件最后修改时间"><i class="fa fa-check"></i><b>10.3.6</b> 文件最后修改时间</a></li>
+<li class="chapter" data-level="10.3.7" data-path="Statistical-books.html"><a href="Statistical-books.html#添加指定序号"><i class="fa fa-check"></i><b>10.3.7</b> 添加指定序号</a></li>
+<li class="chapter" data-level="10.3.8" data-path="Statistical-books.html"><a href="Statistical-books.html#辅助知识-"><i class="fa fa-check"></i><b>10.3.8</b> 辅助知识：—-</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html"><i class="fa fa-check"></i><b>11</b> 统计与研究设计</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用参数释义"><i class="fa fa-check"></i><b>11.1</b> 常用参数释义</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#因果回归参数"><i class="fa fa-check"></i><b>11.1.1</b> 因果回归参数</a></li>
+<li class="chapter" data-level="11.1.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#生存分析参数"><i class="fa fa-check"></i><b>11.1.2</b> 生存分析参数</a></li>
+<li class="chapter" data-level="11.1.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析参数解释"><i class="fa fa-check"></i><b>11.1.3</b> 方差分析参数解释</a></li>
+<li class="chapter" data-level="11.1.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归分析中常用参数释义"><i class="fa fa-check"></i><b>11.1.4</b> 回归分析中常用参数释义</a></li>
+<li class="chapter" data-level="11.1.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#常用分布描述"><i class="fa fa-check"></i><b>11.1.5</b> 常用分布描述</a></li>
+<li class="chapter" data-level="11.1.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#其他统计参数释义"><i class="fa fa-check"></i><b>11.1.6</b> 其他统计参数释义</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#临床研究中常用的统计方法和常见问题"><i class="fa fa-check"></i><b>11.2</b> 临床研究中常用的统计方法和常见问题</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计推断与区间估计"><i class="fa fa-check"></i><b>11.2.1</b> 统计推断与区间估计</a></li>
+<li class="chapter" data-level="11.2.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计方法选择"><i class="fa fa-check"></i><b>11.2.2</b> 统计方法选择：</a></li>
+<li class="chapter" data-level="11.2.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#统计分析中的常见问题"><i class="fa fa-check"></i><b>11.2.3</b> 统计分析中的常见问题</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#差异分析"><i class="fa fa-check"></i><b>11.3</b> 差异分析</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差检验与t检验的选择"><i class="fa fa-check"></i><b>11.3.1</b> 方差检验与T检验的选择</a></li>
+<li class="chapter" data-level="11.3.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#z-分布t检验f检验和卡方检验"><i class="fa fa-check"></i><b>11.3.2</b> Z 分布、T检验、F检验和卡方检验</a></li>
+<li class="chapter" data-level="11.3.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#t检验"><i class="fa fa-check"></i><b>11.3.3</b> T检验</a></li>
+<li class="chapter" data-level="11.3.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#方差分析"><i class="fa fa-check"></i><b>11.3.4</b> 方差分析</a></li>
+<li class="chapter" data-level="11.3.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#卡方检验"><i class="fa fa-check"></i><b>11.3.5</b> 卡方检验</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归"><i class="fa fa-check"></i><b>11.4</b> 多元线性回归</a>
+<ul>
+<li class="chapter" data-level="11.4.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的概念和基础公式"><i class="fa fa-check"></i><b>11.4.1</b> 多元线性回归的概念和基础公式</a></li>
+<li class="chapter" data-level="11.4.2" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#多元线性回归的本质"><i class="fa fa-check"></i><b>11.4.2</b> 多元线性回归的本质</a></li>
+<li class="chapter" data-level="11.4.3" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的参数解释"><i class="fa fa-check"></i><b>11.4.3</b> 回归方程的参数解释：</a></li>
+<li class="chapter" data-level="11.4.4" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归方程的评价指标"><i class="fa fa-check"></i><b>11.4.4</b> 回归方程的评价指标</a></li>
+<li class="chapter" data-level="11.4.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关参数"><i class="fa fa-check"></i><b>11.4.5</b> 回归解释相关参数：</a></li>
+<li class="chapter" data-level="11.4.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#回归解释相关补充"><i class="fa fa-check"></i><b>11.4.6</b> 回归解释相关补充：</a></li>
+</ul></li>
+<li class="chapter" data-level="11.5" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验"><i class="fa fa-check"></i><b>11.5</b> 相关检验</a>
+<ul>
+<li class="chapter" data-level="11.5.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#相关检验和系数"><i class="fa fa-check"></i><b>11.5.1</b> 相关检验和系数</a></li>
+</ul></li>
+<li class="chapter" data-level="11.6" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#医疗相关检验"><i class="fa fa-check"></i><b>11.6</b> 医疗相关检验</a>
+<ul>
+<li class="chapter" data-level="11.6.1" data-path="Statistics-and-Research-Design.html"><a href="Statistics-and-Research-Design.html#log-rank检验"><i class="fa fa-check"></i><b>11.6.1</b> Log-rank检验</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html"><i class="fa fa-check"></i><b>12</b> 构筑R package</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构筑r-package相关参数配置"><i class="fa fa-check"></i><b>12.1</b> 构筑R package相关参数配置</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#创建本地环境并使用renv初始化本地安装环境"><i class="fa fa-check"></i><b>12.1.1</b> 创建本地环境并使用renv初始化本地安装环境</a></li>
+<li class="chapter" data-level="12.1.2" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#常用配置"><i class="fa fa-check"></i><b>12.1.2</b> 常用配置</a></li>
+<li class="chapter" data-level="12.1.3" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建函数"><i class="fa fa-check"></i><b>12.1.3</b> 构建函数</a></li>
+<li class="chapter" data-level="12.1.4" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#函数测试"><i class="fa fa-check"></i><b>12.1.4</b> 函数测试</a></li>
+<li class="chapter" data-level="12.1.5" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加项目内置数据集"><i class="fa fa-check"></i><b>12.1.5</b> 添加项目内置数据集</a></li>
+<li class="chapter" data-level="12.1.6" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#添加辅助描述文件"><i class="fa fa-check"></i><b>12.1.6</b> 添加辅助描述文件</a></li>
+<li class="chapter" data-level="12.1.7" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#r包整体测试"><i class="fa fa-check"></i><b>12.1.7</b> R包整体测试</a></li>
+<li class="chapter" data-level="12.1.8" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建及安装r包"><i class="fa fa-check"></i><b>12.1.8</b> 构建及安装R包</a></li>
+<li class="chapter" data-level="12.1.9" data-path="id_-Build-R-package.html"><a href="id_-Build-R-package.html#构建后上传到github多平台检查"><i class="fa fa-check"></i><b>12.1.9</b> 构建后上传到github多平台检查</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">本书由bookdown驱动</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">基于 R 的数据处理流程指南</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Data-extraction" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">第 2 章</span> 数据提取<a href="Data-extraction.html#Data-extraction" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="数据提取的基本范式" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 数据提取的基本范式<a href="Data-extraction.html#数据提取的基本范式" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>数据提取/采集（探索和检查数据质量问题，发掘数据的内部属性）</li>
+<li>数据核验（数据有效性、时效性）</li>
+<li>采用PDCA循环法来构造项目处理流程（计划、实施、检查和反馈处理）</li>
+<li>关键主键的主导的多源数据融合</li>
+</ul>
+</div>
+<div id="数据导入与导出" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 数据导入与导出<a href="Data-extraction.html#数据导入与导出" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="剪切板中处理数据" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> 剪切板中处理数据<a href="Data-extraction.html#剪切板中处理数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Data-extraction.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 读入粘贴板数据：</span></span>
+<span id="cb1-2"><a href="Data-extraction.html#cb1-2" aria-hidden="true" tabindex="-1"></a>t1 <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">&quot;clipboard&quot;</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">&#39;</span><span class="sc">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb1-3"><a href="Data-extraction.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="Data-extraction.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># export the linelist data frame to your system&#39;s clipboard</span></span>
+<span id="cb1-5"><a href="Data-extraction.html#cb1-5" aria-hidden="true" tabindex="-1"></a>clipr<span class="sc">::</span><span class="fu">write_clip</span>(linelist)</span>
+<span id="cb1-6"><a href="Data-extraction.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="Data-extraction.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 调用文件选择器</span></span>
+<span id="cb1-8"><a href="Data-extraction.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="fu">file.choose</span>())</span></code></pre></div>
+</div>
+<div id="读取excle文件" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> 读取excle文件<a href="Data-extraction.html#读取excle文件" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Data-extraction.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取excel表数据：</span></span>
+<span id="cb2-2"><a href="Data-extraction.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xlsx)</span>
+<span id="cb2-3"><a href="Data-extraction.html#cb2-3" aria-hidden="true" tabindex="-1"></a>st1 <span class="ot">&lt;-</span> xlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&quot;mtcars.xlsx&quot;</span>, <span class="dv">1</span>) <span class="co"># 1为sheet1；</span></span>
+<span id="cb2-4"><a href="Data-extraction.html#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="Data-extraction.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 另外一种优化的方式：</span></span>
+<span id="cb2-6"><a href="Data-extraction.html#cb2-6" aria-hidden="true" tabindex="-1"></a>st1 <span class="ot">&lt;-</span> openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>(<span class="st">&quot;./fn_out/v11_log.xlsx&quot;</span>) <span class="co"># 1为sheet1；</span></span>
+<span id="cb2-7"><a href="Data-extraction.html#cb2-7" aria-hidden="true" tabindex="-1"></a>st1</span>
+<span id="cb2-8"><a href="Data-extraction.html#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="Data-extraction.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 使用openxlsx来读取和写入数据：</span></span>
+<span id="cb2-10"><a href="Data-extraction.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="do">### 学习使用：openxlsx</span></span>
+<span id="cb2-11"><a href="Data-extraction.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb2-12"><a href="Data-extraction.html#cb2-12" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">a=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">b=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">d=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb2-13"><a href="Data-extraction.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 第一步创建workbook</span></span>
+<span id="cb2-14"><a href="Data-extraction.html#cb2-14" aria-hidden="true" tabindex="-1"></a>wb <span class="ot">&lt;-</span> <span class="fu">createWorkbook</span>(<span class="at">creator =</span> <span class="st">&#39;zhongyf&#39;</span>,<span class="at">title =</span> <span class="st">&#39;test&#39;</span>)</span>
+<span id="cb2-15"><a href="Data-extraction.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 第二步添加addworksheet</span></span>
+<span id="cb2-16"><a href="Data-extraction.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">addWorksheet</span>(wb,<span class="at">sheetName =</span> <span class="st">&#39;test&#39;</span>)</span>
+<span id="cb2-17"><a href="Data-extraction.html#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 第三步写入数据writeDataTable</span></span>
+<span id="cb2-18"><a href="Data-extraction.html#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">writeData</span>(wb,<span class="at">sheet =</span> <span class="st">&#39;test&#39;</span>,<span class="at">x =</span> df)</span>
+<span id="cb2-19"><a href="Data-extraction.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 第四步保存saveworkbook。</span></span>
+<span id="cb2-20"><a href="Data-extraction.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">saveWorkbook</span>(wb, <span class="st">&quot;test.xlsx&quot;</span>, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="加速读取及导出常用数据" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> 加速读取及导出常用数据<a href="Data-extraction.html#加速读取及导出常用数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="rio包读取数据和导出一般数据" class="section level4 hasAnchor" number="2.2.3.1">
+<h4><span class="header-section-number">2.2.3.1</span> 3.1 RIO包读取数据和导出一般数据<a href="Data-extraction.html#rio包读取数据和导出一般数据" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Data-extraction.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">##### rio包的数据读入与导出练习  ####</span></span>
+<span id="cb3-2"><a href="Data-extraction.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="do">### 注意rio包调用的是data.table::fread()进行读取函数；</span></span>
+<span id="cb3-3"><a href="Data-extraction.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb3-4"><a href="Data-extraction.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rio&quot;</span>)</span>
+<span id="cb3-5"><a href="Data-extraction.html#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="Data-extraction.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">### 导入csv文件：</span></span>
+<span id="cb3-7"><a href="Data-extraction.html#cb3-7" aria-hidden="true" tabindex="-1"></a>mtcars <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;data/mtcars.csv&quot;</span>)</span>
+<span id="cb3-8"><a href="Data-extraction.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars)</span>
+<span id="cb3-9"><a href="Data-extraction.html#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="Data-extraction.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="do">### 导入excle的多个子表：</span></span>
+<span id="cb3-11"><a href="Data-extraction.html#cb3-11" aria-hidden="true" tabindex="-1"></a>multi <span class="ot">&lt;-</span> <span class="fu">import_list</span>(<span class="st">&quot;data/multi.xlsx&quot;</span>)</span>
+<span id="cb3-12"><a href="Data-extraction.html#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="Data-extraction.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="do">### 批量导入多个格式相同的项目文件：</span></span>
+<span id="cb3-14"><a href="Data-extraction.html#cb3-14" aria-hidden="true" tabindex="-1"></a>paths <span class="ot">&lt;-</span> <span class="fu">Sys.glob</span>(<span class="st">&quot;data/unemployment/*.csv&quot;</span>)</span>
+<span id="cb3-15"><a href="Data-extraction.html#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="Data-extraction.html#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="do">### 借助here包引用进行数据导入：</span></span>
+<span id="cb3-17"><a href="Data-extraction.html#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 这里是借助linelist_raw的路径来导入data数据；</span></span>
+<span id="cb3-18"><a href="Data-extraction.html#cb3-18" aria-hidden="true" tabindex="-1"></a>linelist <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;linelist_raw.xlsx&quot;</span>))</span>
+<span id="cb3-19"><a href="Data-extraction.html#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="Data-extraction.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="do">### 借助export来批量导出数据：</span></span>
+<span id="cb3-21"><a href="Data-extraction.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(linelist, <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>,<span class="st">&quot;clean&quot;</span>, <span class="st">&quot;my_linelist.rds&quot;</span>))</span>
+<span id="cb3-22"><a href="Data-extraction.html#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="Data-extraction.html#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="do">### 保存图片：</span></span>
+<span id="cb3-24"><a href="Data-extraction.html#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 这里是将赋值outputs 输出到epicurves文件夹中的对应文件编号中</span></span>
+<span id="cb3-25"><a href="Data-extraction.html#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="fu">here</span>(<span class="st">&quot;outputs&quot;</span>, <span class="st">&quot;epicurves&quot;</span>, <span class="st">&quot;epicurve_2021-02-15.png&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Data-extraction.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 优化现有的代码读入规则：</span></span>
+<span id="cb4-2"><a href="Data-extraction.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">### RIO包读取特定条件下文档</span></span>
+<span id="cb4-3"><a href="Data-extraction.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取指定的excle表：</span></span>
+<span id="cb4-4"><a href="Data-extraction.html#cb4-4" aria-hidden="true" tabindex="-1"></a>my_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;my_excel_file.xlsx&quot;</span>, <span class="at">which =</span> <span class="st">&quot;Sheetname&quot;</span>)</span>
+<span id="cb4-5"><a href="Data-extraction.html#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="Data-extraction.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用here()来辅助数据读取：</span></span>
+<span id="cb4-7"><a href="Data-extraction.html#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstration: importing a specific Excel sheet when using relative pathways with the &#39;here&#39; package</span></span>
+<span id="cb4-8"><a href="Data-extraction.html#cb4-8" aria-hidden="true" tabindex="-1"></a>linelist_raw <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;linelist.xlsx&quot;</span>), <span class="at">which =</span> <span class="st">&quot;Sheet1&quot;</span>)<span class="st">`</span><span class="at">  </span></span>
+<span id="cb4-9"><a href="Data-extraction.html#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="Data-extraction.html#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="Data-extraction.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="at">##  缺失值读入：</span></span>
+<span id="cb4-12"><a href="Data-extraction.html#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="at">## 将缺失值重新定义为为99；</span></span>
+<span id="cb4-13"><a href="Data-extraction.html#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="at">linelist &lt;- import(here(&quot;data&quot;, &quot;my_linelist.xlsx&quot;), na = &quot;99&quot;)</span></span>
+<span id="cb4-14"><a href="Data-extraction.html#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="Data-extraction.html#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="at">## 将矩阵中的missing和空格等转为</span></span>
+<span id="cb4-16"><a href="Data-extraction.html#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="at">linelist &lt;- import(here(&quot;data&quot;, &quot;my_linelist.csv&quot;), na = c(&quot;Missing&quot;, &quot;&quot;, &quot; &quot;))</span></span>
+<span id="cb4-17"><a href="Data-extraction.html#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="Data-extraction.html#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="at">## 跳过行：</span></span>
+<span id="cb4-19"><a href="Data-extraction.html#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="at">linelist_raw &lt;- import(&quot;linelist_raw.xlsx&quot;, skip = 1)  # does not import header row</span></span>
+<span id="cb4-20"><a href="Data-extraction.html#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="Data-extraction.html#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="at">###  指定文档的列名读入：</span></span>
+<span id="cb4-22"><a href="Data-extraction.html#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="at"># note argument for csv files is &#39;col.names = &#39;</span></span>
+<span id="cb4-23"><a href="Data-extraction.html#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="at">linelist_raw &lt;- import(&quot;linelist_raw.csv&quot;,</span></span>
+<span id="cb4-24"><a href="Data-extraction.html#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="at">                       skip = 2,</span></span>
+<span id="cb4-25"><a href="Data-extraction.html#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="at">                       col.names = linelist_raw_names)</span></span>
+<span id="cb4-26"><a href="Data-extraction.html#cb4-26" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</div>
+<div id="data.table包中的fread" class="section level4 hasAnchor" number="2.2.3.2">
+<h4><span class="header-section-number">2.2.3.2</span> 3.2 data.table包中的fread()<a href="Data-extraction.html#data.table包中的fread" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Data-extraction.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 用于高性能处理数据：</span></span>
+<span id="cb5-2"><a href="Data-extraction.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 浅拷贝：只是拷贝列指针向量(对应数据框中的列)，而实际数据在内存中不做物理拷贝；</span></span>
+<span id="cb5-3"><a href="Data-extraction.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 深拷贝：拷贝整个数据列到内存的另一位置，深拷贝这种冗余拷贝极大地影响性能。</span></span>
+<span id="cb5-4"><a href="Data-extraction.html#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="Data-extraction.html#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="Data-extraction.html#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="sc">@</span> 简要用法：</span>
+<span id="cb5-7"><a href="Data-extraction.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.table</span>() <span class="sc">:</span>生成数据框，并将数据框、列表和矩阵转为<span class="fu">data.table</span>()</span>
+<span id="cb5-8"><a href="Data-extraction.html#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="Data-extraction.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 键和索引：</span></span>
+<span id="cb5-10"><a href="Data-extraction.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data.table</span>() 支持键和索引。</span>
+<span id="cb5-11"><a href="Data-extraction.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">setkey</span>(dt,v1,v3) <span class="do">## 设置键；</span></span>
+<span id="cb5-12"><a href="Data-extraction.html#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">setindex</span>(dt,v1,v3) <span class="co"># 设置索引；</span></span>
+<span id="cb5-13"><a href="Data-extraction.html#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="Data-extraction.html#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="Data-extraction.html#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 特殊符号： data.table()提供了一些辅助操作的特殊符号；</span></span>
+<span id="cb5-16"><a href="Data-extraction.html#cb5-16" aria-hidden="true" tabindex="-1"></a>.()<span class="sc">:</span>代替<span class="fu">uist</span>(</span>
+<span id="cb5-17"><a href="Data-extraction.html#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="sc">:</span><span class="er">=:</span>按引用方式增加、修改列</span>
+<span id="cb5-18"><a href="Data-extraction.html#cb5-18" aria-hidden="true" tabindex="-1"></a>.N<span class="sc">:</span>行数</span>
+<span id="cb5-19"><a href="Data-extraction.html#cb5-19" aria-hidden="true" tabindex="-1"></a>.SD<span class="sc">:</span>每个分组的数据子集,除了by或 kelby的列</span>
+<span id="cb5-20"><a href="Data-extraction.html#cb5-20" aria-hidden="true" tabindex="-1"></a>.SCots<span class="sc">:</span>与.sD连用,用来选择包含在SD中的列</span>
+<span id="cb5-21"><a href="Data-extraction.html#cb5-21" aria-hidden="true" tabindex="-1"></a>.BY<span class="sc">:</span>包含所有by分组变量的1ist</span>
+<span id="cb5-22"><a href="Data-extraction.html#cb5-22" aria-hidden="true" tabindex="-1"></a>.I<span class="sc">:</span>整数向量<span class="fu">seq_len</span>(<span class="fu">nrow</span>(x),例如DT[,,I[ whi <span class="fu">ch.max</span>( somecol)],<span class="at">by=</span>grp]</span>
+<span id="cb5-23"><a href="Data-extraction.html#cb5-23" aria-hidden="true" tabindex="-1"></a>.GRP<span class="sc">:</span>分组索引,1代表第1分组,2代表第2分组,</span>
+<span id="cb5-24"><a href="Data-extraction.html#cb5-24" aria-hidden="true" tabindex="-1"></a>.NGRP<span class="sc">:</span>分组数</span>
+<span id="cb5-25"><a href="Data-extraction.html#cb5-25" aria-hidden="true" tabindex="-1"></a>.EACHI<span class="sc">:</span>用于by<span class="sc">/</span> <span class="at">kerby=</span>. EACHI表示根据i表达式的每一行分组</span>
+<span id="cb5-26"><a href="Data-extraction.html#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="Data-extraction.html#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 管道符操作：也称为链式操作：</span></span>
+<span id="cb5-28"><a href="Data-extraction.html#cb5-28" aria-hidden="true" tabindex="-1"></a>DT[...][...][...] </span>
+<span id="cb5-29"><a href="Data-extraction.html#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="Data-extraction.html#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 数据读写：</span></span>
+<span id="cb5-31"><a href="Data-extraction.html#cb5-31" aria-hidden="true" tabindex="-1"></a>函数<span class="fu">fread</span>()和<span class="fu">fwrite</span>()是data.tabel最强大的函数之二。</span>
+<span id="cb5-32"><a href="Data-extraction.html#cb5-32" aria-hidden="true" tabindex="-1"></a><span class="co"># 常用函数读取，不支持直接读取excel文件；</span></span>
+<span id="cb5-33"><a href="Data-extraction.html#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="fu">fread</span>(<span class="st">&quot;DT.csv&quot;</span>)</span>
+<span id="cb5-34"><a href="Data-extraction.html#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="fu">fread</span>(<span class="st">&quot;DT.csv&quot;</span>,<span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb5-35"><a href="Data-extraction.html#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="co"># 选择部分行列读取：</span></span>
+<span id="cb5-36"><a href="Data-extraction.html#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="at">HH =</span> <span class="fu">fread</span>(<span class="st">&quot;DT.csv&quot;</span>,<span class="at">select =</span><span class="fu">c</span>(<span class="st">&quot;v1&quot;</span>,<span class="st">&quot;v4&quot;</span>))</span>
+<span id="cb5-37"><a href="Data-extraction.html#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="fu">fread</span>(<span class="st">&quot;DT.csv&quot;</span>,dr</span>
+<span id="cb5-38"><a href="Data-extraction.html#cb5-38" aria-hidden="true" tabindex="-1"></a>      <span class="at">op=</span><span class="st">&quot;v4&quot;</span>,<span class="at">nrows=</span><span class="dv">100</span>)</span>
+<span id="cb5-39"><a href="Data-extraction.html#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取压缩文件：</span></span>
+<span id="cb5-40"><a href="Data-extraction.html#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="fu">fread</span>(<span class="at">cmd =</span><span class="st">&quot;unzip - cq myfile.zip&quot;</span>)</span>
+<span id="cb5-41"><a href="Data-extraction.html#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">fread</span>(<span class="st">&quot;myfile.gz&quot;</span>)</span>
+<span id="cb5-42"><a href="Data-extraction.html#cb5-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 批量读取：</span></span>
+<span id="cb5-43"><a href="Data-extraction.html#cb5-43" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="st">&quot;DT.csv&quot;</span>,<span class="st">&quot;FFF.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-44"><a href="Data-extraction.html#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lapply</span>(fread) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-45"><a href="Data-extraction.html#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbindlist</span>() <span class="do">## 多个数据扛，按列表、按行合并；</span></span>
+<span id="cb5-46"><a href="Data-extraction.html#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="Data-extraction.html#cb5-47" aria-hidden="true" tabindex="-1"></a><span class="do">## 写出数据：</span></span>
+<span id="cb5-48"><a href="Data-extraction.html#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(DT,<span class="st">&quot;DT.csv&quot;</span>)</span>
+<span id="cb5-49"><a href="Data-extraction.html#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(DT,<span class="st">&quot;DT.csv&quot;</span>,<span class="at">append =</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-50"><a href="Data-extraction.html#cb5-50" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(DT,<span class="st">&quot;DT.csv&quot;</span>,<span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb5-51"><a href="Data-extraction.html#cb5-51" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(<span class="fu">setDT</span>(<span class="fu">list</span>(<span class="dv">0</span>,<span class="fu">list</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>))),<span class="st">&quot;DT2.csv&quot;</span>) <span class="do">##将列表作为对象写出；</span></span>
+<span id="cb5-52"><a href="Data-extraction.html#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="fu">fwrite</span>(DT,<span class="st">&quot;myfile.csv.gz&quot;</span>,<span class="at">compress =</span><span class="st">&quot;gzip&quot;</span>)</span>
+<span id="cb5-53"><a href="Data-extraction.html#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="Data-extraction.html#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="do">##  数据链接：数据链接部分参见</span></span>
+<span id="cb5-55"><a href="Data-extraction.html#cb5-55" aria-hidden="true" tabindex="-1"></a><span class="co"># 左连接：</span></span>
+<span id="cb5-56"><a href="Data-extraction.html#cb5-56" aria-hidden="true" tabindex="-1"></a>y[x,<span class="at">onm=</span> <span class="st">&quot;v1&quot;</span>] <span class="co"># 注意是以x为左表；</span></span>
+<span id="cb5-57"><a href="Data-extraction.html#cb5-57" aria-hidden="true" tabindex="-1"></a>y[x]           <span class="co"># 若v1是键；</span></span>
+<span id="cb5-58"><a href="Data-extraction.html#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="fu">merge</span>(x,y,<span class="at">all.x=</span><span class="cn">TRUE</span>,<span class="at">by=</span><span class="st">&quot;v1&quot;</span>) <span class="do">## 注意是只要加载了data.table包，将自动动用更快速的data.table::merge()，而不是R base中的merge()，二者语法相同；</span></span>
+<span id="cb5-59"><a href="Data-extraction.html#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="Data-extraction.html#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co"># 非等链接：</span></span>
+<span id="cb5-61"><a href="Data-extraction.html#cb5-61" aria-hidden="true" tabindex="-1"></a>通常数据连接是等值链接，即匹配列的值相等，才认为匹配陈宫，再将匹配成功的其他列连接起来；</span>
+<span id="cb5-62"><a href="Data-extraction.html#cb5-62" aria-hidden="true" tabindex="-1"></a>很多时候需要非等连接，相当于是按条件链接，即匹配列的值不要求必须相等，只要满足一定条件就认为是匹配成功，再将匹配成功的其他列连接进来。</span></code></pre></div>
+</div>
+<div id="vroom包--超大量级数据集读取" class="section level4 hasAnchor" number="2.2.3.3">
+<h4><span class="header-section-number">2.2.3.3</span> 3.3 Vroom包- 超大量级数据集读取<a href="Data-extraction.html#vroom包--超大量级数据集读取" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Data-extraction.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb6-2"><a href="Data-extraction.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;common.R&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;utf-8&quot;</span>)</span>
+<span id="cb6-3"><a href="Data-extraction.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 数据读入：</span></span>
+<span id="cb6-4"><a href="Data-extraction.html#cb6-4" aria-hidden="true" tabindex="-1"></a>patient_filepath <span class="ot">&lt;-</span> fs<span class="sc">::</span><span class="fu">dir_ls</span>(<span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;preprocess&quot;</span>, <span class="st">&quot;patient_clean&quot;</span>),</span>
+<span id="cb6-5"><a href="Data-extraction.html#cb6-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">glob =</span> <span class="st">&quot;*/*.csv&quot;</span>)</span>
+<span id="cb6-6"><a href="Data-extraction.html#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="Data-extraction.html#cb6-7" aria-hidden="true" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">vroom</span>(patient_filepath) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="Data-extraction.html#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;...1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="Data-extraction.html#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span>
+<span id="cb6-10"><a href="Data-extraction.html#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="Data-extraction.html#cb6-11" aria-hidden="true" tabindex="-1"></a>lab <span class="ot">&lt;-</span> <span class="fu">vroom</span>(lab_filepath) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-12"><a href="Data-extraction.html#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">&quot;...1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-13"><a href="Data-extraction.html#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-14"><a href="Data-extraction.html#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-15"><a href="Data-extraction.html#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">pbg_diff =</span> end_pbg <span class="sc">-</span> start_pbg) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-16"><a href="Data-extraction.html#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_with_na_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">&quot;pbg_diff&quot;</span>),</span>
+<span id="cb6-17"><a href="Data-extraction.html#cb6-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">condition =</span> <span class="sc">~</span>.x <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb6-18"><a href="Data-extraction.html#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="Data-extraction.html#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 数据写出：</span></span></code></pre></div>
+</div>
+<div id="arrow包--数据整洁编码读取" class="section level4 hasAnchor" number="2.2.3.4">
+<h4><span class="header-section-number">2.2.3.4</span> 3.3 Arrow包- 数据整洁编码读取<a href="Data-extraction.html#arrow包--数据整洁编码读取" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Data-extraction.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb7-2"><a href="Data-extraction.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">&quot;R&quot;</span>, <span class="st">&quot;prepare and analyse data&quot;</span>, <span class="st">&quot;prepare.R&quot;</span>), <span class="at">encoding =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb7-3"><a href="Data-extraction.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="Data-extraction.html#cb7-4" aria-hidden="true" tabindex="-1"></a>patient <span class="ot">&lt;-</span> <span class="fu">open_dataset</span>(</span>
+<span id="cb7-5"><a href="Data-extraction.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;preprocess&quot;</span>, <span class="st">&quot;lan&quot;</span>, <span class="st">&quot;patient_clean&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="Data-extraction.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>() </span>
+<span id="cb7-7"><a href="Data-extraction.html#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="Data-extraction.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write_dataset</span>(</span>
+<span id="cb7-9"><a href="Data-extraction.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  data_endpoint3, </span>
+<span id="cb7-10"><a href="Data-extraction.html#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">&quot;data&quot;</span>, <span class="st">&quot;analysis&quot;</span>, <span class="st">&quot;lan&quot;</span>, <span class="st">&quot;endpoint3&quot;</span>),</span>
+<span id="cb7-11"><a href="Data-extraction.html#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">format =</span> <span class="st">&quot;parquet&quot;</span>)</span></code></pre></div>
+<div id="open_dataset的高阶用法" class="section level5 hasAnchor" number="2.2.3.4.1">
+<h5><span class="header-section-number">2.2.3.4.1</span> 3.3.1 open_dataset的高阶用法：<a href="Data-extraction.html#open_dataset的高阶用法" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Data-extraction.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Task 1 - join</span></span>
+<span id="cb8-2"><a href="Data-extraction.html#cb8-2" aria-hidden="true" tabindex="-1"></a>start <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-3"><a href="Data-extraction.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(</span>
+<span id="cb8-4"><a href="Data-extraction.html#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="do">## 使用open paraquet方法来加速数据的合并与读取</span></span>
+<span id="cb8-5"><a href="Data-extraction.html#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">open_dataset</span>(</span>
+<span id="cb8-6"><a href="Data-extraction.html#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">source =</span> <span class="st">&quot;/home/data/CLAIM_HISTORY_MONTH&quot;</span></span>
+<span id="cb8-7"><a href="Data-extraction.html#cb8-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="Data-extraction.html#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(CLAIM_STATUS_TYPE_CD <span class="sc">==</span> <span class="st">&quot;PC&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="Data-extraction.html#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(CH_SUBM_PROVIDER_ID,</span>
+<span id="cb8-10"><a href="Data-extraction.html#cb8-10" aria-hidden="true" tabindex="-1"></a>           BNFT_TYPE_CD, </span>
+<span id="cb8-11"><a href="Data-extraction.html#cb8-11" aria-hidden="true" tabindex="-1"></a>           CH_REND_AMT),</span>
+<span id="cb8-12"><a href="Data-extraction.html#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">open_dataset</span>(<span class="at">sources =</span> <span class="st">&quot;/home/data/Provider&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="Data-extraction.html#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(provider_id, provider_type, benefit_description),</span>
+<span id="cb8-14"><a href="Data-extraction.html#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CH_SUBM_PROVIDER_ID&quot;</span> <span class="ot">=</span> <span class="st">&quot;provider_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-15"><a href="Data-extraction.html#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">collect</span>()</span>
+<span id="cb8-16"><a href="Data-extraction.html#cb8-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-17"><a href="Data-extraction.html#cb8-17" aria-hidden="true" tabindex="-1"></a>end <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb8-18"><a href="Data-extraction.html#cb8-18" aria-hidden="true" tabindex="-1"></a>end <span class="sc">-</span> start</span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="office格式及图片导出" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> OFFICE格式及图片导出<a href="Data-extraction.html#office格式及图片导出" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="export" class="section level4 hasAnchor" number="2.2.4.1">
+<h4><span class="header-section-number">2.2.4.1</span> 4.1 export()<a href="Data-extraction.html#export" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Data-extraction.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(export)</span>
+<span id="cb9-2"><a href="Data-extraction.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出ppt&quot;</span></span>
+<span id="cb9-3"><a href="Data-extraction.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;c:/Users/admin/Desktop/&quot;</span>)</span>
+<span id="cb9-4"><a href="Data-extraction.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">graph2ppt</span>(<span class="at">file=</span><span class="st">&quot;effect plot.pptx&quot;</span>, <span class="at">width=</span><span class="dv">7</span>, <span class="at">height=</span><span class="dv">5</span>)</span>
+<span id="cb9-5"><a href="Data-extraction.html#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="Data-extraction.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出word：</span></span>
+<span id="cb9-7"><a href="Data-extraction.html#cb9-7" aria-hidden="true" tabindex="-1"></a>graph2doc</span>
+<span id="cb9-8"><a href="Data-extraction.html#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="Data-extraction.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出图片：</span></span>
+<span id="cb9-10"><a href="Data-extraction.html#cb9-10" aria-hidden="true" tabindex="-1"></a>graph2bitmap</span>
+<span id="cb9-11"><a href="Data-extraction.html#cb9-11" aria-hidden="true" tabindex="-1"></a>graph2eps</span>
+<span id="cb9-12"><a href="Data-extraction.html#cb9-12" aria-hidden="true" tabindex="-1"></a>graph2jpg</span>
+<span id="cb9-13"><a href="Data-extraction.html#cb9-13" aria-hidden="true" tabindex="-1"></a>graph2png</span>
+<span id="cb9-14"><a href="Data-extraction.html#cb9-14" aria-hidden="true" tabindex="-1"></a>graph2svg</span>
+<span id="cb9-15"><a href="Data-extraction.html#cb9-15" aria-hidden="true" tabindex="-1"></a>graph2tif</span>
+<span id="cb9-16"><a href="Data-extraction.html#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="Data-extraction.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出pdf版本：</span></span>
+<span id="cb9-18"><a href="Data-extraction.html#cb9-18" aria-hidden="true" tabindex="-1"></a>graph2pdf</span>
+<span id="cb9-19"><a href="Data-extraction.html#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出数据表在excle平台：</span></span>
+<span id="cb9-20"><a href="Data-extraction.html#cb9-20" aria-hidden="true" tabindex="-1"></a>table2csv</span>
+<span id="cb9-21"><a href="Data-extraction.html#cb9-21" aria-hidden="true" tabindex="-1"></a>table2csv2</span>
+<span id="cb9-22"><a href="Data-extraction.html#cb9-22" aria-hidden="true" tabindex="-1"></a>table2excel</span>
+<span id="cb9-23"><a href="Data-extraction.html#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出数据在word生成的数据表：</span></span>
+<span id="cb9-24"><a href="Data-extraction.html#cb9-24" aria-hidden="true" tabindex="-1"></a>table2doc</span>
+<span id="cb9-25"><a href="Data-extraction.html#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出数据生成对应的网页：</span></span>
+<span id="cb9-26"><a href="Data-extraction.html#cb9-26" aria-hidden="true" tabindex="-1"></a>table2html</span>
+<span id="cb9-27"><a href="Data-extraction.html#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出表到ppt中：</span></span>
+<span id="cb9-28"><a href="Data-extraction.html#cb9-28" aria-hidden="true" tabindex="-1"></a>table2ppt</span></code></pre></div>
+</div>
+<div id="eoiffice" class="section level4 hasAnchor" number="2.2.4.2">
+<h4><span class="header-section-number">2.2.4.2</span> 4.2 eoiffice()<a href="Data-extraction.html#eoiffice" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="Data-extraction.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## eoiffice ####</span></span>
+<span id="cb10-2"><a href="Data-extraction.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;eoffice&quot;</span>)</span>
+<span id="cb10-3"><a href="Data-extraction.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(eoffice)</span>
+<span id="cb10-4"><a href="Data-extraction.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-5"><a href="Data-extraction.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 写入文件指定类型 ##</span></span>
+<span id="cb10-6"><a href="Data-extraction.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># topptx 将数字写入 powerpoint 文件</span></span>
+<span id="cb10-7"><a href="Data-extraction.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># todocx 将数字写入 word 文件</span></span>
+<span id="cb10-8"><a href="Data-extraction.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># tofigure 将图形写入不同的输出格式。</span></span>
+<span id="cb10-9"><a href="Data-extraction.html#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="Data-extraction.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 写入ppt和word中：</span></span>
+<span id="cb10-11"><a href="Data-extraction.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>disp, <span class="at">col =</span> <span class="fu">factor</span>(mtcars<span class="sc">$</span>cyl), <span class="at">pch =</span> <span class="dv">20</span>)</span>
+<span id="cb10-12"><a href="Data-extraction.html#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">topptx</span>(p, <span class="at">filename =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;mtcars.pptx&quot;</span>), <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>)</span>
+<span id="cb10-13"><a href="Data-extraction.html#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="Data-extraction.html#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 写入表格：</span></span>
+<span id="cb10-15"><a href="Data-extraction.html#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="fu">totable</span>(<span class="fu">head</span>(mtcars), <span class="at">filename =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;mtcars2.pptx&quot;</span>))</span>
+<span id="cb10-16"><a href="Data-extraction.html#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="Data-extraction.html#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取数据：</span></span>
+<span id="cb10-18"><a href="Data-extraction.html#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取ptx和doc文件：</span></span>
+<span id="cb10-19"><a href="Data-extraction.html#cb10-19" aria-hidden="true" tabindex="-1"></a>tabs <span class="ot">&lt;-</span> <span class="fu">inpptx</span>(<span class="at">filename =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;mtcars.pptx&quot;</span>), <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-20"><a href="Data-extraction.html#cb10-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="Data-extraction.html#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 写入图片：可以到处pdf/png/eps等文件格式：</span></span>
+<span id="cb10-22"><a href="Data-extraction.html#cb10-22" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(mpg, disp, <span class="at">color =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span> <span class="fu">geom_point</span>()</span>
+<span id="cb10-23"><a href="Data-extraction.html#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="fu">tofigure</span>(p, <span class="at">filename =</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(), <span class="st">&quot;mtcars.pdf&quot;</span>))</span></code></pre></div>
+</div>
+<div id="officer" class="section level4 hasAnchor" number="2.2.4.3">
+<h4><span class="header-section-number">2.2.4.3</span> 4.3 officer()<a href="Data-extraction.html#officer" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Data-extraction.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">## officer ## </span></span>
+<span id="cb11-2"><a href="Data-extraction.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(officer)</span>
+<span id="cb11-3"><a href="Data-extraction.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr) <span class="co"># Package `magrittr` makes officer usage easier.</span></span>
+<span id="cb11-4"><a href="Data-extraction.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-5"><a href="Data-extraction.html#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="Data-extraction.html#cb11-6" aria-hidden="true" tabindex="-1"></a>my_doc <span class="ot">&lt;-</span> <span class="fu">read_docx</span>()  <span class="co">#初始化一个docx , 里面不填路径使用默认模板</span></span>
+<span id="cb11-7"><a href="Data-extraction.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">styles_info</span>(my_doc)  <span class="co">#显示信息</span></span>
+<span id="cb11-8"><a href="Data-extraction.html#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="Data-extraction.html#cb11-9" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> iris, <span class="fu">aes</span>(Sepal.Length, Petal.Length)) <span class="sc">+</span> </span>
+<span id="cb11-10"><a href="Data-extraction.html#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb11-11"><a href="Data-extraction.html#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="Data-extraction.html#cb11-12" aria-hidden="true" tabindex="-1"></a>my_doc <span class="sc">%&gt;%</span>   <span class="co">#可以使用magrittr方式一步步添加</span></span>
+<span id="cb11-13"><a href="Data-extraction.html#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;Table of content&quot;</span>, <span class="at">style =</span> <span class="st">&quot;heading 1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-14"><a href="Data-extraction.html#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_toc</span>(<span class="at">level =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-15"><a href="Data-extraction.html#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_break</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-16"><a href="Data-extraction.html#cb11-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-17"><a href="Data-extraction.html#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;dataset iris&quot;</span>, <span class="at">style =</span> <span class="st">&quot;heading 2&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-18"><a href="Data-extraction.html#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_table</span>(<span class="at">value =</span> <span class="fu">head</span>(iris), <span class="at">style =</span> <span class="st">&quot;table_template&quot;</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-19"><a href="Data-extraction.html#cb11-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-20"><a href="Data-extraction.html#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_par</span>(<span class="at">value =</span> <span class="st">&quot;plot examples&quot;</span>, <span class="at">style =</span> <span class="st">&quot;heading 1&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-21"><a href="Data-extraction.html#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">body_add_gg</span>(<span class="at">value =</span> gg, <span class="at">style =</span> <span class="st">&quot;centered&quot;</span> ) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-22"><a href="Data-extraction.html#cb11-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-23"><a href="Data-extraction.html#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">target =</span> <span class="st">&quot;body_add_demo.docx&quot;</span>)</span></code></pre></div>
+</div>
+<div id="rrtable" class="section level4 hasAnchor" number="2.2.4.4">
+<h4><span class="header-section-number">2.2.4.4</span> 4.4 rrtable()<a href="Data-extraction.html#rrtable" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="Data-extraction.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;rrtable&quot;)</span></span>
+<span id="cb12-2"><a href="Data-extraction.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rrtable)</span>
+<span id="cb12-3"><a href="Data-extraction.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 自动化报表输出：</span></span>
+<span id="cb12-4"><a href="Data-extraction.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 生成报表图片：</span></span>
+<span id="cb12-5"><a href="Data-extraction.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">df2flextable2</span>( sampleData3 ,<span class="at">vanilla=</span> <span class="cn">FALSE</span> )</span>
+<span id="cb12-6"><a href="Data-extraction.html#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="Data-extraction.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 生成描述性统计图片：</span></span>
+<span id="cb12-8"><a href="Data-extraction.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mytable2flextable</span>( <span class="fu">mytable</span>(Dx<span class="sc">~</span>.,<span class="at">data=</span>acs) ,<span class="at">vanilla=</span> <span class="cn">FALSE</span> )</span>
+<span id="cb12-9"><a href="Data-extraction.html#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="Data-extraction.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 生成对应统计分类的html格式：</span></span>
+<span id="cb12-11"><a href="Data-extraction.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">data2HTML</span>(sampleData3) </span>
+<span id="cb12-12"><a href="Data-extraction.html#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="Data-extraction.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出OFFICE</span></span>
+<span id="cb12-14"><a href="Data-extraction.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="fu">data2docx</span>(sampleData3) </span>
+<span id="cb12-15"><a href="Data-extraction.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">data2pptx</span>(sampleData3) </span>
+<span id="cb12-16"><a href="Data-extraction.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">data2pdf</span>(sampleData3) </span>
+<span id="cb12-17"><a href="Data-extraction.html#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="Data-extraction.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 指定形式文件的格式的输出：</span></span>
+<span id="cb12-19"><a href="Data-extraction.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 表导出ppt和word：</span></span>
+<span id="cb12-20"><a href="Data-extraction.html#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">table2pptx</span>(ft)</span>
+<span id="cb12-21"><a href="Data-extraction.html#cb12-21" aria-hidden="true" tabindex="-1"></a>table2docx</span>
+<span id="cb12-22"><a href="Data-extraction.html#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="Data-extraction.html#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 导出图片到word或者ppt中：</span></span>
+<span id="cb12-24"><a href="Data-extraction.html#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">code2docx</span>(<span class="fu">plot</span>(iris))</span>
+<span id="cb12-25"><a href="Data-extraction.html#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(ggplot2)</span>
+<span id="cb12-26"><a href="Data-extraction.html#cb12-26" aria-hidden="true" tabindex="-1"></a>gg<span class="ot">=</span><span class="fu">ggplot</span>(<span class="at">data=</span>mtcars,<span class="fu">aes</span>(<span class="at">x=</span>wt,<span class="at">y=</span>mpg))<span class="sc">+</span><span class="fu">geom_point</span>()</span>
+<span id="cb12-27"><a href="Data-extraction.html#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="fu">code2docx</span>(<span class="at">ggobj=</span>gg)</span>
+<span id="cb12-28"><a href="Data-extraction.html#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="fu">code2pptx</span>(<span class="at">ggobj=</span>gg)</span>
+<span id="cb12-29"><a href="Data-extraction.html#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="Data-extraction.html#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 读取office数据：</span></span>
+<span id="cb12-31"><a href="Data-extraction.html#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="fu">file2docx</span>()</span>
+<span id="cb12-32"><a href="Data-extraction.html#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="fu">file2HTM</span>()</span>
+<span id="cb12-33"><a href="Data-extraction.html#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="fu">file2pdf</span>()</span>
+<span id="cb12-34"><a href="Data-extraction.html#cb12-34" aria-hidden="true" tabindex="-1"></a>file2pptx</span></code></pre></div>
+</div>
+</div>
+<div id="在r中使用sql" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> 在R中使用sql<a href="Data-extraction.html#在r中使用sql" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="链接数据库" class="section level4 hasAnchor" number="2.2.5.1">
+<h4><span class="header-section-number">2.2.5.1</span> 5.1链接数据库：<a href="Data-extraction.html#链接数据库" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>#安装RODBC包  
+install.packages(&quot;RODBC&quot;)   
+library(RODBC)  
+mycon&lt;-odbcConnect(&quot;mydsn&quot;,uid=&quot;user&quot;,pwd=&quot;rply&quot;)  
+#通过一个数据源名称（mydsn）和用户名（user）以及密码（rply，如果没有设置，可以直接忽略）打开了一个ODBC数据库连接  
+  
+data(USArrests)  
+#将R自带的“USArrests”表写进数据库里  
+sqlSave(mycon,USArrests,rownames=&quot;state&quot;,addPK=TRUE)  
+#将数据流保存，这时打开SQL Server就可以看到新建的USArrests表了  
+rm(USArrests)  
+#清除USArrests变量  
+  
+sqlFetch(mycon, &quot;USArrests&quot; ,rownames=&quot;state&quot;)  
+#输出USArrests表中的内容  
+sqlQuery(mycon,&quot;select * from USArrests&quot;)  
+#对USArrests表执行了SQL语句select，并将结果输出  
+  
+sqlDrop(channel,&quot;USArrests&quot;)  
+#删除USArrests表  
+close(mycon)  
+#关闭连接  
+————————————————
+版权声明：本文为CSDN博主「悟乙己」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/sinat_26917383/article/details/51601539</code></pre>
+</div>
+<div id="在r中执行sql命令" class="section level4 hasAnchor" number="2.2.5.2">
+<h4><span class="header-section-number">2.2.5.2</span> 5.2 在R中执行sql命令：<a href="Data-extraction.html#在r中执行sql命令" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Data-extraction.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 参见：</span></span>
+<span id="cb14-2"><a href="Data-extraction.html#cb14-2" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>dept.stat.lsa.umich.edu<span class="sc">/</span><span class="er">~</span>jerrick<span class="sc">/</span>courses<span class="sc">/</span>stat701<span class="sc">/</span>notes<span class="sc">/</span>sql.html<span class="co">#sql-queries</span></span>
+<span id="cb14-3"><a href="Data-extraction.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="Data-extraction.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-5"><a href="Data-extraction.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sqldf)</span>
+<span id="cb14-6"><a href="Data-extraction.html#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="Data-extraction.html#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## SQL版本：</span></span>
+<span id="cb14-8"><a href="Data-extraction.html#cb14-8" aria-hidden="true" tabindex="-1"></a>SQL3 <span class="ot">=</span> <span class="fu">sqldf</span>(<span class="st">&quot;SELECT sex, COUNT(primaryid) as Total</span></span>
+<span id="cb14-9"><a href="Data-extraction.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="st">FROM demo_all</span></span>
+<span id="cb14-10"><a href="Data-extraction.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="st">GROUP BY sex</span></span>
+<span id="cb14-11"><a href="Data-extraction.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="st">ORDER BY Total DESC ;&quot;</span>)</span>
+<span id="cb14-12"><a href="Data-extraction.html#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="Data-extraction.html#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="do">## R版本：</span></span>
+<span id="cb14-14"><a href="Data-extraction.html#cb14-14" aria-hidden="true" tabindex="-1"></a>R3 <span class="ot">=</span> demo_all<span class="sc">%&gt;%</span><span class="fu">group_by</span>(sex) <span class="sc">%&gt;%</span></span>
+<span id="cb14-15"><a href="Data-extraction.html#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarise</span>(<span class="at">Total =</span> <span class="fu">n</span>())<span class="sc">%&gt;%</span><span class="fu">arrange</span>(<span class="fu">desc</span>(Total))</span>
+<span id="cb14-16"><a href="Data-extraction.html#cb14-16" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb14-17"><a href="Data-extraction.html#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(SQL3,R3, <span class="at">allowAll=</span><span class="cn">TRUE</span>)</span>
+<span id="cb14-18"><a href="Data-extraction.html#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="cn">TRUE</span></span></code></pre></div>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Establish-analysis-objectives.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Data-preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/yihui/bookdown-chinese/edit/master/02-Data-extraction.Rmd",
+"text": "编辑"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
